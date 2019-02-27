@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="item_type_form" model="ir.ui.view" >
+        <field name="name">item.type.master</field>
+        <field name="model">item.type.master</field>
+        <field name="arch" type="xml">
+            <form string="Item Type Master">
+                <group string="Item Type Details">
+                    <group name="Item_Type_Master">
+                        <field name='item_type_name' /> 
+                    	<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->
+                        <field name='activeflag' string="Is Active" widget='radio'/>                        
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="item_type_info_tree" model="ir.ui.view">
+        <field name="name">Item Type Info</field>
+        <field name="model">item.type.master</field>
+        <field name="arch" type="xml">
+            <tree string="Item Type Info">
+                <field name='id' string="Id" width="10px" class="o_id_code_master_info_new"/>
+                <field name='item_type_name' string="Item Type Name" />
+				<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->                
+            	<field name='activeflag' string="Is Active" widget='radio'/>   
+	        </tree>
+        </field>
+    </record>
+
+    <record id="item_type_info_action" model="ir.actions.act_window">
+        <field name="name">Item Type Master</field>
+        <field name="res_model">item.type.master</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<menuitem id="master_menu" name="Master" />  
+<menuitem action="item_type_info_action" id="menu_item_type_master" name="Item Type Master" parent="master_menu"/> 
+</odoo>

@@ -1,0 +1,119 @@
+<odoo>
+    <!--=============mrp.production inherited start===================================-->
+    <record model="ir.ui.view" id="mrp_routing_workcenter_form">
+        <field name="name">mrp.production.form</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//button[@name='button_plan']" position="replace">
+                    <button name="button_plan" attrs="{'invisible': ['|',('statusflag', 'in', ('D','I')),('unreserve_visible', '=', False)]}" type="object" string="Release" class="oe_highlight"/>
+                    <!-- <button name="open_produce_product" attrs="{'invisible': ['|',('subcontract_prod','=','Ture')]}" string="Produce" type="object" class="oe_highlight"/> -->
+                    <!-- <button name="open_produce_product" attrs="{'invisible': ['|', '|', '|', '|', ('is_locked', '=', False), ('check_to_done', '=', True), ('availability', '!=', 'waiting'), ('state', 'not in', ('confirmed','progress'))]}" string="Produce" type="object"/> -->
+                    <button name="print_document" attrs="{'invisible': [('statusflag', 'not in', ('R','D','I'))]}" string="Print" type="object" class="oe_highlight"/>
+                    <button name="issue_item_qty" attrs="{'invisible': ['|',('statusflag', 'not in', ('D','I')), ('state', 'in', ('cancel'))]}" string="Issue" type="object" class="oe_highlight"/>
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="statusflag" nolabel="1"/>
+                        </span>
+                    </div>
+                </xpath>
+                <xpath expr="//div[@class='o_row']" position="after">
+                    <field name="produced_qty" />
+                    <field name="complete_qty" />
+                    <field name="balance_qty" />
+                </xpath>
+                <xpath expr="//field[@name='date_planned_finished']" position="replace">
+                    <field name="date_planned_finished" />
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="replace">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(mrp.action_mrp_workorder_production_specific)d" type="action" attrs="{'invisible': ['|',('workorder_count', '=', 0),('statusflag','not in','I')]}" class="oe_stat_button" icon="fa-play-circle-o">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="workorder_done_count" widget="statinfo" nolabel="1"/> /
+                                    <field name="workorder_count" widget="statinfo" nolabel="1"/>
+                                </span>
+                                <span class="o_stat_text">Operation</span>
+                            </div>
+                        </button>
+                        <button name="%(mrp.action_mrp_production_moves)d" type="action" string="Inventory Moves" class="oe_stat_button" icon="fa-arrows-v" attrs="{'invisible': [('state', 'not in', ('progress', 'done'))]}"/>
+                        <button class="oe_stat_button" name="action_see_move_scrap" type="object" icon="fa-arrows-v" attrs="{'invisible': [('scrap_count', '=', 0)]}">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="scrap_count"/>
+                                </span>
+                                <span class="o_stat_text">Scraps</span>
+                            </div>
+                        </button>
+                        <field name="workorder_ids" invisible="1"/>
+                    </div>
+                </xpath>
+            </data>
+        </field>
+    </record>
+    <!-- Inherit tree -->
+
+    <record id="mrp_production_tree_view_inhe" model="ir.ui.view">
+        <field name="name">mrp.production.tree</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="/tree" position="replace">
+                <tree decoration-bf="message_needaction==True" default_order="date_planned_start desc" decoration-info="state=='confirmed'" decoration-danger="date_planned_start&lt;current_date and state not in ('done','cancel')" decoration-muted="state in ('done','cancel')" string="Manufacturing Orders">
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name"/>
+                    <field name="origin" />
+                    <field name="date_planned_start"/>
+                    <field name="product_id"/>
+                    <field name="product_qty" sum="Total Qty" string="Quantity"/>
+                    <field name="product_uom_id" string="Unit of Measure" options="{'no_open':True,'no_create':True}" groups="product.group_uom"/>
+                    <field name="availability"/>
+                    <field name="routing_id" groups="mrp.group_mrp_routings"/>                    
+                    <field name="state"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <!--  -->
+    <record id="mrp_production_issue_form_view" model="ir.ui.view">
+        <field name="name">mrp.production.issue.form</field>
+        <field name="model">mrp.production</field>
+        <field name="arch" type="xml">
+            <form string="Manufacturing Orders">
+                <header>
+                    <field name="state" widget="statusbar" invisible="1" statusbar_visible="confirmed,progress,done"/>
+                </header>
+                <sheet>
+                    <notebook>
+                        <page string="Issue Materials">
+                            <field name="move_raw_ids" context="{'default_state': 'assigned','default_raw_material_production_id': id}">
+                                <tree delete="0" editable="bottom" create="false" default_order="is_done,sequence" decoration-muted="is_done" decoration-warning="quantity_done&gt;product_uom_qty" decoration-success="quantity_done==product_uom_qty" decoration-danger="reserved_availability &lt; product_uom_qty">
+                                    <field name="product_id" required="1"/>
+                                    <field name="name" invisible="1"/>
+                                    <field name="unit_factor" invisible="1"/>
+                                    <field name="product_uom" groups="product.group_uom"/>
+                                    <field name="has_tracking" invisible="1"/>
+                                    <field name="needs_lots" readonly="1" invisible="1" groups="stock.group_production_lot"/>
+                                    <field name="is_done" invisible="1"/>
+                                    <field name="sequence" invisible="1"/>
+                                    <field name="location_id" invisible="1"/>
+                                    <field name="state" invisible="1" force_save="1" />
+                                    <field name="product_uom_qty" readonly="1" string="To Consume"/>
+                                    <field name="reserved_availability" readonly="1" string="Reserved"/>
+                                    <field name="issue_qty" attrs="{'readonly': [('state', '=', 'done')]}" string="Issue Quantity"/>
+                                    <field name="quantity_done" readonly="1" string="Consumed"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="action_issue" string="Issue" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

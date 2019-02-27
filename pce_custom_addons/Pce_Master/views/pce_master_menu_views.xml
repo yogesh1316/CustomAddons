@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<template id="my_assets_id1" name="website assets for my module" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+        <link rel="stylesheet" href="/Pce_Master/static/src/css/custom_css.css"/>
+        </xpath>
+    </template>
+
+<!--  ================================Text Master Start==================================================================== -->
+	<record id="text_master_info_forms" model="ir.ui.view">
+		<field name="name">Text Master</field>
+		<field name="model">text_master.info</field>
+		<field name="arch" type="xml">
+			<form string="Text Master" delete="0" duplicate="0">
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete,Duplicate Buttons From Actions-->
+				<sheet>
+					<group>
+						<field name="text_code" readonly="1"/>
+						<field name="text_description"/>
+						<!--<field name="text_concat"/>-->	
+						<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->
+						<field name='active_flag' string="Is Active" widget='radio'/> 					
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="text_master_info_tree_view" model="ir.ui.view">
+		<field name="name">Text Master</field>
+		<field name="model">text_master.info</field>
+		<field name="arch" type="xml">
+			<tree string="Text Master"  delete="0"> 
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Action-->
+				<!-- decoration-muted="active!=True" -->
+				<field name="text_code"/>						
+				<field name="text_description"/>
+				<!--<field name="text_concat"/>-->
+				<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->				
+				<field name='active_flag' string="Is Active" widget='radio'/> 			
+			</tree>
+		</field>
+	</record>
+
+	<record id="text_master_info_actions" model="ir.actions.act_window">
+		<field name="name">Text Master</field>
+		<field name="res_model">text_master.info</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+<!--  ================================Text Master End========================================================================= -->
+<!--  ================================Effect Master Start==================================================================== -->
+	<record id="effect_master_info_form" model="ir.ui.view">
+		<field name="name">Effect Master</field>
+		<field name="model">effect_master.info</field>
+		<field name="arch" type="xml">
+			<form string="Effect Master" delete="0" duplicate="0">
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
+				<sheet>
+					<group>
+						<field name="effect_code_no" string="Effect Code"/>
+						<field name="effect_description" string="Effect Code Description"/>
+						<!--<field name="unique_effect_description"/>-->
+						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->						
+						<field name="active_flag" string="Is Active" widget='radio'/>						
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="effect_master_info_tree" model="ir.ui.view">
+		<field name="name">Effect Master</field>
+		<field name="model">effect_master.info</field>
+		<field name="arch" type="xml">
+			<tree string="Effect Master" delete="0" >
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
+				<field name="id" string="Sr.No."  class="o_id_code_master_info_new"/>
+				<field name="effect_code_no" string="Effect Code"/>
+				<field name="effect_description" string="Effect_Desc"/>
+				<!--<field name="unique_effect_description"/>-->
+				<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->					
+				<field name="active_flag" string="Is Active" widget='radio'/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="effect_master_info_action" model="ir.actions.act_window">
+		<field name="name">Effect Master</field>
+		<field name="res_model">effect_master.info</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+<!--  ================================Effect Master End========================================================================= -->
+<!-- =============================================Id Code Master Start=========================================================-->
+	<record id ="id_code_master_info_form" model="ir.ui.view">
+		<field name="name">Id Code Master</field>
+		<field name="model">id_code_master.info</field>
+		<field name="arch" type="xml">
+			<form string="Id Code Master" delete="0" duplicate="0">
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
+				<sheet>
+					<group>
+						<field name="id_code_no" string="ID Code"/>
+						<field name="id_code_description" string="Id Code Description"/>
+						<!--<field name="unique_id_code_description"/>-->
+						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
+						<field name="active_flag" string="Is Active" widget='radio'/>		
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	
+	<record id="id_code_master_info_tree" model="ir.ui.view">
+		<field name="name">Id Code Master</field>
+		<field name="model">id_code_master.info</field>
+		<field name="arch" type="xml">
+			<tree string="Id Code Master" delete="0" >
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
+				<field name='id' string="Sr.No."  class="o_id_code_master_info_new" />			
+				<field name="id_code_no" string="ID_No"/>
+				<field name="id_code_description" string="Id_Desc" />
+				<!--<field name="unique_id_code_description"/>-->
+				<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->					
+				<field name="active_flag" string="Is Active" widget='radio'/>	
+			</tree>
+		</field>
+	</record>
+	
+	<record id="id_code_master_info_action" model="ir.actions.act_window">
+		<field name="name">Id Code Master</field>
+		<field name="res_model">id_code_master.info</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+<!-- =============================================Id Code Master End=========================================================-->
+<!--==============================================Make Master Start========================================================= -->
+	<record id="make_master_info_form" model="ir.ui.view">
+		<field name="name">Make Master</field>
+		<field name="model">make_master.info</field>
+		<field name="arch" type="xml">
+			<form string="Make Master" delete="0" duplicate="0">
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
+				<sheet>
+					<group>
+						<field name="make_no" delete="0" duplicate="0"/>
+						<field name="make_description"/>
+						<!--<field name="unique_make_description"/>	-->
+						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
+						<field name="active_flag" string="Is Active" widget='radio'/>				
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	
+	<record id="make_master_info_tree" model="ir.ui.view">
+		<field name="name">Make Master</field>
+		<field name="model">make_master.info</field>
+		<field name="arch" type="xml">
+			<tree string="Make Master" delete="0">
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
+				<field name="make_no"/>
+				<field name="make_description"/>
+				<!--<field name="unique_make_description"/>-->
+				<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->					
+				<field name="active_flag" string="Is Active" widget='radio'/>				
+			</tree>
+		</field>
+	</record>
+	
+	<record id="make_master_info_action" model="ir.actions.act_window">
+		<field name="name">Make Master</field>
+		<field name="res_model">make_master.info</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+<!--==============================================Make Master End=========================================================== -->
+
+<!--==============================================MRP Type Master Start======================================================--> 
+	<record id="mrp_type_master_info_form" model="ir.ui.view">
+		<field name="name">MRP Type Master</field>
+		<field name="model">mrp_type_master.info</field>
+		<field name="arch" type="xml">
+			<form string="MRP Type Master" delete="0" duplicate="0">
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
+				<sheet>
+					<group>
+						<field name="mrp_type_code"/>
+						<field name="mrp_description"/>
+						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
+						<field name="active_flag" string="Is Active" widget='radio'/>						
+					</group>
+				</sheet>
+			</form> 
+		</field>
+	</record>
+
+	<record id="mrp_type_master_info_tree" model="ir.ui.view">
+		<field name="name">MRP Type Master</field>
+		<field name="model">mrp_type_master.info</field>
+		<field name="arch" type="xml">
+			<tree string="MRP Type Master" delete="0" >
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
+				<field name="mrp_type_code"/>
+				<field name="mrp_description"/>
+				<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->					
+				<field name="active_flag" string="Is Active" widget='radio'/>				
+			</tree>
+		</field>
+	</record>
+
+	<record id="mrp_type_master_info_action" model="ir.actions.act_window">
+		<field name="name">MRP Type Master</field>
+		<field name="res_model">mrp_type_master.info</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	
+<!--==============================================MRP Type Master End======================================================== -->
+<!--=======================================Source Master Start=============================================================== -->	
+	<record id="source_master_info_form" model="ir.ui.view">
+		<field name="name">Souce Master</field>
+		<field name="model">source_master.info</field>
+		<field name="arch" type="xml">
+			<form string="Source Master" delete="0" duplicate="0">
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
+				<sheet>
+					<group>
+						<field name="source_code"/>
+						<field name="source_description"/>
+						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
+						<field name="active_flag" string="Is Active" widget='radio'/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="source_master_info_tree" model="ir.ui.view">
+		<field name="name">Source Master</field>
+		<field name="model">source_master.info</field>
+		<field name="arch" type="xml">
+			<tree string="Source Master" delete="0" >
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
+				<field name="source_code"/>
+				<field name="source_description"/>
+				<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->					
+				<field name="active_flag" string="Is Active" widget='radio'/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="source_master_info_action" model="ir.actions.act_window">
+		<field name="name">Source Master</field>
+		<field name="res_model">source_master.info</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<!--=========================================Source Master End=============================================================== -->	
+	<!--=========================================HSN Master Start=============================================================== -->	
+	<record id="hsn_master_info_form" model="ir.ui.view">
+		<field name="name">HSN Master</field>
+		<field name="model">hsn_master.info</field>
+		<field name="arch" type="xml">
+			<form string="HSN Master">
+				<sheet>
+					<group>
+						<field name="hsn_no"/>
+						<field name="rate"/>
+						<field name="in_state_sale"/>
+						<field name="out_state_sale"/>
+						<field name="in_state_purchase"/>
+						<field name="out_state_purchase"/>					
+					</group>				
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="hsn_master_info_tree" model="ir.ui.view">
+		<field name="name">HSN Master</field>
+		<field name="model">hsn_master.info</field>
+		<field name="arch" type="xml">
+			<tree string="HSN Master">
+				<field name="hsn_no"/>
+				<field name="rate" />
+				<field name="in_state_sale"/>
+				<field name="out_state_sale"/>
+				<field name="in_state_purchase"/>
+				<field name="out_state_purchase"/>			
+			</tree>
+		</field>
+	</record>
+	
+	<record id="hsn_master_info_action" model="ir.actions.act_window">
+		<field name="name">HSN Master</field>
+		<field name="res_model">hsn_master.info</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<!--=========================================HSN Master End=============================================================== -->	
+	<!--=========================================Product Template Inhe {Master's form} START====================================-->
+	<record id="product_template_only_form_view_inherited" model="ir.ui.view">
+		<field name="name">product.template</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='uom_po_id']" position="after">
+				<!--<field name="item_code_num" readonly="1"/>-->
+				<field name="drawing_number"/>	
+				<field name="revision_number"/>		
+				<!--<field name="text_master_id" attrs="{'readonly': [('default_code','!=',False )]}" options="{'no_create': True,'no_edit': True}" widget="selection" style="text-transform: uppercase;"/>-->
+				<!--<field name="item_type"/>-->
+				<!-- Updated-By:Pradip | Updated-Date:28-1-19 |Info. Only Active Flag Showing Here-->					
+				<field name="effect_code_description" domain="[('active_flag','=','Yes')]"/>
+				<field name="id_code_description" domain="[('active_flag','=','Yes')]"/>		
+				<field name="manufacturer" string="Manufacturer" domain="[('active_flag','=','Yes')]"/>	
+				<!--<field name="mrp_type" options="{'no_create': True,'no_edit': True}" widget="selection"/>-->				
+				<!--<field name="source_code_master"/>-->
+				<!--<field name="hsn_num_master" invisible="1" options="{'no_create': True,'no_edit': True}" widget="selection"/>-->	
+				<field name="mf_part_no"/>
+				<!--<field name="attach_pdf" filename="filename"/>-->
+				<field name="filename" invisible="1"/>			
+				<!--<field name="batch_qty" />--> <!-- attrs="{'readonly': [('mrp_type','=',1 )]}"-->
+				<!--<field name="reorder_level" /> --><!-- attrs="{'readonly': ['|',('mrp_type','=',1 ),('mrp_type','=',5 )]}"-->
+				<field name="lead_time"/>		                      
+				<!--<field name="buyer_code" options="{'no_create': True,'no_edit': True}" widget="selection"/>-->	
+				<!--<field name="bin_location"/>-->
+				<!--<field name="bulk_issue_flag"/>-->
+				<!--<field name="channel_flag"/>-->
+				<!--<field name="sr_no_application"/>-->
+			</xpath>
+			
+			<!--Created-By:Pradip |Created-Date:17-1-19 |Info. Default_code is same as item_code_num -->
+			<xpath expr="//field[@name='default_code']" position="replace">
+				<field name="default_code" readonly="1"/>
+		   	</xpath>
+		   	
+			<!--Created-By:Pradip |Created-Date:21-1-19 |Info. when Default Code is Readonly then 
+			Product Name Readonly When Edit the Product Name  -->
+		  <xpath expr="//field[@name='name']" position="replace">
+			<field name="name" attrs="{'readonly': [('default_code','!=',False )]}"/>
+		  </xpath>
+		  
+		<!--Updated-By:Pradip |Updated-Date:21-1-19 |Info. According custom Designed Changes Adjust Fields  -->  
+		<xpath expr="//field[@name='l10n_in_hsn_code']" position="after">
+			<field name="source_code_master" domain="[('active_flag','=','Yes')]"/>
+			<field name="buyer_code" options="{'no_create': True,'no_edit': True}" widget="selection"/>	
+			<field name="channel_flag"/>
+			<field name="sr_no_application"/>
+			<field name="bin_location"/>  		
+		</xpath>
+			   	
+		<!--Updated-By:Pradip |Updated-Date:21-1-19 |Info. According custom Designed Changes Adjust Fields  --> 	   	
+	   	<xpath expr="/form/sheet/notebook/page[@name='inventory']//field[@name='responsible_id']" position="after">
+			<field name="mrp_type" domain="[('active_flag','=','Yes')]" options="{'no_create': True,'no_edit': True}" widget="selection"/>			
+			<field name="batch_qty" />	
+			<field name="reorder_level" />	
+	   </xpath>
+	   
+	   <xpath expr="/form/sheet/div[@class='oe_title']" position="replace">
+	   	
+ 			<div class="oe_title">
+ 						<label class="oe_edit_only" for="name" string="Text Master"/>
+                        <h5><field name="text_master_id" domain="[('active_flag','=','Yes')]" attrs="{'readonly': [('default_code','!=',False )]}" options="{'no_create': True,'no_edit': True}"  
+                        style="text-transform: uppercase;font-weight:normal; "/></h5>
+                        <label class="oe_edit_only" for="name" string="Product Name"/>
+                        <h5><field name="name" placeholder="Product Name" style="text-transform: uppercase;font-weight:normal; "/></h5>
+                        <div name="options" groups="base.group_user">
+                            <div>
+                                <field name="sale_ok"/>
+                                <label for="sale_ok"/>
+                            </div>
+                            <div>
+                                <field name="purchase_ok"/>
+                                <label for="purchase_ok"/>
+                            </div>
+                        </div>
+                    </div>	   	</xpath>
+	   
+	   
+	   <!--<xpath expr="/form/sheet/div/div[@name='options']" position="after">
+	   	<group>
+        	<field name="text_master_id" string="Text Master"/>
+				</group>
+	   	</xpath>-->
+	   
+	   
+	   
+	</field>
+</record>
+
+	<!--Created-By:Pradip |Created-Date:21-1-19 |Info. According custom Designed Changes Adjust Fields  --> 
+ 	<record id="view_template_property_form" model="ir.ui.view">
+	    <field name="name">product.template.stock.property.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+
+			<xpath expr="//group[@name='inventory']//field[@name='route_ids']" position="after">
+				<!-- Updated-By:Pradip | Updated-Date:28-1-19 |Info. Only Active Flag Showing Here-->
+				<field name="item_type" domain="[('activeflag','=','Y')]"/>
+				<field name="bulk_issue_flag"/>
+		   	</xpath>
+		   	
+        </field>
+    </record>
+<!--=========================================Product Template Inhe {Master's form} END====================================-->
+<!-- =====================================================Masters Menu======================================================= -->
+
+	<!-- <menuitem id="pce_master_menu" name="Master"/> -->
+	<!-- <menuitem id="master_menu" name="Master" />   -->
+	<menuitem id="text_master_main_submenu" action="text_master_info_actions" name="Text Master" parent="Pce_Master.master_menu" />
+	<menuitem id="effect_master_main_submenu" action="effect_master_info_action" name="Effect Master" parent="Pce_Master.master_menu" />
+	<menuitem id="id_code_master_main_submenu" action="id_code_master_info_action" name="Id Code Master" parent="Pce_Master.master_menu"/>
+	<menuitem id="make_master_main_submenu" action="make_master_info_action" name="Make Master" parent="Pce_Master.master_menu"/>
+	<menuitem id="mrp_type_master_main_submenu" action="mrp_type_master_info_action" name="MRP Type Master" parent="Pce_Master.master_menu"/>
+	<menuitem id="source_master_main_submenu" action="source_master_info_action" name="Source Master" parent="Pce_Master.master_menu"/> 	
+	<menuitem id="hsn_master_main_submenu" action="hsn_master_info_action" name="HSN Master" parent="Pce_Master.master_menu"/>
+	</odoo>

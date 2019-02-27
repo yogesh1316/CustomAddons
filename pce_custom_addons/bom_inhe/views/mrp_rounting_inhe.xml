@@ -1,0 +1,51 @@
+<odoo>
+    <!--=============mrp.routing.workcenter inherited start===================================-->
+    <record model="ir.ui.view" id="mrp_routing_workcenter_form_inhe">
+        <field name="name">mrp.routing.workcenter.form</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='time_cycle_manual']" position="replace">
+                    <field name='time_cycle_manual' class="oe_inline"/> minutes                       
+                </xpath>
+                <xpath expr="//label[@for='time_cycle_manual']" position="before">                    
+                    <label for="setup_time" string="Setup time"/>
+                    <div >
+                        <field name='setup_time' class="oe_inline"/> minutes                       
+                    </div>
+                    <label for="operation_time" string="Operation time"/>
+                    <div >
+                        <field name='operation_time' class="oe_inline"/> minutes                                                
+                    </div>
+                    <label for="transfer_time" string="Transfer time"/>
+                    <div >
+                        <field name='transfer_time' class="oe_inline"/> hours
+                    </div>
+                </xpath>               
+            </data>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="mrp_routing_workcenter_tree_inhe">
+        <field name="name">mrp.routing.workcenter.tree</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_tree_view"/>
+        <field name="arch" type="xml">
+            <data>               
+                <xpath expr="//field[@name='workcenter_id']" position="after">
+                    <field name='setup_time' string='Setup time (mins)' class="oe_inline"/>
+                    <field name='operation_time' string='Operation time (mins)'  class="oe_inline"/>
+                    <field name='transfer_time' string='Transfer time (hrs)' class="oe_inline"/>
+
+                    <field name='cum_setup_time' string='cumulative Setup time (mins)'  class="oe_inline"/>
+                    <field name='cum_ope_time' string='cumulative Operation time (mins)'  class="oe_inline"/>
+                    <field name='cum_tran_time' string='cumulative Transfer time (hrs)' class="oe_inline"/>
+                </xpath>
+                <xpath expr="//field[@name='time_cycle']" position="replace">
+                    <field name="time_cycle" invisible="1" string='Duration time (mins)' />
+                </xpath>
+            </data>
+        </field>
+    </record>
+    <!--=============mrp.routing.workcenter inherited stop=====================================-->
+</odoo>

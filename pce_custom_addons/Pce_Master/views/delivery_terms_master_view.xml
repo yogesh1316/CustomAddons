@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Delivery Term Master Form View--> 
+    <record id="delivery_term_master_form_view" model="ir.ui.view" >
+        <field name="name">Delivery Term Master</field>
+        <field name="model">delivery_term.master</field>
+        <field name="arch" type="xml">
+            <form string="Delivery Term Master" delete="0" duplicate="0">
+                <group string="Delivery Term">
+                    <group name="Delivery Term Master">
+                    	<field name="deliv_term_code" readonly="1"/>
+                        <field name='delivery_term' /> 
+                        <!-- <field name='unique_delivery_term' />-->   
+                        <field name='active_flag' string="Is Active" widget='radio'/>                
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Created-By:Pradip Created-Date:4-2-19 Info. Delivery Term Master Tree View-->
+    <record id="delivery_term_master_tree_view" model="ir.ui.view">
+        <field name="name">Delivery Term Master</field>
+        <field name="model">delivery_term.master</field>
+        <field name="arch" type="xml">
+            <tree string="Delivery Term Master" delete="0">
+            	<field name="deliv_term_code" readonly="1"/>
+                <field name='delivery_term' />   
+                <field name='active_flag' string="Is Active" widget='radio'/>       
+	            </tree>
+        </field>
+    </record>
+
+ 	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Delivery Term Master Action-->
+    <record id="delivery_term_master_actions" model="ir.actions.act_window">
+        <field name="name">Delivery Term Master</field>
+        <field name="res_model">delivery_term.master</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+	<!-- <menuitem id="master_menu" name="Master" />   -->
+	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Delivery Term Master Left Menu-->	
+ 	<menuitem action="delivery_term_master_actions" id="delivery_term_master_id" name="Delivery Term Master" parent="Pce_Master.master_menu"/> 
+</odoo>

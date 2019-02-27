@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>       
+        <report 
+            string="Document Print" 
+            id="action_report_production_order_doc_print" 
+            model="mrp.production" 
+            name="bom_inhe.report_mrporder_print"
+            file="bom_inhe.report.mrp_pro_document_print" 
+            report_type="qweb-pdf"
+            print_report_name="'Production Order - %s' % object.name"
+        />       
+    </data>
+</odoo>

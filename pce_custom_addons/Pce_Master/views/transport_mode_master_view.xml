@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Transport Mode Master Form View--> 
+    <record id="transport_mode_master_form_view" model="ir.ui.view" >
+        <field name="name">Transport Mode Master</field>
+        <field name="model">transport_mode.master</field>
+        <field name="arch" type="xml">
+            <form string="Transport Mode Master" delete="0" duplicate="0">
+            	<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
+                <group string="Transport Mode">
+                    <group name="Transport Mode Master">
+                    	<field name="transport_mode_code" readonly="1"/>
+                        <field name='transport_mode_desc' /> 
+                        <!--<field name='unique_transport_mode_desc' />-->
+                        <field name='active_flag' string="Is Active" widget='radio'/>                
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Created-By:Pradip Created-Date:4-2-19 Info. Transport Mode Master Tree View-->
+    <record id="transport_mode_master_tree_view" model="ir.ui.view">
+        <field name="name">Transport Mode Master</field>
+        <field name="model">transport_mode.master</field>
+        <field name="arch" type="xml">
+            <tree string="Transport Mode Master" delete="0">
+            	<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
+            	<field name="transport_mode_code" readonly="1"/>
+                <field name='transport_mode_desc' /> 
+                <field name='active_flag' string="Is Active" widget='radio'/>         
+            </tree>
+        </field>
+    </record>
+
+ 	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Transport Mode Master Action-->
+    <record id="transport_mode_master_action" model="ir.actions.act_window">
+        <field name="name">Transport Mode Master</field>
+        <field name="res_model">transport_mode.master</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+	<!-- <menuitem id="master_menu" name="Master" />   -->
+	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Transport Mode Master Left Menu-->	
+ 	<menuitem action="transport_mode_master_action" id="transport_mode_master_id" name="Transport Mode Master" parent="Pce_Master.master_menu"/> 
+</odoo>

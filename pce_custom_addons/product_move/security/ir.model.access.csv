@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_move_product_move,product_move.product_move,model_product_move_product_move,,1,0,0,0

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_partner_master" model="ir.ui.view">
+        <field name="name">res_partner.inherit.view.form</field>        
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+        <!-- <xpath expr="//field[@name='vat']" position="replace">
+            <field name="vat" invisible='1'/>
+        </xpath> -->
+        <xpath expr="//div[@name='div_address']" position="after">
+                <field name="vat" placeholder="e.g. BE0477472701"  string="GSTIN No." />
+        </xpath>
+        
+        
+    </field>
+    </record>
+</odoo>
