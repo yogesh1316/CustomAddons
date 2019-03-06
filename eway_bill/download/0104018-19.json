@@ -1,0 +1,58 @@
+{
+    "billLists": [
+        {
+            "actualFromStateCode": 27,
+            "actualtoStateCode": 27,
+            "cessValue": 0.0,
+            "cgstValue": 65773.0,
+            "docDate": "29/01/2019",
+            "docNo": "01/040/18-19",
+            "docType": "INV",
+            "fromAddr1": "401-403, 4th Floor, Yash Elina, Above Nagpur Nagari Sahakari Bank, ",
+            "fromAddr2": "Behind Maruti Mandir, Off Karve Road",
+            "fromGstin": "27AALCS3803R1ZP",
+            "fromPincode": 411038,
+            "fromPlace": "Pune",
+            "fromStateCode": 27,
+            "fromTrdName": "Sunfire Technologies Pvt. Ltd.",
+            "igstValue": 0,
+            "itemList": [
+                {
+                    "cessRate": 0,
+                    "cgstRate": 9.0,
+                    "hsnCode": 8471,
+                    "igstRate": 0.0,
+                    "itemNo": 1,
+                    "productDesc": "Intel(R) Core(TM) i3-6006U Processor, Intel(R)\nHD Graphics 520\n1\nIntel(R) Core(TM) i3-6006U Processor (3M\nCache, 2.00 GHz), supports Windows 7/8.1/10\n1\nEstar 6.1 1\n13.3\" HD (1366 x 768) Non-Touch LCD 1\nBlack Cover for Non-touch LCD, WLAN, 3380 1\nDell Client System Update 1\nDell Digital Delivery Cirrus Client 1\nDocument for MUI (English, Khemer, Bahasa\nIndonesia, Arabic, Spanish)\n1\nSetup and Features Guide (English, Khmer,\nIndonesian)\n1\nIndia BIS Package Label 1\nAPCC Info 1\nSetup and Features Guide (English, Simplified\nChinese, Japanese, Traditional Chinese)\n1\n8GB, 1x8GB, DDR4 2400MHz Memory 1\nOS Media Kit Not Included 1\n2.5\" 7mm 500GB 7200rpm HDD 1\nNo Resource DVD / USB 1\nE5 Power Cord (India) 1\nPrimary 4-cell 56W/HR Battery with 3 Years\nLimited Hardware Warranty\n1\nDell Essential Backpack 15 1\nIntel Core i3 Processor Skylake Label 1\nE5 65W AC Adapter 1\nQualcomm QCA61x4A 802.11ac Dual Band\n(2x2) Wireless Adapter+ Bluetooth 4.1\n1\nQualcomm QCA61x4A 802.11ac Dual\nBand(2x2) Wireless Adapter+ Bluetooth 4.1\nDriver\n1\nInternal US/International Qwerty Non-backlit\nKeyboard (English)\n1\nWindows 10 Pro (64bit) English 1\nNo Software 1\nNo Out-of-Band Systems Management 1\nWaves Maxx Audio 1\nDell Latitude 3380 SRV 1\nDell Developed Recovery Environment 1\nDell Command | Power Manager (DCPM) 1\nSupportAssist 1\nNo Anti-Virus Software 1\nNo Installation Service Required 1\n3Yr ProSupport Plus: Keep Your Hard Drive 1\nTechnical Support 1\nNo FGA 1\nLimited Warranty:Yr1 Carry-In (Labor) 1\nLimited Warranty:Yr1 Carry-In (Parts) 1\n##Yr 1 ProSupport Plus: Next Business Day\nOnsite Service\n1\n3Yr ProSupport Plus:Next Business Day\nOnsite Service\n1\n##Yr 2-3 ProSupport Plus: Next Business Day\nOnsite Service\n1\nProSupport Plus: 7x24 Technical Support &\nAssistance: 3Yr\n1\nProSupport Plus:3Yr Accidental Damage\nService\n1\nNone 1\nThank you for choosing Dell ProSupport Plus.\nFor tech support, visit\n//www.dell.com/contactdell\n1\nNone 1\nNo Dell ProSupport for Software, No DDPE\nEncryption SW\n1\nFGA NB1-OS-BTO Freight Charges(India) 1",
+                    "productName": "NA",
+                    "qtyUnit": "NOS",
+                    "quantity": 17.0,
+                    "sgstRate": 9.0,
+                    "taxableAmount": 131546.0
+                }
+            ],
+            "sgstValue": 65773.0,
+            "subSupplyType": 1,
+            "supplyType": "O",
+            "toAddr1": "J-177, MIDC, Bhosari",
+            "toAddr2": "",
+            "toGstin": "27AABCR3402K1ZJ",
+            "toPincode": 411026,
+            "toPlace": "",
+            "toStateCode": 27,
+            "toTrdName": "Rich Graviss Products Private Limited ",
+            "totInvValue": 862359.0,
+            "totalValue": 730813.0,
+            "transDistance": 0,
+            "transDocDate": "",
+            "transDocNo": "False",
+            "transMode": 0,
+            "transporterId": "False",
+            "transporterName": "False",
+            "userGstin": "27AALCS3803R1ZP",
+            "vehicleNo": "",
+            "vehicleType": ""
+        }
+    ],
+    "version": "1.0.0618"
+}

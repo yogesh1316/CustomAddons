@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="support_category_view_tree" model="ir.ui.view">
+            <field name="name">support.category.tab.tree.view</field>
+            <field name="model">support.category</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="support_category_view_form" model="ir.ui.view">
+        <field name="name">support.category.view.form</field>
+        <field name="model">support.category</field>
+        <field name="arch" type="xml">
+            <form >
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="categ_lines">
+                            <tree editable="bottom"> 
+                                <field name="name"/>
+                            </tree>            
+                        </field>       
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="support_category_action" model="ir.actions.act_window">
+        <field name="name">Support Ticket Category</field>
+        <field name="res_model">support.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+            No Support Tickets Tags found
+            </p>
+        </field>
+    </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="res_partner_supplier_form" model="ir.ui.view">
+        <field name="name">res_partner.inherit.supplier.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+								  
+
+					            			
+<!-- Created By:Pradip|Created Date:9-Jan-2019 |Desc. Sales Year Computed
+Updated By:Pradip  Updated-Date: 14-01-2019 -->	            			
+		    <xpath expr="//group" position="after">
+		    	<!--Updated By:Pradip  Updated-Date: 16-01-2019 Info.: When Supplier True then visble this Group-->
+				<group>
+		    		<group> 
+						<label string="Sales Year" invisible="1" style="font-weight:bold;"/>
+						<group>
+				 			<field string="From Month" invisible="1" name="from_month" placeholder="From Month" />
+				 		</group>
+			 			<group>
+			 				<field string="To Month" name="to_month" invisible="1" placeholder="To Month" />
+			 			</group>
+			 		</group>
+		
+			    	<group>
+						<label string="Sales Year" style="font-weight:bold;" attrs="{'invisible': [('supplier','=',False)]}"/>
+					 	<group>
+					 		<field string="From Month" name="from_month" placeholder="From Month" attrs="{'invisible': [('supplier','=',False)]}"					 		 />
+				 		</group>
+				 		
+				 		<group>
+				 			<field string="To Month" name="to_month" placeholder="To Month" attrs="{'invisible': [('supplier','=',False)]}"/>
+				 		</group>
+				 	</group>
+		    	</group>
+			</xpath>			
+		</field>
+    </record>
+</odoo>

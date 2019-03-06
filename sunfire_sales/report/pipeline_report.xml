@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    <record id="pipe_report_view_tree" model="ir.ui.view">
+        <field name="name">pipeline_report.view.tree</field>
+        <field name="model">pipeline.report.display</field>
+        <field name="arch" type="xml">
+            <tree default_order='date desc'>
+                <field name="user_id"/>
+                <field name="u_id" invisible="1"/>
+                <field name="quotation_name" string="Quotation No."/>
+                <field name="oppor_name" />
+                <field name="cust" string="Customer Name"/>
+                <field name="vendor"/>
+                <field name="lob"/>
+                <field name="oppor_stg"/>
+                <field name="sale_stage"/>
+                <field name="deal_type"/>
+                <field name="key_deal"/>
+                <field name="topline" string="Top Line"/>
+                <field name="bottom_line" string="Bottom Line"/>
+                <field name="pricelist_id"/>
+                <field name="mnth_yr"/>
+                <field name="date" invisible="1"/>
+                <field name="cust" class="o_sale_order_new" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Pieline Report search view -->
+    <record id="pipeline_report_view_search" model="ir.ui.view">
+        <field name="name">pipeline.report.display.view.search</field>
+        <field name="model">pipeline.report.display</field>
+        <field name="arch" type="xml">
+            <search string="Search Description">
+                <!-- Add your fields here -->
+                <field name="user_id"/>
+                <field name="u_id" invisible="1"/>
+                <field name="oppor_name"/>
+                <field name="vendor"/>
+                <field name="lob"/>
+                <field name="date"/>
+                <field name="cust"/>
+                <field name="pricelist_id"/>
+                <field name="topline"/>
+                <field name="bottom_line"/>
+                <field name="oppor_stg"/>
+                <field name="sale_stage"/>
+                <field name="quotation_name"/>
+                 <field name="key_deal"/>
+                <field name="deal_type"/>
+                <field name="mnth_yr"/> 
+                <filter string="Opportunity stage not in Drop,Lost,Won" name="os_not_dlw" domain="[('oppor_stg','!=','Won'),('oppor_stg','!=','Lost'),('oppor_stg','!=','Drop')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="pipe_report_action" model="ir.actions.act_window">
+		<field name="name">Pipeline</field>
+		<field name="res_model">pipeline.report.display</field>
+		<field name="view_mode">tree,pivot,graph</field>
+        <field name="search_view_id" ref="pipeline_report_view_search"/>
+        <field name="context">{"search_default_os_not_dlw":1}</field>
+        <field name="view_ids" eval="[(5, 0, 0), 
+        (0, 0, {'view_mode': 'tree','view_id': ref('pipe_report_view_tree')})]"/>
+	</record>
+    <menuitem id="pipe_report_tree_submenu" action="pipe_report_action" sequence="0" name="Pipeline Report" parent="sale.menu_sale_report" />
+</data>
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

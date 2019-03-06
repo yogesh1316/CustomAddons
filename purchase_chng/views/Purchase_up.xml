@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="upload_purchase_doc">
+        <field name="name">Purchase</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <!--<xpath expr="//page[2]//field[@name='date_planned']" position="replace">
+                    <field name="date_planned" invisible='1' />
+                </xpath>-->
+            <xpath expr="//page[2]//label[@for='date_planned']" position="replace">
+                <label for="date_planned" />
+            </xpath>
+            <xpath expr="//page[2]//field[@name='incoterm_id']" position="replace">
+                <field name="incoterm_id" invisible='1'/>
+            </xpath>
+            <xpath expr="//form//sheet//notebook//page[1]" position="after">
+                <page string="Upload Documents">
+                    <field name="dr_lines" mode="tree">
+                        <!-- attrs="{'readonly': [('state', 'in', ('done'))]}" -->
+                        <tree string="Upload documents" editable="bottom" delete="false">
+                            <field name="pur_order_dr_id" invisible='1'/>
+                            <field string="Type" name="type" />
+                            <field string="File" name="upload_file" widget="binary" filename="filename" />
+                            <field name="filename" invisible="1" />
+                            <field string="Verbal Communication" name="verbal" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+            <!-- <xpath expr="//header//button[@name='action_view_picking']" position="replace">
+                <button name="action_view_picking" string="Receive Products" class="oe_highlight" type="object" attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}" invisible="1"/>
+            </xpath> -->
+            <xpath expr="//field[@name='name']" position="after">
+                <button name="action_view_picking" class="oe_stat_button" type="object" icon="fa-truck" style="float: right;" 
+                attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}" 
+                invisible="1" />
+            </xpath>
+            <xpath expr="//div[@class='oe_title']" position="replace">
+                <group>
+                    <group>
+                        <div>
+                            <label string="Request for Quotation " attrs="{'invisible': [('state','not in',('draft','sent','bid'))]}"/>
+                            <label string="Purchase Order " attrs="{'invisible': [('state','in',('draft','sent','bid'))]}"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                    </group>
+                    <group>
+
+
+                        <div class="oe_button_box" name="button_box">
+                            <!-- <button type="object" name="action_view_picking" class="oe_stat_button" icon="fa-truck" attrs="{'invisible':[('state', 'in', ('draft','sent','to approve')),('invoice_ids','=',[])]}">
+                                <field name="picking_count" widget="statinfo" string="Shipment" help="Incoming Shipments"/>
+                                <field name="picking_ids" invisible="1"/>
+                            </button> -->
+                            <button type="object" name="action_view_delivery" class="oe_stat_button" icon="fa-truck" groups="sunfire_sales.smart_delivery_button_user">
+                                <field name="delivery_count" widget="statinfo" string="Delivery"/>
+                            </button>
+                        </div>
+
+                    </group>
+                </group>
+            </xpath>
+
+
+        </field>
+    </record>
+</odoo>

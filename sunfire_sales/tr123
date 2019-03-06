@@ -1,0 +1,145 @@
+(03:21:03  IST) SMA:
+id integer NOT NULL DEFAULT nextval('hr_employee_id_seq'::regclass),
+  name character varying, -- Name
+  active boolean, -- Active
+  address_home_id integer, -- Private Address
+  country_id integer, -- Nationality (Country)
+  gender character varying, -- Gender
+  marital character varying, -- Marital Status
+  birthday date, -- Date of Birth
+  ssnid character varying, -- SSN No
+  sinid character varying, -- SIN No
+  identification_id character varying, -- Identification No
+  passport_id character varying, -- Passport No
+  bank_account_id integer, -- Bank Account Number
+  permit_no character varying, -- Work Permit No
+  visa_no character varying, -- Visa No
+  visa_expire date, -- Visa Expire Date
+  address_id integer, -- Work Address
+  work_phone character varying, -- Work Phone
+  mobile_phone character varying, -- Work Mobile
+  work_email character varying, -- Work Email
+  work_location character varying, -- Work Location
+  job_id integer, -- Job Position
+  department_id integer, -- Department
+  parent_id integer, -- Manager
+  coach_id integer, -- Coach
+  notes text, -- Notes
+  color integer, -- Color Index
+  resource_id integer NOT NULL, -- Resource
+  message_last_post timestamp without time zone, -- Last Message Date
+  company_id integer, -- Company
+  create_uid integer, -- Created by
+  create_date timestamp without time zone, -- Created on
+  write_uid integer, -- Last Updated by
+  write_date timestamp without time zone, -- Last Updated on
+  manager boolean, -- Is a Manager
+  medic_exam date, -- Medical Examination Date
+  place_of_birth character varying, -- Place of Birth
+  children integer, -- Number of Children
+  vehicle character varying, -- Company Vehicle
+  vehicle_distance integer, -- Home-Work Dist.
+  public_info character varying, -- Public Info
+  website_published boolean, -- Visible in Website
+  "x_UID_Number" character varying, -- Aadhar No
+  "x_Employee_PAN" character varying, -- PAN No
+  "x_Blood_Group" character varying, -- Blood Group
+  "x_Date_Of_Joining" date, -- Date of Joining
+  barcode character varying, -- Badge ID
+  pin character varying, -- PIN
+  "x_Current_Address" character varying, -- Current Address
+  "x_Bank_Name" character varying, -- Bank Name
+  "x_Emergency_Contact" character varying, -- Emergency Contact Name
+  "x_Emergency_Contact_No" character varying, -- Emergency Contact No
+  "x_Personal_Email" character varying, -- Personal Email
+  "x_PF_UAN_No" character varying, -- PF UAN NO
+  "x_ESI_No" character varying, -- ESI NO
+  "x_EPF_NOs" character varying, -- EPF Nos
+  device_id character varying, -- Biometric Device ID
+  CONSTRAINT hr_employee_pkey PRIMARY KEY (id),
+  CONSTRAINT hr_employee_address_home_id_fkey FOREIGN KEY (address_home_id)
+      REFERENCES public.res_partner (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT hr_employee_address_id_fkey FOREIGN KEY (address_id)
+      REFERENCES public.res_partner (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT hr_employee_bank_account_id_fkey FOREIGN KEY (bank_account_id)
+      REFERENCES public.res_partner_bank (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT hr_employee_coach_id_fkey FOREIGN KEY (coach_id)
+      REFERENCES public.hr_employee (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT hr_employee_company_id_fkey FOREIGN KEY (company_id)
+      REFERENCES public.res_company (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT hr_employee_country_id_fkey FOREIGN KEY (country_id)
+      REFERENCES public.res_country (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT hr_employee_create_uid_fkey FOREIGN KEY (create_uid)
+      REFERENCES public.res_users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT hr_employee_department_id_fkey FOREIGN KEY (department_id)
+      REFERENCES public.hr_department (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT hr_employee_job_id_fkey FOREIGN KEY (job_id)
+      REFERENCES public.hr_job (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT hr_employee_parent_id_fkey FOREIGN KEY (parent_id)
+      REFERENCES public.hr_employee (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT hr_employee_resource_id_fkey FOREIGN KEY (resource_id)
+      REFERENCES public.resource_resource (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE RESTRICT,
+  CONSTRAINT hr_employee_write_uid_fkey FOREIGN KEY (write_uid)
+      REFERENCES public.res_users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT hr_employee_barcode_uniq UNIQUE (barcode)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.hr_employee
+  OWNER TO openpg;
+COMMENT ON TABLE public.hr_employee
+  IS 'Employee';
+COMMENT ON COLUMN public.hr_employee.name IS 'Name';
+COMMENT ON COLUMN public.hr_employee.active IS 'Active';
+COMMENT ON COLUMN public.hr_employee.address_home_id IS 'Private Address';
+COMMENT ON COLUMN public.hr_employee.country_id IS 'Nationality (Country)';
+COMMENT ON COLUMN public.hr_employee.gender IS 'Gender';
+COMMENT ON COLUMN public.hr_employee.marital IS 'Marital Status';
+COMMENT ON COLUMN public.hr_employee.birthday IS 'Date of Birth';
+COMMENT ON COLUMN public.hr_employee.ssnid IS 'SSN No';
+COMMENT ON COLUMN public.hr_employee.sinid IS 'SIN No';
+COMMENT ON COLUMN public.hr_employee.identification_id IS 'Identification No';
+COMMENT ON COLUMN public.hr_employee.passport_id IS 'Passport No';
+COMMENT ON COLUMN public.hr_employee.bank_account_id IS 'Bank Account Number';
+COMMENT ON COLUMN public.hr_employee.permit_no IS 'Work Permit No';
+COMMENT ON COLUMN public.hr_employee.visa_no IS 'Visa No';
+COMMENT ON COLUMN public.hr_employee.visa_expire IS 'Visa Expire Date';
+COMMENT ON COLUMN public.hr_employee.address_id IS 'Work Address';
+COMMENT ON COLUMN public.hr_employee.work_phone IS 'Work Phone';
+COMMENT ON COLUMN public.hr_employee.mobile_phone IS 'Work Mobile';
+COMMENT ON COLUMN public.hr_employee.work_email IS 'Work Email';
+COMMENT ON COLUMN public.hr_employee.work_location IS 'Work Location';
+COMMENT ON COLUMN public.hr_employee.job_id IS 'Job Position';
+COMMENT ON COLUMN public.hr_employee.department_id IS 'Department';
+COMMENT ON COLUMN public.hr_employee.parent_id IS 'Manager';
+COMMENT ON COLUMN public.hr_employee.coach_id IS 'Coach';
+COMMENT ON COLUMN public.hr_employee.notes IS 'Notes';
+COMMENT ON COLUMN public.hr_employee.color IS 'Color Index';
+COMMENT ON COLUMN public.hr_employee.resource_id IS 'Resource';
+COMMENT ON COLUMN public.hr_employee.message_last_post IS 'Last Message Date';
+COMMENT ON COLUMN public.hr_employee.company_id IS 'Company';
+COMMENT ON COLUMN public.hr_employee.create_uid IS 'Created by';
+COMMENT ON COLUMN public.hr_employee.create_date IS 'Created on';
+COMMENT ON COLUMN public.hr_employee.write_uid IS 'Last Updated by';
+COMMENT ON COLUMN public.hr_employee.write_date IS 'Last Updated on';
+COMMENT ON COLUMN public.hr_employee.manager IS 'Is a Manager';
+COMMENT ON COLUMN public.hr_employee.medic_exam IS 'Medical Examination Date';
+COMMENT ON COLUMN public.hr_employee.place_of_birth IS 'Place of Birth';
+COMMENT ON COLUMN public.hr_employee.children IS 'Number of Children';
+COMMENT ON COLUMN public.hr_employee.vehicle IS 'Company Vehicle';
+COMMENT ON COLUMN public.hr_employee.vehicle_distance IS 'Home-Work Dist.';
+COMMENT ON COLUMN public.hr_employee.public_info IS 'Public Info';
+COMMENT ON COLUMN public.hr_employee.we

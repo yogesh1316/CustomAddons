@@ -1,0 +1,71 @@
+{
+    "billLists": [
+        {
+            "actualFromStateCode": 27,
+            "actualtoStateCode": 27,
+            "cessValue": 0.0,
+            "cgstValue": 17064.72,
+            "docDate": "26/12/2018",
+            "docNo": "12/029/18-19",
+            "docType": "INV",
+            "fromAddr1": "401-403, 4th Floor, Yash Elina, Above Nagpur Nagari Sahakari Bank, ",
+            "fromAddr2": "Behind Maruti Mandir, Off Karve Road",
+            "fromGstin": "27AALCS3803R1ZP",
+            "fromPincode": 411038,
+            "fromPlace": "Pune",
+            "fromStateCode": 27,
+            "fromTrdName": "Sunfire Technologies Pvt. Ltd.",
+            "igstValue": 0,
+            "itemList": [
+                {
+                    "cessRate": 0,
+                    "cgstRate": 9.0,
+                    "hsnCode": 8471,
+                    "igstRate": 0.0,
+                    "itemNo": 1,
+                    "productDesc": "Intel Core i7-8850H, Six Core 2.60GHz,\n4.30GHz Turbo, 9MB 45W, w/Intel HD GFX , Intel Core i7-8850H (Six Core 2.60GHz, 4.30GHz Turbo, 9MB 45W)\n17.3\" HD+ TN 1600x900 AG, 42% color \n17.3\" FHD/HD, Non-Touch, No Mic Bezel 1 17.3\" FHD/HD, WLAN/WWAN \n64.0GB, 4x16GB, DDR4-2666MHz SDRAM, 4\nDIMMS, Non-ECC\n2.5\" 1TB 7200RPM SATA Hard Drive 1\nNo Additional Hard Drive 3\nResource Media not Included 1\nE5 C13 Power Cord 1M for India 1\nE5 240W 7.4mm Lot 6 PCR, Liteon 1\n4-cell 64Wh Lithium Ion battery with\n7mm Hard Drive Bracket for 7mm Hard Drive 1\nInternal US/International Qwerty 106-keys Non-backlit Keyboard\nWindows 10 Pro (64bit) English 1\nNo OS Media Kit 1\nOffice 2013 Trial 1\nMicrosoft Office 30 Day Trial - Excludes Office License\nNo Installation Service Required 1\nNo RAID 1\n3Yr Technical Support 1\nNo FGA 1\nLimited Warranty:Yr1-3 (Labor) 1\nLimited Warranty:Yr1-3 (Parts) 1\n3Yr Onsite Service 1\nNBD Onsite Labor Service only support limited OCSR parts replacement\n",
+                    "productName": "Mobile Precision 7730 CTO BASE",
+                    "qtyUnit": "NOS",
+                    "quantity": 1.0,
+                    "sgstRate": 9.0,
+                    "taxableAmount": 33681.96
+                },
+                {
+                    "cessRate": 0,
+                    "cgstRate": 9.0,
+                    "hsnCode": 4202,
+                    "igstRate": 0.0,
+                    "itemNo": 2,
+                    "productDesc": "Kit - Dell Professional Backpack 17 - S&P",
+                    "productName": "Backpack",
+                    "qtyUnit": "NOS",
+                    "quantity": 1.0,
+                    "sgstRate": 9.0,
+                    "taxableAmount": 447.48
+                }
+            ],
+            "sgstValue": 17064.72,
+            "subSupplyType": 1,
+            "supplyType": "O",
+            "toAddr1": "Tata Capital Financial Services Limited",
+            "toAddr2": "",
+            "toGstin": "27AAFCS3924D1ZI",
+            "toPincode": 400013,
+            "toPlace": "",
+            "toStateCode": 27,
+            "toTrdName": "False",
+            "totInvValue": 223737.44,
+            "totalValue": 189608.0,
+            "transDistance": 50,
+            "transDocDate": "26/12/2018",
+            "transDocNo": "12345",
+            "transMode": 1,
+            "transporterId": "27AALCS3803R1ZP",
+            "transporterName": "Ulhas Bidkar",
+            "userGstin": "27AALCS3803R1ZP",
+            "vehicleNo": "",
+            "vehicleType": ""
+        }
+    ],
+    "version": "1.0.0618"
+}

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- model.name inherit form view -->
+    <record id="account_inovice_form_inherite" model="ir.ui.view">
+        <field name="name">account.invoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <!-- ADD HAN_CODE Invoice line order  29/06/18--> 
+            <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after" groups="base.group_user">
+                <field name="l10n_in_hsn_code" style="min-width: 92px;" />
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='product_id']" position="replace">
+                <field name="product_id" domain="[('sale_ok','=',True)]" readonly="1"/>
+            </xpath> 
+            <!-- Add button for send invoice entry to tally 20/07/18 -->
+            <xpath expr="//button[@name='action_invoice_draft']" position="after">               
+                <button name="send_tally" type="object" string="Send to tally" attrs="{'invisible':[('state', 'not in', ('open','paid'))]}" groups="account.group_account_invoice"/>               
+            </xpath>  
+            <xpath expr="//page[@name='other_info']" position="after">
+                <page string="E-Way Bill Details">
+                    <group string="Transportation Details">
+                        <group name="invoice_person">
+                            <field name='transmode' string="Transport Mode" />
+                            <field name='vehicletype' string="Vehicle Type" attrs="{'required': ['|',('transmode','in',('1'))]}" />
+                            <field name='vehicleno' attrs="{'required': ['|',('transmode','in',('1'))]}" />  
+                            <field name='transdistance' />                             
+                        </group>
+                        <group>
+                            <field name='transportername' />
+                            <field name='transporterid' attrs="{'required': ['|',('transmode','in',('1'))]}" /> 
+                            <field name='transdocno' attrs="{'required': ['|',('transmode','in',('2','3','4'))]}"/>
+                            <field name='transdocdate' attrs="{'required': ['|',('transmode','in',('2','3','4'))]}"/>                                                                          
+                        </group>
+                    </group>            
+                </page>
+                <page string="Upload Documents">
+                    <field name="upload_lines" mode="tree">
+                        <!-- attrs="{'readonly': [('state', 'in', ('done'))]}" -->
+                        <tree string="Upload documents" editable="bottom" delete="false">
+                            <field name="invoice_order_id" invisible='1'/>
+                            <field string="Type" name="type" />
+                            <field string="File" name="upload_file" widget="binary" filename="filename" />
+                            <field name="filename" invisible="1" />
+                            <field string="Verbal Communication" name="verbal" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field> 
+    </record> 
+    <!-- account_invoice inherit tree view -->
+    <record id="account_invoice_tree_inherit" model="ir.ui.view">
+        <field name="name">account_invoice.inherit.view.tree</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_tree"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="/tree" position="replace">
+                <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" string="Invoice">
+                    <field name="partner_id" groups="base.group_user" string="Customer"/>
+                    <field name="date_invoice"/>
+                    <field name="number"/>
+                    <field name="commercial_partner_id" invisible="1"/>
+                    <field name="reference" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                    <field name="user_id"/>
+                    <field name="date_due"/>
+                    <field name="origin" invisible="1"/>
+                    <field name="opf_origin"/>
+                    <field name="amount_total_signed" string="Total" sum="Total"/>
+                    <field name="residual_signed" string="Amount Due" sum="Amount Due"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_currency_id" invisible="1"/>
+                    <field name="state"/>
+                    <field name="type" invisible="context.get('type',True)"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+</odoo>

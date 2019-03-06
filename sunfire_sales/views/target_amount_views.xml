@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!--  ================================Target Master Start======================================================== -->
+# create_by      | create_date | update_by | update_date
+# Pradip Yenpure 5,Nov,2018    Pradip Yenpure 12,Nov,2018             
+# Info : In this master model,Target amount calculate by Month wise  
+	<record id="defining_target_form_view" model="ir.ui.view">
+		<field name="name">Target Master</field>
+		<field name="model">target.master</field>
+		<field name="arch" type="xml">
+			<form string="Defining Target">
+				<sheet>
+					<group>
+						<group>
+							<field name="users_name" style="width:55%%" options="{'no_create': True,'no_edit': True}" widget="selection"/>
+							<field name="type" style="width:30%%"/>
+							<field name="year" style="width:30%%"/>
+
+						</group>
+					</group>
+
+					<group col="4">
+						<group>
+							<group >
+								<field name="quarter1" string="Target for Quarter1" style="min-width: 100px;text-align:right;"/>
+								<field name="monthly_target_quarter1" string=" Monthly Target for Quarter1 " style="min-width: 100px;text-align:right;" />
+							</group>
+						</group>
+						<group>
+
+							<group>
+								<field name="quarter2" string="Target for Quarter2" style="min-width: 100px;text-align:right;"/>
+								<field name="monthly_target_quarter2" string=" Monthly Target for Quarter2" style="min-width: 100px;text-align:right;"/>
+							</group>
+						</group>
+						<group>
+							<group>
+								<field name="quarter3" string="Target for Quarter3" style="min-width: 100px;text-align:right;"/>
+								<field name="monthly_target_quarter3" string=" Monthly Target for Quarter3" style="min-width: 100px;text-align:right;"/>
+							</group>
+						</group>
+
+						<group>
+							<group>
+								<field name="quarter4" string="Target for Quarter4" style="min-width: 100px;text-align:right;"/>
+								<field name="monthly_target_quarter4" string=" Monthly Target for Quarter4" style="min-width: 100px;text-align:right;"/>
+							</group>
+						</group>
+					</group>
+				</sheet>
+				<!--Chatter Box Added After Form View 
+			<xpath expr="//field[@name='message_follower_ids']" position="after"> 
+    					<field name="message_ids" widget="mail_thread"/>
+								</xpath>-->
+				<div class="oe_chatter">
+					<field name="message_follower_ids" widget="mail_followers"/>
+					<field name="activity_ids" widget="mail_activity"/>
+					<field name="message_ids" widget="mail_thread"/>
+				</div>
+			</form>
+		</field>
+	</record>
+
+	<record id="defining_target_tree_view" model="ir.ui.view">
+		<field name="name">Target Master</field>
+		<field name="model">target.master</field>
+		<field name="arch" type="xml">
+			<tree string="Defining Target">
+
+				<field name="users_name"/>
+				<field name="type"/>
+				<field name="year"/>
+
+
+				<field name="quarter1" string="Target Quarter1"/>
+				<field name="quarter2" string="Target Quarter2"/>
+				<field name="quarter3" string="Target Quarter3"/>
+				<field name="quarter4" string="Target Quarter4"/>
+
+				<field name="monthly_target_quarter1" />
+				<field name="monthly_target_quarter2"/>
+				<field name="monthly_target_quarter3"/>
+				<field name="monthly_target_quarter4"/>
+
+			</tree>
+		</field>
+	</record>
+
+	<record id="defining_target_actions" model="ir.actions.act_window">
+		<field name="name">Target Master</field>
+		<field name="res_model">target.master</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+
+
+
+	<menuitem id="defining_target_amount" action="defining_target_actions" name="Target Master" parent="sale.sale_menu_root"/>
+	<!--  ================================Target Master End======================================================== -->
+
+</odoo>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<record id="sale_order_canceled_opf_tree" model="ir.ui.view">
+    <field name="name">Cancelled OPFs</field>
+    <field name="model">sale.order</field>
+    <field name="arch" type="xml">
+        <tree string="Cancelled OPFs">
+            <field name="confirmation_date_new" string="OPF Date"/>
+            <field name="user_id"/>
+            <field name="partner_id"/>
+            <field name="opf_name" string="OPF Number"/>
+            <field name="cancel_opf_desc" string="OPF Cancellation Description"/>
+            <field name="oem" string="Vendor"/>
+            <field name="lob"/>
+            <field name="amount_total_new" sum="Total Tax Included" />
+            <field name="currency_id" />
+            <field name="invoice_status" invisible="1"/>
+            <field name="state" invisible="1"/>
+            <field name="write_date_new"/>
+        </tree>
+    </field>
+</record>
+<!-- sale_order Quotation inherit tree view -->
+<record id="view_quitation_tree_inhe" model="ir.ui.view">
+    <field name="name">sale.order.inherit.quotationview.tree</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_quotation_tree"/>
+    <field name="arch" type="xml">
+        <xpath expr="/tree" position="replace">
+            <tree string="Quotation" default_order="date_order desc" create="false" decoration-bf="message_needaction==True">
+                <field name="message_needaction" invisible="1"/>
+                <field name="name" string="Quotation No."/>
+                <field name="date_order_new" string="Quotation Date"/>
+                <field name="user_id" string="Sales Person"/>
+                <field name="partner_id" class="o_sale_order_new" string="Customer Name"/>
+                <field name="opportunity_id" string="Opportunity Name"/>
+                <field name="oem" string="Vendor" />
+                <field name="lob" string="LOB"/>
+                <field name="opportunity_stages" string="Opportunity Stage"/>
+                <field name="sales_stages" string="Sales Stage"/>
+                <field name="deal"/>
+                <field name="priority"/>
+                <field name="amount_untaxed" string="Top Line"/>
+                <field name="margin" string="Bottom Line"/>
+                <field name="currency_id" string="Currency"/>
+                <field name="mnth_yr" string="Expected Closure (Mth and Yr)"/>
+                <field name="vertical" invisible="1"/>
+                <field name="amount_total_new" sum="Total Tax Included" invisible="1" />
+                <field name="sale_yr" invisible="1"/>
+                <field name="financial_yr" invisible="1"/>
+                <field name="state" invisible="1"/>
+                <field name="date_order" invisible="1"/>
+            </tree>
+        </xpath>
+    </field>
+</record>
+
+<record id="view_order_tree_inhe" model="ir.ui.view">
+    <field name="name">sale.order.inherit.orderview.tree</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_tree"/>
+    <field name="arch" type="xml">
+        <xpath expr="/tree" position="replace">
+            <tree string="OPF" default_order="confirmation_date desc" create="false" decoration-warning="approve_flag==False" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'">
+                <field name="message_needaction" invisible="1"/>
+                <field name="opf_name" string="OPF No."/>
+                <field name="confirmation_date_new" string="OPF Date"/>
+                <field name="user_id" string="Sales Person"/>
+                <field name="partner_id" string="Customer Name"/>
+                <field name="vertical" invisible="1"/>
+                <field name="oem" string="Vendor"/>
+                <field name="lob" string="LOB"/>
+                <field name="bu_head"/>
+                <field name="amount_untaxed" string="Top Line"/>
+                <field name="margin" string="Bottom Line"/>
+                <field name="currency_id" string="Currency"/>
+                <field name="new_status" string="OPF Status"/>
+                <field name="confirmation_date" invisible="1"/>
+                <field name="amount_total_new" sum="Total Tax Included" invisible="1"/>
+                <field name="invoice_status" invisible="1"/>
+                <field name="state" invisible="1"/>
+                <field name="sale_yr" invisible="1"/>
+                <field name="financial_yr" invisible="1"/>
+                <field name="approve_flag" invisible="1"/>
+            </tree>
+        </xpath>
+    </field>
+</record>
+<!-- Validate OPF Tree -->
+<record id="validate_opf_tree_view" model="ir.ui.view">
+    <field name="name">validate_opf.view.tree</field>
+    <field name="model">sale.order</field>
+    <field name="arch" type="xml">
+        <tree string="Validate OPF" default_order="confirmation_date desc" create="false" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'">
+            <field name="message_needaction" invisible="1"/>
+            <field name="opf_name" string="OPF No."/>
+            <field name="user_id" string="Sales Person"/>
+            <field name="partner_id" string="Customer Name"/>
+            <field name="oem" string="Vendor"/>
+            <field name="lob" string="LOB"/>
+            <field name="bu_head" string="BU Head"/>
+            <field name="amount_untaxed" string="Top Line"/>
+            <field name="amount_stp" string="Purchase Amount"/>
+            <field name="margin" string="Bottom Line"/>
+            <field name="currency_id" string="Currency"/>
+            <field name="new_status" string="OPF Status"/>
+            <field name="confirmation_date_new" string="OPF Date" invisible="1"/>
+            <field name="vertical" invisible="1"/>
+            <field name="state" invisible="1"/>
+            <field name="confirmation_date" invisible="1"/>
+            <field name="approve_flag" invisible="1"/>
+
+        </tree>
+    </field>
+</record>
+<!-- OPF#/Date/SAM/Customer Name/Sales Revenue/purchase revenue/bottomline -->
+<record id="aprove_opf_tree_view" model="ir.ui.view">
+    <field name="name">approve_opf.view.tree</field>
+    <field name="model">sale.order</field>
+    <field name="arch" type="xml">
+        <tree string="OPF" default_order="confirmation_date desc" create="false" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'">
+            <field name="message_needaction" invisible="1"/>
+            <field name="opf_name" string="OPF No."/>
+            <field name="user_id" string="Sales Person"/>
+            <field name="partner_id" string="Customer Name"/>
+            <field name="oem" string="Vendor"/>
+            <field name="lob" string="LOB"/>
+            <field name="bu_head" string="BU Head"/>
+            <field name="amount_untaxed" string="Top Line"/>
+            <field name="amount_stp" string="Purchase Amount"/>
+            <field name="margin" string="Bottom Line"/>
+            <field name="currency_id" string="Currency"/>
+            <field name="new_status" string="Status"/>
+            <field name="confirmation_date_new" string="OPF Date" invisible="1"/>
+            <field name="vertical" invisible="1"/>
+            <field name="state" invisible="1"/>
+            <field name="confirmation_date" invisible="1"/>
+            <field name="approve_flag" invisible="1"/>
+        </tree>
+    </field>
+    </record>
+</odoo>

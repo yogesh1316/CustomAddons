@@ -1,0 +1,58 @@
+{
+    "billLists": [
+        {
+            "actualFromStateCode": 27,
+            "actualtoStateCode": 27,
+            "cessValue": 0.0,
+            "cgstValue": 22450.32,
+            "docDate": "03/01/2019",
+            "docNo": "01/008/18-19",
+            "docType": "INV",
+            "fromAddr1": "401-403, 4th Floor, Yash Elina, Above Nagpur Nagari Sahakari Bank, ",
+            "fromAddr2": "Behind Maruti Mandir, Off Karve Road",
+            "fromGstin": "27AALCS3803R1ZP",
+            "fromPincode": 411038,
+            "fromPlace": "Pune",
+            "fromStateCode": 27,
+            "fromTrdName": "Sunfire Technologies Pvt. Ltd.",
+            "igstValue": 0,
+            "itemList": [
+                {
+                    "cessRate": 0,
+                    "cgstRate": 9.0,
+                    "hsnCode": 998313,
+                    "igstRate": 0.0,
+                    "itemNo": 1,
+                    "productDesc": "Production Support Coverage\nVMware vSphere 6 Enterprise\nPlus for 1 processor\nInstance ID - 155301820\nDuration - From 01-JAN-19 To 31-DEC-19",
+                    "productName": "VS6-EPL-P-SSS-C ",
+                    "qtyUnit": "NOS",
+                    "quantity": 4.0,
+                    "sgstRate": 9.0,
+                    "taxableAmount": 44900.64
+                }
+            ],
+            "sgstValue": 22450.32,
+            "subSupplyType": 1,
+            "supplyType": "O",
+            "toAddr1": "A Business Unit of Emerson Electric Co. (India) Pvt. Ltd. Emerson Tower, ",
+            "toAddr2": "",
+            "toGstin": "27AAACE1260B2ZB",
+            "toPincode": 411005,
+            "toPlace": "",
+            "toStateCode": 27,
+            "toTrdName": "Emerson Export Engineering Centre",
+            "totInvValue": 294348.64,
+            "totalValue": 249448.0,
+            "transDistance": 0,
+            "transDocDate": "",
+            "transDocNo": "False",
+            "transMode": 0,
+            "transporterId": "False",
+            "transporterName": "False",
+            "userGstin": "27AALCS3803R1ZP",
+            "vehicleNo": "",
+            "vehicleType": ""
+        }
+    ],
+    "version": "1.0.0618"
+}

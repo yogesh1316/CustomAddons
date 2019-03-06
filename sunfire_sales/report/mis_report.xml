@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- mis report tree view -->
+    <record id="mis_report_view_tree" model="ir.ui.view">
+        <field name="name">mis_report.view.tree</field>
+        <field name="model">mis.report</field>
+        <field name="arch" type="xml">
+        
+
+            <tree default_order='inv_date desc'>
+                <field name="id_user" string="Sales Person"/>
+                <field name="cust_name" string="Customer Name"/>
+                <field name="opf_name" string="OPF No."/>
+                <field name="pricelist" string="Currency"/>
+                <field name="top_line_in" string="Topline In"/>
+                <field name="purchase_val_stp" string="Purchase Amount"/>
+                <field name="purchase_nego" string="Purchase Value Negotiated"/>
+                <field name="btm_line_in" string="Bottom Line"/>
+                <field name="act_btm_line_margin_in" string="Actual Bottom Line In"/>
+                <field name='product_catagory' string="Vendor"/>
+                <field name="lineob" string="Line of Business (LOB)"/>
+                <field name="bu_head" string="BU Head"/>
+                <field name="stata" string="Sales In/Out"/>
+                <field name="cust_type" string="Customer Type"/>
+                <field name="deal_type" string="Deal Type"/>
+                <field name="location" string="Location"/>
+                <field name="inv_no" string="Invoice No."/>
+                <field name="inv_date" string="Invoice Date"/>
+                <field name="sale_yr" string="SY"/>
+                <field name="fin_yr" string="FY"/>
+                <field name="invoice_quater" string="Quarter"/>
+                <field name="out_mnth" string="Month"/>
+                <field name="vertical" string="Vertical"/>
+                <field name="quat" invisible="1"/>
+                <field name="in_mnth" invisible="1"/>
+                <field name="top_line_out" invisible="1"/>
+                <field name="btm_line_out" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <!-- mis.report search view -->
+    <record id="mis_report_view_search" model="ir.ui.view">
+        <field name="name">mis.report.view.search</field>
+        <field name="model">mis.report</field>
+        <field name="arch" type="xml">
+            <search string="Search Description">
+                <field name="id_user"/>
+                <field name="quat"/>
+                <field name="in_mnth"/>
+                <field name="opf_name"/>
+                <field name="cust_name"/>
+                <field name="stata"/>
+                <field name="invoice_quater"/>
+                <field name="inv_no"/>
+                <field name="inv_date"/>
+                <field name="out_mnth"/>
+                <field name="pricelist"/>
+                <field name="top_line_out"/>
+                <field name="btm_line_out"/>
+                <field name="fin_yr"/>
+                <field name="sale_yr"/>
+                <field name="cust_type"/>
+                <field name="location"/>
+                <field name="top_line_in"/>
+                <field name="purchase_val_stp"/>
+                <field name="purchase_nego"/>
+                <field name="btm_line_in"/>
+                <field name="act_btm_line_margin_in"/>
+                <field name='product_catagory'/>
+                <field name="lineob"/>
+                <field name="bu_head"/>
+                <field name="deal_type"/>
+                <field name="vertical"/>
+            </search>
+        </field>
+    </record>
+    <record id="mis_report_action" model="ir.actions.act_window">
+        <field name="name">MIS Report</field>
+        <field name="res_model">mis.report</field>
+        <field name="view_mode">tree,pivot,graph</field>
+        <field name="search_view_id" ref="mis_report_view_search"/>
+        <field name="view_ids" eval="[(5, 0, 0), 
+        (0, 0, {'view_mode': 'tree','view_id': ref('mis_report_view_tree')})]"/>
+    </record>
+    <menuitem id="mis_report_tree_submenu" action="mis_report_action" name="MIS report" sequence='7' parent="sale.menu_sale_report" />
+</odoo>                                                                                                                                                 
