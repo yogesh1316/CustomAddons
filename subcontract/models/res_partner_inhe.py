@@ -11,6 +11,5 @@ class Partner(models.Model):
     _inherit = "res.partner"
 
 
-    subcontract = fields.Boolean(string='Is a Subcontract',
-                               help="Check this box if this contact is a Subcontractor")
+    #subcontract = fields.Boolean(string='Is a Subcontract', help="Check this box if this contact is a Subcontractor")
     
