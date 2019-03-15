@@ -19,14 +19,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','mrp','stock'],
+    'depends': ['base','mrp','stock','Pce_Master'],
 
     # always loaded
     'data': [
         'views/mrp_rounting_inhe.xml',
         'views/mrp_production_view.xml',
         'views/mrp_workorder_view_inhe.xml',
+        'views/mtn_view.xml',
         'report/mrp_pro_document_print.xml',
         'report/report_menu.xml',
+        
     ],   
 }
