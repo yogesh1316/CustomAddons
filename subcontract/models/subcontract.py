@@ -53,7 +53,7 @@ class MrpProduction(models.Model):
     def _compute_subcontractvendor(self):        
         con=[]
         res_partner_obj = self.env['res.partner']
-        ids=res_partner_obj.search([('property_stock_supplier.id','=',22)])
+        ids=res_partner_obj.search([('property_stock_supplier.id','=',18)])      #22
         for i in ids:
             con.append(i.id)       
         return [('id','in',con)]
@@ -177,16 +177,16 @@ class Picking(models.Model):
     @api.multi
     def button_validate(self):
         self.mrp_validation()        
-        if self.picking_type_code in ('outgoing', 'internal'):
-            for ml in self.move_lines:
-                sq = self.env['stock.quant'].search([('product_id', '=', ml.product_id.id), ('location_id', '=', self.location_id.id)])
-                print('sq',sq,ml.product_id.id,self.location_id.id)
-                if sq.id == False:
-                    raise UserError(_('There is no stock available for the product ( ' + (ml.product_id.default_code or '') + ' ' + (ml.product_id.name) + ' ) in the stock location. Kindly add the required stock.'))
-                else:
-                    for i in sq:                        
-                        if ml.quantity_done > i.quantity:
-                            raise UserError(_('You cannot validate this stock operation because the stock level of the product ( ' + (ml.product_id.default_code or '') + ' ' + (ml.product_id.name) + ' ) would become negative on the stock location and negative stock is not allowed for this product.'))
+        # if self.picking_type_code in ('outgoing', 'internal'):
+        #     for ml in self.move_lines:
+        #         sq = self.env['stock.quant'].search([('product_id', '=', ml.product_id.id), ('location_id', '=', self.location_id.id)])
+        #         print('sq',sq,ml.product_id.id,self.location_id.id)
+        #         if sq.id == False:
+        #             raise UserError(_('There is no stock available for the product ( ' + (ml.product_id.default_code or '') + ' ' + (ml.product_id.name) + ' ) in the stock location. Kindly add the required stock.'))
+        #         else:
+        #             for i in sq:                        
+        #                 if ml.quantity_done > i.quantity:
+        #                     raise UserError(_('You cannot validate this stock operation because the stock level of the product ( ' + (ml.product_id.default_code or '') + ' ' + (ml.product_id.name) + ' ) would become negative on the stock location and negative stock is not allowed for this product.'))
         res = super(Picking, self).button_validate()
         return res
  
@@ -227,6 +227,8 @@ class Picking(models.Model):
     def DC_close(self):
         print('------',self.dc_number)
         mrp_workorder_obj = self.env['mrp.workorder'] 
+        wo_data = {}
+        workorder_pdir_generate_obj = self.env['workorder.pdir.generate']
         if self.dc_number:      
             data = self.env['mrp.product.produce'].search([('production_id','=',self.purchase_id.mrp_id.id)])
             mrp_work_data = mrp_workorder_obj.search([('production_id','=',self.purchase_id.mrp_id.id),('subcontract_operation','=','t'),('state','!=','done')])
@@ -238,8 +240,20 @@ class Picking(models.Model):
                 initial_qty =self.purchase_id.order_line.product_qty
                 if initial_qty == done_qty:                    
                     for woline in mrp_work_data:
+                        if not woline.next_work_order_id:    
+                            woline.production_id.write({'produced_qty': 0})
+
                         woline.write({'state': 'done','qty_produced': data.product_qty,'qty_producing': 0,'date_start': fields.Datetime.now(),'date_finished': fields.Datetime.now()})
                         
+                        if not woline.next_work_order_id:                                
+                            wo_data ={'production_id':woline.production_id.id,
+                                    'product_id': woline.product_id.id,
+                                    'qty_produced':data.product_qty, #if line.product_id.description_sale else 'NA',
+                                    'workorder_id': woline.id,
+                                    }
+                            
+                            ids = workorder_pdir_generate_obj.create(wo_data)
+
                     self.dc_number.button_validate()   
 
             elif self.purchase_id.mrp_id.subcontract_parentchildprod  =='2':
@@ -249,7 +263,19 @@ class Picking(models.Model):
                         if dline.product_id == line.product_id:
                             if dline.quantity_done == curr_qty_done:
                                 for woline in mrp_work_data:
+                                    if not woline.next_work_order_id:    
+                                        woline.production_id.write({'produced_qty': 0})
+
                                     woline.write({'state': 'done','qty_produced': data.product_qty,'qty_producing': 0,'date_start': fields.Datetime.now(),'date_finished': fields.Datetime.now()})
+                                    if not woline.next_work_order_id:                
+                                        wo_data ={'production_id':woline.production_id.id,
+                                                'product_id': woline.product_id.id,
+                                                'qty_produced':data.product_qty, #if line.product_id.description_sale else 'NA',
+                                                'workorder_id': woline.id,
+                                                }
+                            
+                                        ids = workorder_pdir_generate_obj.create(wo_data)
+
                                 self.dc_number.button_validate()        
 
             elif self.purchase_id.mrp_id.subcontract_parentchildprod  =='3':
@@ -270,7 +296,18 @@ class Picking(models.Model):
                 print('dcount,mcount',dcount,mcount)
                 if dcount == mcount:      
                     for woline in mrp_work_data:
+                        if not woline.next_work_order_id:    
+                            woline.production_id.write({'produced_qty': 0})
+                            
                         woline.write({'state': 'done','qty_produced': data.product_qty,'qty_producing': 0,'date_start': fields.Datetime.now(),'date_finished': fields.Datetime.now()})
+                        if not woline.next_work_order_id:                
+                            wo_data ={'production_id':woline.production_id.id,
+                                    'product_id': woline.product_id.id,
+                                    'qty_produced':data.product_qty, #if line.product_id.description_sale else 'NA',
+                                    'workorder_id': woline.id,
+                                    }
+                            
+                            ids = workorder_pdir_generate_obj.create(wo_data)
 
                     print('in, close DC')
                     #self.dc_number.button_validate()

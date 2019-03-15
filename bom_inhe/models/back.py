@@ -220,3 +220,7 @@ class PDIR_generate(models.Model):
         'mrp.workorder', 'work Order',
         index=True, ondelete='cascade', required=True,store=True)
      
+
+
+
+    #last_bank_stmt = self.env['account.bank.statement'].search([('journal_id', 'in', self.ids),('date', '<=', last_month.strftime(DF))], order="date desc, id desc", limit=1)

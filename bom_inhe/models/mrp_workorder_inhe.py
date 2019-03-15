@@ -16,13 +16,8 @@ class MrpWorkorder(models.Model):
     _inherit = 'mrp.workorder'
     _description = 'Manufacturing Workorder inherite For calculate planned date and finished date on Cumulative time'
 
-
-    # pdir_ids = fields.Many2one('workorder.pdir.generate')
-
     workorder_ids = fields.One2many('workorder.pdir.generate', 'workorder_id', string='line ids')
-    # workorder_ids
-
-
+   
     @api.constrains('qty_produced')
     def complete_qty(self):
         #print('self.qty_produced',self.qty_produced)
@@ -38,8 +33,7 @@ class MrpWorkorder(models.Model):
     def generate_pdir(self):
         
         view_id=self.env.ref('bom_inhe.workorder_generate_pdir_form_view').id
-        ctx=dict(self.env.context)
-        #print('ctx',ctx)
+        ctx=dict(self.env.context)        
         return {
             'name': _('PDIR generate'),
             'type': 'ir.actions.act_window',
@@ -53,7 +47,7 @@ class MrpWorkorder(models.Model):
 
         }
 
-    # Code inherite  Comment code for child item at the time of Mark_as_done button click  30/11/2018
+    # Code inherite, Comment code for child item at the time of Mark_as_done button click  30/11/2018
 
     @api.multi
     def record_production(self):
@@ -83,16 +77,16 @@ class MrpWorkorder(models.Model):
 
         wo_data = {}
         workorder_pdir_generate_obj = self.env['workorder.pdir.generate']
+
         if not self.next_work_order_id:                
             wo_data ={'production_id':self.production_id.id,
                     'product_id': self.production_id.product_id.id,
                     'qty_produced':self.qty_producing, #if line.product_id.description_sale else 'NA',
                     'workorder_id': self.ids[0],
                     }
-            #print('id---------',wo_data)
+            
             ids = workorder_pdir_generate_obj.create(wo_data)
-        #print('id',ids)
-        
+                
         # Transfer quantities from temporary to final move lots or make them final
         for move_line in self.move_line_ids:
             #print('workorder active_move_line_ids',move_line)
@@ -104,7 +98,7 @@ class MrpWorkorder(models.Model):
                 raise UserError(_('You should provide a lot/serial number for a component'))
             # Search other move_line where it could be added:
             lots = self.move_line_ids.filtered(lambda x: (x.lot_id.id == move_line.lot_id.id) and (not x.lot_produced_id) and (not x.done_move) and (x.product_id == move_line.product_id))
-            #print('workorder lots',lots)
+            
             if lots:
                 lots[0].qty_done += move_line.qty_done
                 lots[0].lot_produced_id = self.final_lot_id.id
@@ -127,6 +121,12 @@ class MrpWorkorder(models.Model):
         # If last work order, then post lots used
         # TODO: should be same as checking if for every workorder something has been done?
         if not self.next_work_order_id:
+
+            # Update : When last operation is done then previous all operation get done if it is not done 28/02/2019
+            mrp_work_data = self.search([('production_id','=',self.production_id.id),('state','!=','done'),('next_work_order_id','!=',False)])
+            for woline in mrp_work_data:
+                woline.write({'state': 'done','qty_produced': self.qty_producing,'qty_producing': 0,'date_start': fields.Datetime.now(),'date_finished': fields.Datetime.now()})
+
             production_move = self.production_id.move_finished_ids.filtered(
                                 lambda x: (x.product_id.id == self.production_id.product_id.id) and (x.state not in ('done', 'cancel')))
             if production_move.product_id.tracking != 'none':
@@ -184,25 +184,6 @@ class MrpWorkorder(models.Model):
         if float_compare(self.qty_produced, self.production_id.product_qty, precision_rounding=rounding) >= 0:
             self.button_finish()
         return True
-
-
-    #Pradit code file save in folder location
-    # @api.onchange('attach_docs12')
-    # def file_upload(self):
-    #     if self.attach_docs12:             
-    #         dirpath='/home/sai/Documents'
-    #         a=os.chdir(dirpath)             
-    #         path=os.getcwd()
-    #         print("path=============",path)
-    #         data = base64.b64decode(self.attach_docs12)
-    #         with open(self.filename, 'wb') as file:
-    #             file.write(data)
-    #             self.attach_docs12=path+'/'+self.filename
-    #             print("45555555",self.attach_docs12)
-    #             self.attach_docs12=path+'/'+self.filename
-    #             pathfile=path+'/'+self.filename
-    #             print("pathfile",pathfile)
-
 
 class PDIR_generate(models.Model):
     _name = "workorder.pdir.generate"

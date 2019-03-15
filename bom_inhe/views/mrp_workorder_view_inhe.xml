@@ -37,7 +37,7 @@
         <field name="name">work.order.pdir.form</field>
         <field name="model">mrp.workorder</field>
         <field name="arch" type="xml">
-            <form string="PDIR upload">
+            <form string="PDIR upload" create="0">
                 <sheet>
                     <header>
                         <field name="state" widget="statusbar" invisible="1" statusbar_visible="confirmed,progress,done"/>
