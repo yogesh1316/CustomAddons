@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- test
+# -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
 class product_move(models.Model):
