@@ -8,30 +8,39 @@ from odoo.exceptions import UserError, ValidationError
 
 class reason_master(models.Model):
     _name='reason.master'   
+    _inherit = ['mail.thread', 'mail.activity.mixin', 'portal.mixin']
+    _description='Reason Master'
     _rec_name='reason_desc'    
          
     _sql_constraints=[('Unique Reason Description','unique(unique_reason_desc)','Please Enter Unique Reason Description.')]
-    reason_desc=fields.Char('Reason Description',required=True,help="Please Enter Unique Description")
-    unique_reason_desc=fields.Char('Unique Reason Description' ,compute='reason_description_fun',store=True)
-    reason_code=fields.Char(string='Reason Code')
-    active_flag=fields.Selection([('Yes','Yes'),('No','No')],default='Yes')
+   
+    #Updated-By|Updated-Date|Info.
+    #Pradip    |12-03-2019  |all fields Added into Chatter Box
     
-# create_by | create_date |Info.
-# Pradip |17-1-19||Item Name Converted into uppercase    
-    # @api.onchange('reason_desc')
-    # def reason_desc_uppercase(self):
-    #     for i in self:
-    #         if i.reason_desc:
-    #             str_reason_desc=(i.reason_desc).upper()
-    #             i.reason_desc=str_reason_desc
+    reason_desc=fields.Char('Reason Description',required=True,track_visibility='onchange',help="Please Enter Unique Description")
+    unique_reason_desc=fields.Char('Unique Reason Description' ,compute='reason_description_fun',store=True)
+    reason_code=fields.Char(string='Reason Code',track_visibility='onchange',help='Reason Code')
+    active_flag=fields.Selection([('yes','Yes'),('no','No')],default='yes',track_visibility='onchange',help='Activate/Deactivate')
+    
+
     
     # Update : Unique Reason Description
-    # @api.depends('reason_desc')
-    # def reason_description_fun(self):
-    #     for i in self:
-    #         desc_str_data=str(i.reason_desc).lower()
-    #         i.unique_reason_desc=desc_str_data.replace(' ','')
+    @api.depends('reason_desc')
+    def reason_description_fun(self):
+        for i in self:
+            desc_str_data=str(i.reason_desc).lower()
+            text=desc_str_data.replace(' ','')
+            i.unique_reason_desc=text.strip()  #Updated-By:Pradip|Updated-Date11-03-2019|Info.Copy-Paste test case(Space remove)
             
+   #Created-By|Created-Date|Info.
+   #Pradip    |11-03-2019  |Reason Desc. (Upper Case)
+            
+    @api.onchange('reason_desc')
+    def set_upper(self):    
+        if self.reason_desc:
+            self.reason_desc = str(self.reason_desc).upper()   
+        return
+    
 # create_by | create_date |Info.
 # Pradip |28-1-19|| Unique and Require when Create Method Call and Auto Sequence Created   
 
