@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "product_move",
+    'name': "bom_status",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,14 +20,15 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','stock','product'],
+    'depends': ['base','mrp','product'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/product_move.xml',
-        'views/move_tree.xml',
-      
+         'wizard/bom_confirm_view.xml',
+
+        'views/mrp_bom_status_views.xml',
+        'views/confirm_bom_process.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

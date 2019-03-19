@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- model.name form view -->
+        <record id="category_attribute_view_form" model="ir.ui.view">
+            <field name="name">category attribute view form</field>
+            <field name="model">category.attribute</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <!-- Add your fields here -->
+                            <field name="attribute"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- primary|extension Inherited .:Form:. view for "model" -->
+        <record id="category_attribute_form_inherited" model="ir.ui.view">
+            <field name="name">category attribute form </field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="stock.product_category_form_view_inherit" />
+            <field name="arch" type="xml">
+                
+             <xpath expr="//field[@name='removal_strategy_id']" position="after">
+            
+
+             <group name="attribute" colspan="2">
+                
+                    <notebook>
+                        <page string="Attribute" mode='tree'>
+                            <field name="categories_attr">
+                                <tree editable="bottom">
+                                    <field name="attributes"/>
+                                    <field name="uom"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    </group>
+                
+              
+            </xpath>
+            
+            </field>
+        </record>
+        <!-- model.name action window -->
+        <record id="category_attribute_model_name_action" model="ir.actions.act_window">
+            <field name="name">category attribute action</field>
+            <field name="res_model">category.attribute</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="attr_menu_act" name="Attribute 
+        catagory" parent="stock.menu_product_in_config_stock" action="category_attribute_model_name_action"/>
+    </data>
+</odoo>

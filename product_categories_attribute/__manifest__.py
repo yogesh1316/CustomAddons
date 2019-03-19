@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "product_move",
+    'name': "product_categories_attribute",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,14 +20,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','stock','product'],
+    'depends': ['base','product','stock'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/product_move.xml',
-        'views/move_tree.xml',
-      
+        'views/category_attribute.xml',
+        
     ],
     # only loaded in demonstration mode
     'demo': [
