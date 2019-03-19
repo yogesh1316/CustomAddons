@@ -4,16 +4,26 @@
         <field name="name">reason.master</field>
         <field name="model">reason.master</field>
         <field name="arch" type="xml">
-            <form string="Reason Master" delete="0" duplicate="0">
-                <group string="Reason Details">
+            <form string="Reason Master" delete="1" duplicate="0">
+                <sheet>
+            	<group string="Reason Details">
                     <group name="Reason_Master">
                     	<field name="reason_code" readonly="1"/>
-                        <field name='reason_desc' />   
+						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->                    	
+                        <field name='reason_desc' style="text-transform: uppercase;"/>   
                        <!--<field name="unique_reason_desc"/>-->
 						<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->                       
                         <field name='active_flag' string="Is Active" widget='radio'/>                
                     </group>
                 </group>
+                </sheet>
+                <!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
+                 
+                  <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>

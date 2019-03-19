@@ -26,7 +26,8 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/product_move.xml',
-        'views/templates.xml',
+        'views/move_tree.xml',
+      
     ],
     # only loaded in demonstration mode
     'demo': [
