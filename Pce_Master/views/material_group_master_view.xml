@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <data>
+        <!-- 
+        # Created By | Created Date |Info.
+        # Pradip    |13-03-19 | material_group.master form_view,chatter,tree,action,menuitem_id,search_view 
+         -->
+        <record id="material_group_master_form_view" model="ir.ui.view">
+            <field name="name">Material Group Master</field>
+            <field name="model">material_group.master</field>
+            <field name="arch" type="xml">
+                <form string="Material Group Master" delete="0" duplicate="0">
+                    <sheet>
+                         <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <group>
+                            <!-- <group> -->
+                            <field name="group_description" style="text-transform: uppercase;" />
+                            <!-- <field name="unique_group_description" /> -->
+                            <!-- </group> -->
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="material_group_master_tree_view" model="ir.ui.view">
+            <field name="name">Material Group Master</field>
+            <field name="model">material_group.master</field>
+            <field name="arch" type="xml">
+                <tree string="Material Group Master" delete="0" duplicate="0">
+                    <field name="id" string="Material Group No." class="o_material_group_master" />
+                    <field name="group_description" string="Material Group Description"/>
+                    <field name="active" widget="boolean_toggle" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="material_group_master_action" model="ir.actions.act_window">
+            <field name="name">Material Group Master</field>
+            <field name="res_model">material_group.master</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="material_group_master_search" model="ir.ui.view">
+            <field name="name">material_group.master.search</field>
+            <field name="model">material_group.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Material Group Master">
+
+                     <field name="group_description"/>
+
+
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Material Group Records" />
+                    <filter name="inactive" string="Inactive" domain="[('active','=',False)]" help="Show Deactivate Material Group Records" />
+                   
+                    
+                    <group string="Group By">
+                        <filter string="Active" domain="[]" context="{'group_by':'active'}" help="Display Group By Active Material Group Records" />
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Material Group Records" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- <menuitem id="master_menu" name="Master" />   -->
+        <menuitem action="material_group_master_action" id="material_group_master_menu_id" name="Material Group Master" parent="Pce_Master.master_menu" />
+    
+    </data>
+</odoo>

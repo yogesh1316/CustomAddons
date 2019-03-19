@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+         <!-- 
+        # Created By | Created Date |Info.
+        # Pradip    |15-03-19 | material.master form_view,chatter,tree,action,menuitem_id,search_view 
+         -->
+
+        <record id="material_master_form_view" model="ir.ui.view">
+            <field name="name">material.master.form</field>
+            <field name="model">material.master</field>
+            <field name="arch" type="xml">
+                <form string="Material Master" delete="0" duplicate="0">
+                    <sheet>
+                        
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+
+                        <group>
+                            <field name="material_description" style="text-transform: uppercase;" />
+                            <!-- <field name="unique_material_description"/> -->
+                            <field name="material_group_description" options="{'no_create':True,'no_create_edit':True,'no_open':True}"/>
+                        </group>
+
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+
+
+                </form>
+            </field>
+        </record>
+        
+
+        <record id="material_master_tree_view" model="ir.ui.view">
+            <field name="name">material.master.tree</field>
+            <field name="model">material.master</field>
+            <field name="arch" type="xml">
+                <tree string="Material Master" delete="0" duplicate="0">
+                    <field name="id" string="Material No." class="o_material_master"/>
+                    <field name="material_description"/>
+                    <field name="material_group_description" string="Material Group Description"/>
+                    <field name="active" widget="boolean_toggle" />
+                </tree>
+            </field>
+        </record>
+
+       
+
+
+        
+        <record id="material_master_action" model="ir.actions.act_window">
+            <field name="name">Material Master</field>
+            <field name="res_model">material.master</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+        <record id="material_master_search" model="ir.ui.view">
+            <field name="name">material.master.search</field>
+            <field name="model">material.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Material Master">
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Material Master Records" />
+                    <filter name="inactive" string="Inactive" domain="[('active','=',False)]"  help="Show Deactivate Material Master Records"/>
+                    <field name="material_description"/>
+                    <!-- <field name="material_group_description" domain="[('active','=',False)]"/> -->
+                    
+                    <group string="Group By">
+                        <filter string="Active" domain="[]" context="{'group_by':'active'}" help="Display Group By Active Material Master Records"/>
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Deactivate Material Master Records" />
+                    </group>
+                </search>
+            </field>
+        </record> 
+
+         
+
+
+        <!-- <menuitem id="master_menu" name="Master" />   -->
+        <menuitem id="material_master_id" name="Material Master" action="material_master_action" parent="Pce_Master.master_menu" />
+        
+
+    </data>
+</odoo>

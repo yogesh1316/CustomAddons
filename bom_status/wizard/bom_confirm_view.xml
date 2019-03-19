@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <record id="confirm_bom_view_123" model="ir.ui.view">
+            <field name="name">mrp.bom.data.view</field>
+            <field name="model">mrp_bom.confirm</field>
+            <field name="arch" type="xml">
+                <form string="bom confirmation">
+                <h3>Is BOM Details And Routing Details Complete?</h3>
+
+                    <footer>
+                        <button name="yes" string="Yes" type="object" class="oe_highlight"/>
+                        or
+                        <button string="No" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="act_mrp_product_produce" model="ir.actions.act_window">
+            <field name="name">Produce</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp_bom.confirm</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
+    

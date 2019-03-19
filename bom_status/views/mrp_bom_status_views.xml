@@ -1,0 +1,44 @@
+<odoo>
+  <data>
+    <!-- model.name inherit form view -->
+    <record id="bom_status_form_view_id" model="ir.ui.view">
+      <field name="name">bom form</field>
+      <field name="model">mrp.bom</field>
+      <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+      <field name="arch" type="xml">
+        <!-- <xpath expr="//button" position="attributes">
+          <button name="edit" attrs="{'invisible':[('state','=','draft')]}"/>
+        </xpath> -->
+        <!-- <xpath expr="/form" position="attributes">
+					<attribute name="edit">true</attribute>					
+				</xpath> -->
+        <xpath expr="//sheet " position="before">
+          <header>
+            <button name="confirm_save" string="Confirm Bom" type="object" class="oe_stat_button" attrs="{'invisible': [('status', '!=',3)]}"/>
+          </header>
+        </xpath>
+        <xpath expr="//field[@name='type']" position="after">
+          <field name="status"/>
+          <field name="process_id"/>
+          <field name="description"/>
+        </xpath>
+      </field>
+    </record>
+
+
+    <!-- model.name inherit tree view -->
+    <record id="bom_process_id_tree_view_id" model="ir.ui.view">
+      <field name="name">bom process id tree</field>
+      <field name="model">mrp.bom</field>
+      <field name="inherit_id" ref="mrp.mrp_bom_tree_view"/>
+      <field name="arch" type="xml">
+        <!-- Add your xpath here -->
+        <xpath expr="//field[@name='product_tmpl_id']" position="after">
+          <field name="process_id"/>
+        </xpath>
+      </field>
+    </record>
+
+
+  </data>
+</odoo>

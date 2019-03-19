@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--    |Created By      |Created Date | Info.
+        |Pradip          |21 Feb.,2019 |Follwing Columns Width Adjusted Only   -->
+        <record model="ir.ui.view" id="view_order_form_inherit">
+            <field name="name">sale.order.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="order_line"]/tree/field[@name="product_id"]' position="replace">
+                    <field name="product_id"
+                        context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+                        attrs="{'readonly': [('product_updatable', '=', False)]}"
+                        force_save="1"
+                        style="min-width: 380px;"/>
+                </xpath>
+
+                <xpath expr='//field[@name="order_line"]/tree/field[@name="name"]' position="replace">
+                    <field name="name" style="min-width: 380px;"/>
+                </xpath>
+            
+                <xpath expr='//field[@name="order_line"]/tree/field[@name="product_uom"]' position="replace">
+                    <field name="product_uom"
+                        attrs="{'readonly': [('state', 'in', ('sale','done', 'cancel'))]}"
+                        context="{'company_id': parent.company_id}"
+                        groups="product.group_uom" options='{"no_open": True}'
+                        style="min-width: 2px;"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="replace">
+                <field name="discount" groups="sale.group_discount_per_so_line" style="width: 50px;"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="replace">
+                <field name="price_unit" style="min-width: 86px;"/>
+                </xpath>          
+            </field>
+        </record>
+
+<!--    |Created By      |Created Date | Info.
+        |Pradip          |21 Feb.,2019 |Follwing Columns Width Adjusted Only   -->
+
+    <record model="ir.ui.view" id="sale_margin_sale_order_line_inherit">
+        <field name="name">sale.order.line.margin.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/form//field[@name='purchase_price']" position="replace">
+                <field name="purchase_price" groups="base.group_user" style="min-width: 100px;"/>
+            </xpath>
+        </field>
+    </record>
+    
+       </data>
+</odoo>
