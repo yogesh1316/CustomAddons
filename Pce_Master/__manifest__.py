@@ -12,7 +12,7 @@
     'category': 'Master',
     'version': '1.1',
     # any module necessary for this one to work correctly
-    'depends': ['sale','product','sale_margin','purchase','account','base','delivery','mrp'],
+    'depends': ['sale','product','sale_margin','purchase','account','base','delivery','mrp','mail'],
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',        
