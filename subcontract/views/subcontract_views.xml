@@ -14,7 +14,7 @@
 					<field name="vendor" attrs="{'invisible': [('subcontract_prod', '=', False)],'required':[('subcontract_prod', '!=', False)], 'readonly': [('state', '=','done')]}"/>
 				</field>
 				<xpath expr="//button[@name='issue_item_qty']" position="after">
-					<button name="open_produce_product" attrs="{'invisible': ['|',('statusflag', 'not in', ('I')),('subcontract_prod', '!=',True)]}" string="Sub contract" type="object" class="oe_highlight"/>
+					<button name="open_produce_product" attrs="{'invisible': ['|','|',('statusflag', 'not in', ('I')),('subcontract_prod', '!=',True),('check_to_done', '=', True)]}" string="Sub contract" type="object" class="oe_highlight"/>
 					<!-- <button name="open_produce_product" attrs="{'invisible': [('state', 'not in', ('confirmed','progress'))]}" string="Produce" type="object"/> -->
 				</xpath>
 				<button name="action_see_move_scrap" position="after">

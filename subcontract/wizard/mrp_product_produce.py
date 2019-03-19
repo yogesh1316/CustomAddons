@@ -37,8 +37,7 @@ class MrpProductProduce(models.TransientModel):
                         'qty_producing':self.product_qty,
                         'state':'pending',
                         }
-                    ids = mrp_workorder_obj.create(wo_data)   
-                   
+                    ids = mrp_workorder_obj.create(wo_data)  
                 else:
                     self.env.cr.execute("update mrp_workorder set subcontract_operation='f' where id= %s",(line.id,))            
     
@@ -107,8 +106,9 @@ class MrpProductProduce(models.TransientModel):
                     'order_id': po_id.id,
                 }
                 pol_obj.create(vals_line_item)
-            elif self.production_id.subcontract_parentchildprod =='3':                
-                for line in self.production_id.move_raw_ids:                        
+            elif self.production_id.subcontract_parentchildprod =='3':    
+                # Update : taken move_raw_ids only those product which r_flag is in New and Replace         
+                for line in self.production_id.move_raw_ids.filtered(lambda x: x.r_flag in('N','R')):                        
                     vals_line_item = {
                         'product_id': line.product_id.id,
                         'name': line.product_id.name,

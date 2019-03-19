@@ -189,8 +189,7 @@ class Picking(models.Model):
         total_qty = 0 
         if self.purchase_id.mrp_id.product_id:
             for line in self.move_lines:
-                if line.product_id == self.purchase_id.mrp_id.product_id:
-                    
+                if line.product_id == self.purchase_id.mrp_id.product_id:                    
                     if self.purchase_id.mrp_id.finished_move_line_ids: 
                         for mrp in self.purchase_id.mrp_id.finished_move_line_ids:
                             mrp.write({'done_move': 't','qty_done':self.purchase_id.mrp_id.product_qty}) 
@@ -212,7 +211,7 @@ class Picking(models.Model):
                     else:
                         raise UserError(_('Kindly Process the respective MRP / Work Order for Qty.'))
 
-            #self.DC_close()    
+            self.DC_close()    
         return True
 
 
@@ -268,7 +267,7 @@ class Picking(models.Model):
                                                 'workorder_id': woline.id,
                                                 }
                             
-                                        ids = workorder_pdir_generate_obj.create(wo_data)
+                                        ids = workorder_pdir_generate_obj.create(wo_data)                                        
 
                                 self.dc_number.button_validate()        
 
@@ -279,7 +278,10 @@ class Picking(models.Model):
                         if dline.product_id == line.product_id:
                             print('curr_qty_done,dline.product_id',curr_qty_done,dline.product_id)
                             if dline.quantity_done == curr_qty_done:
-                                dline.write({'state': 'done', 'is_done':True})     
+                                dline.write({'state': 'done', 'is_done':True}) 
+
+                for mrp in self.purchase_id.mrp_id.finished_move_line_ids:
+                    mrp.write({'done_move': 't','qty_done':self.purchase_id.mrp_id.product_qty})     
 
                 dcount=0
                 mcount=0
@@ -292,6 +294,7 @@ class Picking(models.Model):
                     for woline in mrp_work_data:
                         if not woline.next_work_order_id:    
                             woline.production_id.write({'produced_qty': 0})
+                            self.dc_number.button_validate()
                             
                         woline.write({'state': 'done','qty_produced': data.product_qty,'qty_producing': 0,'date_start': fields.Datetime.now(),'date_finished': fields.Datetime.now()})
                         if not woline.next_work_order_id:                
