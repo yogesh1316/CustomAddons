@@ -8,9 +8,6 @@ import json
 import time
 from time import gmtime, strftime
 
-# create_by | create_date | update_by | update_date
-# hrishikesh|             |  Chandrakant |23/01/2019   
-# Info : factory calendor is use to get customer delivery date
 
 class factory_calendor(models.Model):
     _name='factory.calendor'
@@ -72,22 +69,7 @@ class factory_calendor(models.Model):
             flg='0'
             i=i+1
         k=1
-        # Update : generate seq_no on max seq_no for next year to get unique seq_no 
-        list=[]
-        for i in factory_calendor_obj.search([('id','>',0)]):
-            #print("''''''''''''''''''''''",i.seq_no)
-            list.append(i.seq_no)
-        if list:
-            seq_no=max(list)
-        else:
-            seq_no=0
-       # print(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,",seq_no)
         lseq_no=0
-        if seq_no!=0:
-            print("666666666666666666666")
-            k=seq_no+1
-        else:
-            lseq_no=lseq_no
 
         for fline in thisdict.items():                    
             start12= datetime.strptime(fline[1]['date'], "%d-%m-%Y").strftime("%Y-%m-%d")
@@ -112,7 +94,7 @@ class factory_calendor(models.Model):
             # self.deadline = self.env.cr.fetchone()[0]
             # for counter in  range(0,self.deadline):     
             obj_gn=factory_calendor_obj.create(fact_line)
-            
+            #     print('print',counter+1)
         
         self._cr.execute("select date_from,date_to from resource_calendar_leaves where date_part('year', date_from)=%s\
         and calendar_id=%s",(self.year,self.shift.id))
@@ -135,14 +117,7 @@ class factory_calendor(models.Model):
         ##Update the sequence the factory_calendor
         self._cr.execute("select flag,ydate from factory_calendor where year=%s and shift=%s order by ydate",(self.year,self.shift.id))
         temp1= self.env.cr.fetchall()
-        list1=[]
-        # Update : logic change here when update year in factory calendor then we get min seq_no and pass that year
-        # assign that min seq_no to j1 variable
-        for j in factory_calendor_obj.search([('seq_no','!=',0),('year','=',self.year),('shift','=',self.shift.id)]):
-            print(j,j.seq_no)
-            list1.append(j.seq_no)        
-        
-        t1=min(list1)
+        t1=1
         for l1 in temp1:
             if str(l1[0])=='0':
                 self.env.cr.execute("update factory_calendor set seq_no=%s where ydate=%s and shift=%s",('0',l1[1],self.shift.id))

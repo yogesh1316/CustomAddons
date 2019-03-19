@@ -6,23 +6,29 @@
         <link rel="stylesheet" href="/Pce_Master/static/src/css/custom_css.css"/>
         </xpath>
     </template>
-
 <!--  ================================Text Master Start==================================================================== -->
 	<record id="text_master_info_forms" model="ir.ui.view">
 		<field name="name">Text Master</field>
 		<field name="model">text_master.info</field>
 		<field name="arch" type="xml">
-			<form string="Text Master" delete="0" duplicate="0">
+			<form string="Text Master" delete="1" duplicate="0">
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete,Duplicate Buttons From Actions-->
 				<sheet>
 					<group>
-						<field name="text_code" readonly="1"/>
-						<field name="text_description"/>
-						<!--<field name="text_concat"/>-->	
+						<field name="text_code" readonly="1"/>						
+						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->                    	
+						<field name="text_description" style="text-transform: uppercase;"/> <!-- style="text-transform: uppercase;"-->
+						<!--<field name="text_concat" readonly="1"/>-->
 						<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->
 						<field name='active_flag' string="Is Active" widget='radio'/> 					
 					</group>
 				</sheet>
+				<!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
+                  <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
 			</form>
 		</field>
 	</record>
@@ -31,11 +37,11 @@
 		<field name="name">Text Master</field>
 		<field name="model">text_master.info</field>
 		<field name="arch" type="xml">
-			<tree string="Text Master"  delete="0"> 
+			<tree string="Text Master"  delete="1"> 
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Action-->
 				<!-- decoration-muted="active!=True" -->
 				<field name="text_code"/>						
-				<field name="text_description"/>
+				<field name="text_description" />
 				<!--<field name="text_concat"/>-->
 				<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->				
 				<field name='active_flag' string="Is Active" widget='radio'/> 			
@@ -48,23 +54,31 @@
 		<field name="res_model">text_master.info</field>
 		<field name="view_mode">tree,form</field>
 	</record>
+    
 <!--  ================================Text Master End========================================================================= -->
 <!--  ================================Effect Master Start==================================================================== -->
 	<record id="effect_master_info_form" model="ir.ui.view">
 		<field name="name">Effect Master</field>
 		<field name="model">effect_master.info</field>
 		<field name="arch" type="xml">
-			<form string="Effect Master" delete="0" duplicate="0">
+			<form string="Effect Master" delete="1" duplicate="0">
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
 				<sheet>
 					<group>
-						<field name="effect_code_no" string="Effect Code"/>
-						<field name="effect_description" string="Effect Code Description"/>
-						<!--<field name="unique_effect_description"/>-->
+						<field name="effect_code_no" string="Effect Code"/>							
+						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->                    	
+						<field name="effect_description" string="Effect Code Description" style="text-transform: uppercase;"/>
+						<!--<field name="unique_effect_description" />-->
 						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->						
 						<field name="active_flag" string="Is Active" widget='radio'/>						
 					</group>
 				</sheet>
+				<!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
+                  <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
 			</form>
 		</field>
 	</record>
@@ -73,7 +87,7 @@
 		<field name="name">Effect Master</field>
 		<field name="model">effect_master.info</field>
 		<field name="arch" type="xml">
-			<tree string="Effect Master" delete="0" >
+			<tree string="Effect Master" delete="1" >
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
 				<field name="id" string="Sr.No."  class="o_id_code_master_info_new"/>
 				<field name="effect_code_no" string="Effect Code"/>
@@ -96,17 +110,24 @@
 		<field name="name">Id Code Master</field>
 		<field name="model">id_code_master.info</field>
 		<field name="arch" type="xml">
-			<form string="Id Code Master" delete="0" duplicate="0">
+			<form string="Id Code Master" delete="1" duplicate="0">
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
 				<sheet>
 					<group>
 						<field name="id_code_no" string="ID Code"/>
-						<field name="id_code_description" string="Id Code Description"/>
+						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->				
+						<field name="id_code_description" string="Id Code Description" style="text-transform: uppercase;"/>
 						<!--<field name="unique_id_code_description"/>-->
 						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
 						<field name="active_flag" string="Is Active" widget='radio'/>		
 					</group>
 				</sheet>
+				<!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
+                  <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
 			</form>
 		</field>
 	</record>
@@ -115,7 +136,7 @@
 		<field name="name">Id Code Master</field>
 		<field name="model">id_code_master.info</field>
 		<field name="arch" type="xml">
-			<tree string="Id Code Master" delete="0" >
+			<tree string="Id Code Master" delete="1" >
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
 				<field name='id' string="Sr.No."  class="o_id_code_master_info_new" />			
 				<field name="id_code_no" string="ID_No"/>
@@ -143,12 +164,19 @@
 				<sheet>
 					<group>
 						<field name="make_no" delete="0" duplicate="0"/>
-						<field name="make_description"/>
+						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->				
+						<field name="make_description" style="text-transform: uppercase;"/>
 						<!--<field name="unique_make_description"/>	-->
 						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
 						<field name="active_flag" string="Is Active" widget='radio'/>				
 					</group>
 				</sheet>
+				<!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
+                  <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
 			</form>
 		</field>
 	</record>
@@ -157,7 +185,7 @@
 		<field name="name">Make Master</field>
 		<field name="model">make_master.info</field>
 		<field name="arch" type="xml">
-			<tree string="Make Master" delete="0">
+			<tree string="Make Master" delete="1">
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
 				<field name="make_no"/>
 				<field name="make_description"/>
@@ -180,16 +208,22 @@
 		<field name="name">MRP Type Master</field>
 		<field name="model">mrp_type_master.info</field>
 		<field name="arch" type="xml">
-			<form string="MRP Type Master" delete="0" duplicate="0">
+			<form string="MRP Type Master" delete="1" duplicate="0">
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
 				<sheet>
 					<group>
 						<field name="mrp_type_code"/>
-						<field name="mrp_description"/>
+						<field name="mrp_description" style="text-transform: uppercase;"/>
 						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
 						<field name="active_flag" string="Is Active" widget='radio'/>						
 					</group>
-				</sheet>
+				 </sheet>
+				 <!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
+                  <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
 			</form> 
 		</field>
 	</record>
@@ -224,12 +258,19 @@
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
 				<sheet>
 					<group>
-						<field name="source_code"/>
-						<field name="source_description"/>
+						<field name="source_code"/>				
+						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->				
+						<field name="source_description" style="text-transform: uppercase;"/>
 						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
 						<field name="active_flag" string="Is Active" widget='radio'/>
 					</group>
-				</sheet>
+				 </sheet>
+				<!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->				 
+                  <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
 			</form>
 		</field>
 	</record>
@@ -311,7 +352,7 @@
 				<!-- Updated-By:Pradip | Updated-Date:28-1-19 |Info. Only Active Flag Showing Here-->					
 				<field name="effect_code_description" domain="[('active_flag','=','Yes')]"/>
 				<field name="id_code_description" domain="[('active_flag','=','Yes')]"/>		
-				<field name="manufacturer" string="Manufacturer" domain="[('active_flag','=','Yes')]"/>	
+				<field name="manufacturer" string="Manufacturer" domain="[('active_flag','=','yes')]"/>	
 				<!--<field name="mrp_type" options="{'no_create': True,'no_edit': True}" widget="selection"/>-->				
 				<!--<field name="source_code_master"/>-->
 				<!--<field name="hsn_num_master" invisible="1" options="{'no_create': True,'no_edit': True}" widget="selection"/>-->	
@@ -320,7 +361,7 @@
 				<field name="filename" invisible="1"/>			
 				<!--<field name="batch_qty" />--> <!-- attrs="{'readonly': [('mrp_type','=',1 )]}"-->
 				<!--<field name="reorder_level" /> --><!-- attrs="{'readonly': ['|',('mrp_type','=',1 ),('mrp_type','=',5 )]}"-->
-				<field name="lead_time"/>		                      
+				<field name="bom_process_id"/>		                      
 				<!--<field name="buyer_code" options="{'no_create': True,'no_edit': True}" widget="selection"/>-->	
 				<!--<field name="bin_location"/>-->
 				<!--<field name="bulk_issue_flag"/>-->
@@ -360,7 +401,7 @@
  			<div class="oe_title">
  						<label class="oe_edit_only" for="name" string="Text Master"/>
                         <h5><field name="text_master_id" domain="[('active_flag','=','Yes')]" attrs="{'readonly': [('default_code','!=',False )]}" options="{'no_create': True,'no_edit': True}"  
-                        style="text-transform: uppercase;font-weight:normal; "/></h5>
+                        	style="text-transform: uppercase;font-weight:normal; "/></h5> 
                         <label class="oe_edit_only" for="name" string="Product Name"/>
                         <h5><field name="name" placeholder="Product Name" style="text-transform: uppercase;font-weight:normal; "/></h5>
                         <div name="options" groups="base.group_user">

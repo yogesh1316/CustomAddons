@@ -5,30 +5,36 @@ class product_template_inhe(models.Model):
     _inherit='product.template'
     _sql_constraints=[('Unique Product Name','unique(unique_product)','Please Enter Unique Product Name.')]
 
-    drawing_number =fields.Char('Drawing Number.')
-    revision_number =fields.Integer('Revision Number',default=0)
+    #updated-By:Pradip|Updated-Date-12-3-2019|Info.Fileds Added into Chatter box
+    
+    drawing_number =fields.Char('Drawing Number.',track_visibility='onchange',help='Drawing Number')
+    revision_number =fields.Integer('Revision Number',default=0,track_visibility='onchange',help='Revision Number')
     
     text_master_id=fields.Many2one('text_master.info',string='Text',required=True)
     effect_code_description=fields.Many2one('effect_master.info',string='Effect Code Descrip.',required=True)      
     id_code_description=fields.Many2one('id_code_master.info',string="Id Code Descrip.",required=True)
     manufacturer=fields.Many2one('make_master.info',string='Manufacturer',required=True)
-    mrp_type=fields.Many2one('mrp_type_master.info',string='MRP Type',required=True)#,compute='mrp_type_fun'
+    mrp_type=fields.Many2one('mrp_type_master.info',string='MRP Type',required=True,track_visibility='onchange',help='MRP Type')#,compute='mrp_type_fun'
     source_code_master=fields.Many2one('source_master.info',string='Source Code',required=True)
-    mf_part_no=fields.Char(string='Mf. Part No.')
+    mf_part_no=fields.Char(string='Mf. Part No.',track_visibility='onchange',help='Mf. Part No.')
     filename=fields.Char()
-    batch_qty=fields.Float(string='Batch Qty.',required=True ,default=0.0)
-    reorder_level=fields.Float(string='ReOrder Level',required=True,default=0.0)
-    lead_time=fields.Integer(string='Lead Time (Days)')
+    batch_qty=fields.Float(string='Batch Qty.',required=True ,default=0.0,track_visibility='onchange',help='Batch Qty.')
+    reorder_level=fields.Float(string='Reorder Level',required=True,default=0.0,track_visibility='onchange',help='Reorder Level')
+#     lead_time=fields.Integer(string='Lead Time (Days)')
     buyer_code=fields.Many2one('res.users',string='Buyer Code',required=True)
     bin_location=fields.Char(string='Bin Location')
-    bulk_issue_flag=fields.Selection([('yes','Yes'),('no','No')],'Bulk Issue Flag')
-    channel_flag=fields.Selection([('red','Red'),('green','Green')],'Channel Flag')
+    bulk_issue_flag=fields.Selection([('yes','Yes'),('no','No')],'Bulk Issue Flag',track_visibility='onchange',help='Bulk Issue Flag')
+    channel_flag=fields.Selection([('red','Red'),('green','Green')],'Channel Flag',track_visibility='onchange',help='Channel Flag')
     sr_no_application=fields.Selection([('yes','Yes'),('no','No')],'SrNo.Application')
     unique_product=fields.Char(string="Unique Product Name",compute='unique_product__name_fun',store=True)
-    item_type=fields.Many2one('item.type.master',string='Item Type',required=True)
+    item_type=fields.Many2one('item.type.master',string='Item Type',required=True,track_visibility='onchange',help='Item Type')
     
+    bom_process_id=fields.Integer(string="Process Id")
     
-    
+    produce_delay = fields.Float(
+        'Manufacturing Lead Time', default=0.0,track_visibility='onchange',
+        help="Average delay in days to produce this product. In the case of multi-level BOM, the manufacturing lead times of the components will be added.")
+
     # Created By | Created Date |Info. 
     # Pradip    |17-1-19 |If select text master item then this text master item update product name
     @api.onchange('text_master_id')
@@ -37,7 +43,7 @@ class product_template_inhe(models.Model):
             if i.text_master_id:
                 i.name=i.text_master_id.text_description or ''
     
-    
+
     
     # Created By | Created Date 
     # Pradip    |17-1-19 |
@@ -146,11 +152,11 @@ class product_template_inhe(models.Model):
         rmp_type_obj=self.env['mrp_type_master.info']
 
         if vals:
-            vals['default_code'] = self.env['ir.sequence'].next_by_code('product.template') 
-            #vals['drawing_number']=vals['default_code']
-            if vals['drawing_number']==False:
-                vals['drawing_number']=vals['default_code'] #Updated-By:Pradip Update-Date:21-1-19 Info.-drawing_number is same as default_code(Internal Reference) 
-                #vals['default_code']=vals['item_code_num'] #Updated-By:Pradip|Updated-Date:17-1-19|Info:default_code=itemcode_num
+            if 'type' in vals: #Upadated-By:Pradip|Updated-Date:7-3-19|Info.if Product type is Stockable Product then create Sequence
+                if vals['type']=='product':
+                    vals['default_code'] = self.env['ir.sequence'].next_by_code('product.template') 
+            
+                    vals['drawing_number']=vals['default_code'] #Updated-By:Pradip Update-Date:21-1-19 Info.-drawing_number is same as default_code(Internal Reference) 
 
             if 'mrp_type' in vals:
                 mrp=rmp_type_obj.search([('id','=',vals['mrp_type'])])
@@ -179,9 +185,10 @@ class product_template_inhe(models.Model):
         if vals['name']:
             if vals['name'].replace(' ','')=='':
                 raise UserError(_("Please Enter Product  Name."))
-        if 'lead_time' in vals:
-            if vals['lead_time']<0:
-                raise UserError(_("Please Do Not Enter Negative Lead Time.")) 
+            
+        if 'produce_delay' in vals:  #Updatd-By-Pradip update-Date:07-03-19 Info.Manufacturing Lead Time validation for Negative values
+            if vals['produce_delay']<0:
+                raise UserError(_("Please Do Not Enter Negative Customer Lead Time.")) 
             
             else:
                 return super(product_template_inhe, self).create(vals)
@@ -199,9 +206,9 @@ class product_template_inhe(models.Model):
                 if values['text_master_id']:
                     raise UserError(_("Please Do Not Edit Text")) #Updatd-By-Pradip update-Date:21-1-19 Info.Text Master Id Name Do not Edit After Creating Text Master Id
                 
-            if 'lead_time' in values:
-                if values['lead_time']<0:
-                    raise UserError(_("Please Do Not Enter Negative Lead Time.")) 
+            if 'produce_delay' in values:  #Updatd-By-Pradip update-Date:07-03-19 Info.Manufacturing Lead Time validation for Negative values  
+                if values['produce_delay']<0:
+                    raise UserError(_("Please Do Not Enter Negative Customer Lead Time.")) 
         return super(product_template_inhe, self).write(values)
     
     
