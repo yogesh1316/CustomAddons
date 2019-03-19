@@ -491,13 +491,15 @@ class MrpProduction(models.Model):
                             productqty = 0    
                             for qty in self.move_raw_ids.filtered(lambda x: x.state not in ('done','cancel')):       
                                 productqty =   qty.reserved_availability / qty.unit_factor 
-                                if math.floor(productqty) != 0:
-                                    temp.append(math.floor(productqty))   
-                            minqty = min(temp)
-                            if minqty == 0:
-                                raise UserError(_('In sufficient stock for child item') )                                
-                            else:                         
-                                move.quantity_done = float_round(minqty * move.unit_factor, precision_rounding=rounding)
+                                if productqty:
+                                    if math.floor(productqty) != 0:
+                                        temp.append(math.floor(productqty))   
+                            if temp:
+                                minqty = min(temp)
+                                if minqty == 0:
+                                    raise UserError(_('In sufficient stock for child item') )                                
+                                else:                         
+                                    move.quantity_done = float_round(minqty * move.unit_factor, precision_rounding=rounding)
 
             if minqty:
                 if self.produced_qty < 0:

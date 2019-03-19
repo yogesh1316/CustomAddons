@@ -69,8 +69,7 @@
 					<field name="po_number" attrs="{'readonly': [('state', '=', 'done')],'invisible': [('subcontract', '=', False)]}"/>
 					<button name="get_bom_materials" type="object" class="oe_highlight" string="Update" attrs="{'readonly': [('state', '=', 'done')],'invisible': ['|', ('subcontract', '=', False), ('picking_type_code', 'in', ('incoming','internal','mrp_operation'))]}"/>
 					<field name="flag" invisible="1"/>
-					<field name="dc_number" attrs="{'readonly': [('state', '=', 'done')],'invisible': [('location_id', '!=', 18)]}"/>   <!--22-->
-					<!-- check subcotract location -->
+					<field name="dc_number" attrs="{'readonly': [('state', '=', 'done')],'invisible': [('location_id', '!=', 18)]}"/>   <!--22 check subcotract location -->
 				</field>
 				<xpath expr="//button[@name='button_validate']" position="replace">
 					<button name="button_validate" attrs="{'invisible': ['|',('show_validate', '=', False),('subcontract', '=', True)]}" string="Validate" groups="stock.group_stock_user" type="object" class="oe_highlight"/>

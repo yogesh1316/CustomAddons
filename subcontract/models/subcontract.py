@@ -49,6 +49,7 @@ class MrpProduction(models.Model):
     purchase_count = fields.Integer(compute='_purchase_count', string='# Purchases')
     purchase_ids = fields.One2many('purchase.order', 'mrp_id', string='Pickings')
 
+    # Update : find vendor witch property_stock_supplier is Subcontract location 
     @api.multi
     def _compute_subcontractvendor(self):        
         con=[]
@@ -61,6 +62,7 @@ class MrpProduction(models.Model):
     vendor = fields.Many2one('res.partner', string="Vendor",domain=_compute_subcontractvendor,help='Select Subcontract vendor')
 
     subcontract_prod = fields.Boolean(string="Subcontract")
+    # Update : Add subcontract type to send subcontractor
     subcontract_parentchildprod = fields.Selection([
         ('1', 'Component job send'),
         ('2', 'Assembly'),
@@ -89,7 +91,6 @@ class Picking(models.Model):
     subcontract = fields.Boolean(string="Subcontract")        
     flag = fields.Boolean(string="Flag", default=False)
 
-
     # Add this function to set location on subcontract selection
     @api.onchange('subcontract')
     def onchange_picking_type(self):     
@@ -97,7 +98,7 @@ class Picking(models.Model):
             if self.subcontract:
                 if self.partner_id:
                     print('in',self.subcontract)
-                    self.location_id =  self.po_number.mrp_id.location_src_id.id or 15    # WH/Stock location
+                    self.location_id =  self.po_number.mrp_id.location_src_id.id or 15      # WH/Stock location
                     self.location_dest_id = self.partner_id.property_stock_supplier.id      # Subcontract location
                 else:
                     raise UserError(_('Select partner'))
@@ -121,12 +122,9 @@ class Picking(models.Model):
                     self.location_id = location_id                                                      # WH/Output location
                     self.location_dest_id = location_dest_id                                            # Customer location
         
-        
-
     # Add computed field for selecting as per screen
     @api.multi
     def _compute_DCnumber(self):
-        #domain={}
         con=[]
         stock_picking_obj = self.env['stock.picking']
         con_ids=stock_picking_obj.search([('subcontract','=',True),('state','!=','done')])
@@ -137,7 +135,6 @@ class Picking(models.Model):
 
     @api.multi
     def _compute_POnumber(self):
-        #domain={}
         con=[]
         purchase_order_obj = self.env['purchase.order']
         po_ids=purchase_order_obj.search([('mrp_id','!=',None),('state','=','purchase')])
@@ -156,11 +153,8 @@ class Picking(models.Model):
     @api.multi
     def set_operation(self,mo): 
         if mo:                
-            op_ary =[]
-            #mrp_obj = self.env['mrp.production']
-            mrp_workorder_obj = self.env['mrp.workorder'] 
-            #print('MO',mo.id)
-            # mrp_data = mrp_obj.search([('name','=',str(mo))])        
+            op_ary =[]            
+            mrp_workorder_obj = self.env['mrp.workorder']             
             mrp_work_data = mrp_workorder_obj.search([('production_id','=',mo.id),('subcontract_operation','=','t')])
             i=1
             strg =''
