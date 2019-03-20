@@ -20,7 +20,7 @@ class Operation_master(models.Model):
     unique_operation_description=fields.Char(compute='_unique_operation_description',store=True)
     active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Deactivate")
     
-    oper_mst_line=fields.One2many('operation.master.line','oper_mst_id')
+  #  oper_mst_line=fields.One2many('operation.master.line','oper_mst_id')
 
     # Created By | Created Date |Info.
     # Pradip    |15-03-19 | operation_description unique  
@@ -62,18 +62,6 @@ class Operation_master(models.Model):
             if values['operation_description'].replace(' ','')=='':
                 raise UserError(_("Please Enter Operation Description"))
         return super(Operation_master,self).write(values)
-
-# Created By | Created Date |Info.
-# Pradip    |15-03-19 | operation.master.line  
-
-class Operation_master_line(models.Model):
-    _name='operation.master.line'
-    _description='Operation Master Line'
-
-    oper_mst_id=fields.Many2one('operation.master')
-    parm_mst_id=fields.Many2one('parameter.master',required=True)
-    tolerance=fields.Char(string="Tolerance")
-    re_mark=fields.Text('Rmrk')
 
 
   

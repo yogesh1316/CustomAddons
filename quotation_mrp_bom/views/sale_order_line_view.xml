@@ -3,18 +3,26 @@
     <data>
 <!--    |Created By      |Created Date | Info.
         |Pradip          |21 Feb.,2019 |Follwing Columns Width Adjusted Only   -->
+
+
+        <template id="my_assets_id1" name="website assets for my module" inherit_id="web.assets_backend">
+                <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/quotation_mrp_bom/static/src/css/quotation_mrp_bom_csscss.css"/>
+                </xpath>
+        </template>
+
         <record model="ir.ui.view" id="view_order_form_inherit">
             <field name="name">sale.order.inherit</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr='//field[@name="order_line"]/tree/field[@name="product_id"]' position="replace">
+                 <xpath expr='//field[@name="order_line"]/tree/field[@name="product_id"]' position="replace">
                     <field name="product_id"
                         context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
                         attrs="{'readonly': [('product_updatable', '=', False)]}"
                         force_save="1"
                         style="min-width: 380px;"/>
-                </xpath>
+                </xpath> 
 
                 <xpath expr='//field[@name="order_line"]/tree/field[@name="name"]' position="replace">
                     <field name="name" style="min-width: 380px;"/>

@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <!-- 
+        # Created By | Created Date |Info.
+        # Pradip    |20-03-19 |  
+        -->
+ <record model="ir.ui.view" id="view_order_form_inherit">
+            <field name="name">mrp.routing.workcenter.form</field>
+            <field name="model">mrp.routing.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="name"]' position="replace">
+                    <field name="name" string=""  />
+                </xpath>
+
+                <xpath expr='//field[@name="name"]' position="before">
+                    <field name="operation_descr_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    </data>
+</odoo>

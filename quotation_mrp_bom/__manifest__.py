@@ -24,10 +24,10 @@
     'data': [
         'views/quotation_mrp_bom.xml',
         'views/sale_order_view.xml',
-        'views/mrp_bom_views.xml',
-        'views/sale_order_line_view.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.Sale.order.line.views ,Column width Adjust
-	   'views/purchase_view_order_form.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.purchase.order.line.views ,Column width Adjust
-	      'views/mrp_bom_views_line.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.mrp.bom.line.views ,Column width Adjust
+       'views/mrp_bom_views.xml',
+       'views/sale_order_line_view.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.Sale.order.line.views ,Column width Adjust
+	    'views/purchase_view_order_form.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.purchase.order.line.views ,Column width Adjust
+        'views/mrp_bom_views_line.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.mrp.bom.line.views ,Column width Adjust
     ],
     # only loaded in demonstration mode
     'demo': [
