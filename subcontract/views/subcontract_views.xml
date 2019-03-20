@@ -14,7 +14,7 @@
 					<field name="vendor" attrs="{'invisible': [('subcontract_prod', '=', False)],'required':[('subcontract_prod', '!=', False)], 'readonly': [('state', '=','done')]}"/>
 				</field>
 				<xpath expr="//button[@name='issue_item_qty']" position="after">
-					<button name="open_produce_product" attrs="{'invisible': ['|',('statusflag', 'not in', ('I')),('subcontract_prod', '!=',True)]}" string="Sub contract" type="object" class="oe_highlight"/>
+					<button name="open_produce_product" attrs="{'invisible': ['|','|',('statusflag', 'not in', ('I')),('subcontract_prod', '!=',True),('check_to_done', '=', True)]}" string="Sub contract" type="object" class="oe_highlight"/>
 					<!-- <button name="open_produce_product" attrs="{'invisible': [('state', 'not in', ('confirmed','progress'))]}" string="Produce" type="object"/> -->
 				</xpath>
 				<button name="action_see_move_scrap" position="after">
@@ -69,8 +69,7 @@
 					<field name="po_number" attrs="{'readonly': [('state', '=', 'done')],'invisible': [('subcontract', '=', False)]}"/>
 					<button name="get_bom_materials" type="object" class="oe_highlight" string="Update" attrs="{'readonly': [('state', '=', 'done')],'invisible': ['|', ('subcontract', '=', False), ('picking_type_code', 'in', ('incoming','internal','mrp_operation'))]}"/>
 					<field name="flag" invisible="1"/>
-					<field name="dc_number" attrs="{'readonly': [('state', '=', 'done')],'invisible': [('location_id', '!=', 18)]}"/>   <!--22-->
-					<!-- check subcotract location -->
+					<field name="dc_number" attrs="{'readonly': [('state', '=', 'done')],'invisible': [('location_id', '!=', 18)]}"/>   <!--22 check subcotract location -->
 				</field>
 				<xpath expr="//button[@name='button_validate']" position="replace">
 					<button name="button_validate" attrs="{'invisible': ['|',('show_validate', '=', False),('subcontract', '=', True)]}" string="Validate" groups="stock.group_stock_user" type="object" class="oe_highlight"/>

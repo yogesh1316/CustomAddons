@@ -43,7 +43,7 @@
                         <field name="state" widget="statusbar" invisible="1" statusbar_visible="confirmed,progress,done"/>
                     </header>
                     <group class="oe_inline">
-                        <field name="production_id" />
+                        <field name="production_id" />                        
                     </group>
                     <notebook>
                         <page string="PDIR report upload">
@@ -51,8 +51,8 @@
                                 <tree string="Work Orders" delete="0" editable="bottom" create="0">
                                     <field name="product_id"/>
                                     <field name="qty_produced"/>
-                                    <field name="report" widget='binary' class="oe_avatar" filename="fname" style="min-width: 200px;" />
-                                    <field name="fname"/>
+                                    <field name="report" widget='binary' class="oe_avatar" filename="fname" />
+                                    <field name="fname"/>  
                                 </tree>
                             </field>
                         </page>
