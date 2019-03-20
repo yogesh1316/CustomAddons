@@ -25,4 +25,6 @@ from .import mrp_routing_work_center
 
 from .import parameter_master
 
+from .import operation_parameter_master
+
 
