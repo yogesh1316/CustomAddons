@@ -45,10 +45,19 @@
             </field>
         </record>
 
+
+        <!-- 
+        # Updated By | Updated Date |Info.
+        # Pradip    |20-03-19 | Material Group Master showing tree view(field name="context") 
+        -->
         <record id="material_group_master_action" model="ir.actions.act_window">
             <field name="name">Material Group Master</field>
             <field name="res_model">material_group.master</field>
             <field name="view_mode">tree,form</field>
+            <field name="context">{'active_test': False}</field>
+
+
+
         </record>
 
         <record id="material_group_master_search" model="ir.ui.view">
