@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+      <!-- model.name inherit tree view -->
+    <record id="view_id" model="ir.ui.view">
+      <field name="name">product.template.product.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <!-- Add your xpath here -->
+        <xpath expr="//page[@name='notes']" position="after">
+          <page name="product_move" string="moves" groups="product.group_product_variant">
+
+            <field name="stock_move_line_ids" >
+              <tree string="Move Lines" decoration-warning="receipt==issue" decoration-success="receipt" decoration-danger="issue">
+                <field name="date"/>
+                <field name="reference" string="Reference"/>
+                <field name="product_id"/>
+                <field name="location_id"/>
+                <field name="location_dest_id"/>
+                <field name="qty_done" string="Quantity Done"/>
+                <field name="product_uom_id" options="{'no_open': True, 'no_create': True}" string="Unit of Measure" groups="product.group_uom"/>
+                <field name="state"/>
+                <field name="available_quantity"/>
+                <field name="receipt"/>
+                <field name="issue"/>
+                <field name="closing_quantity"/>
+                <!-- <field name="tran_type"/> -->
+              </tree>
+            </field>
+          </page>
+        </xpath>
+
+      </field>
+    </record>
+    
+  </data>
+</odoo>
+  
+    

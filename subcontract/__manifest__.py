@@ -17,7 +17,7 @@
 
     'version': '1.0',
     
-    'depends': ['mrp', 'purchase','stock','bom_inhe'],
+    'depends': ['mrp','bom_inhe','purchase','stock'],
 
     'data':
     [

@@ -11,8 +11,8 @@
                     <!-- <button name="open_produce_product" attrs="{'invisible': ['|',('subcontract_prod','=','Ture')]}" string="Produce" type="object" class="oe_highlight"/> -->
                     <!-- <button name="open_produce_product" attrs="{'invisible': ['|', '|', '|', '|', ('is_locked', '=', False), ('check_to_done', '=', True), ('availability', '!=', 'waiting'), ('state', 'not in', ('confirmed','progress'))]}" string="Produce" type="object"/> -->
                     <button name="print_document" attrs="{'invisible': [('statusflag', 'not in', ('R','D','I'))]}" string="Print" type="object" class="oe_highlight"/>
-                    <button name="issue_item_qty" attrs="{'invisible': ['|',('statusflag', 'not in', ('D','I')), ('state', 'in', ('cancel'))]}" string="Issue" type="object" class="oe_highlight"/>
-                    <button name="replace_item" attrs="{'invisible': ['|',('statusflag', 'not in', ('D','I')), ('state', 'in', ('cancel'))]}" string="Replace" type="object" class="oe_highlight"/>                    
+                    <button name="issue_item_qty" attrs="{'invisible': ['|','|',('statusflag', 'not in', ('D','I')), ('state', 'in', ('cancel')), ('check_to_done', '=', True)]}" string="Issue" type="object" class="oe_highlight"/>
+                    <button name="replace_item" attrs="{'invisible': ['|','|','|',('statusflag', 'not in', ('I')), ('state', 'in', ('cancel')), ('check_to_done', '=', True)]}" string="Replace" type="object" class="oe_highlight"/>                    
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value">
                             <field name="statusflag" nolabel="1"/>
@@ -100,7 +100,7 @@
                                     <field name="needs_lots" readonly="1" invisible="1" groups="stock.group_production_lot"/>
                                     <field name="is_done" invisible="1"/>
                                     <field name="sequence" invisible="1"/>
-                                    <field name="location_id" invisible="1"/>
+                                    <field name="location_id" invisible="1"/>                                    
                                     <field name="state" invisible="1" force_save="1" />
                                     <field name="product_uom_qty" readonly="1" string="To Consume"/>
                                     <field name="reserved_availability" readonly="1" string="Reserved"/>
@@ -111,7 +111,7 @@
                         </page>
                     </notebook>
                     <footer>
-                        <button name="action_issue" string="Issue" type="object" class="btn-primary"/>
+                        <button name="action_issue" string="Issue"  type="object" class="btn-primary"/>
                         <button string="Cancel" class="btn-default" special="cancel" />
                     </footer>
                 </sheet>

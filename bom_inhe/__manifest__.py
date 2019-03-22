@@ -28,7 +28,6 @@
         'views/mrp_workorder_view_inhe.xml',
         'views/mtn_view.xml',
         'report/mrp_pro_document_print.xml',
-        'report/report_menu.xml',
-        
+        'report/report_menu.xml',        
     ],   
 }

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "product_move",
+    'name': "Purchase_Custom_model",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -10,7 +10,7 @@
         Long description of module's purpose
     """,
 
-    'author': "My Company",
+    'author': "Saiaipl PVT LTD",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
@@ -20,14 +20,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','stock','product'],
+    'depends': ['base','purchase'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/product_move.xml',
-        'views/move_tree.xml',
-      
+        'views/purchase_model_views.xml',
+        'views/transport_mode_master_view.xml',
+        # 'views/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
