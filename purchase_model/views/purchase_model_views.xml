@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+    	<record id="purchase_order_forms1234" model="ir.ui.view">
+        	<field name="name">purchase.order</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='date_order']" position="after">
+                    <field name="check_box" string="Purchase Order Amendment"/>
+                </xpath>
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="category" string="Category" widget="selection"/>
+                </xpath>
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="revise_count" string="Amendment Number"/>
+                </xpath>
+                <xpath expr="//field[@name='incoterm_id']" position="after">
+                    <field name="transport_id" string="Transport Mode"/>
+                </xpath>
+                <xpath expr="//form//sheet//notebook//page" position="after">
+                    <page string="Purchase Amendment Order">
+                        <field name="purchase_line">
+                            <tree create="false" edit="false" delete="false">
+                                <field name="revise_count" string="Amendment Number"/>
+                                <field name="name" string="Reference"/>
+                                <field name="date_order"  string="Order Date"/>
+                                <field name="partner_id"  string="Vendor"/>
+                                <field name="date_planned"  string="Scheduled Date"/>
+                                <field name="origin"  string="Source Document"/> 
+                                <field name="amount_untaxed"  string="Untaxed" widget="monetary"/>
+                                <field name="amount_total"  string="Total" widget="monetary"/>  
+                                <field name="state"  string="Status"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+      		</field>
+    	</record>
+        <!-- Purchase Order Revise Form -->
+        <record id="purchase_order_revise_forms1316" model="ir.ui.view">
+            <field name="name">purchase.order.revise</field>
+            <field name="model">purchase.order.revise</field>
+            <field name="arch" type="xml">
+                <form>
+                    <script>
+                        $(document).ready(function()
+                        {
+                        $(".modal-footer").hide();
+                        });
+                    </script>
+                    <group>
+                        <group>
+                            <field name="partner_id" string="Vendor" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                            <field name="partner_ref" string="Vendor Reference" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="date_order" string="Order Date" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Purchase Order Line Amendment"> 
+                            <field name="purchase_revise_line"  readonly="1" write="false">
+                                <tree delete="false">
+                                    <field name="product_id" readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                                    <field name="name"  readonly="1"/>
+                                    <field name="date_planned" readonly="1"/>
+                                    <field name="product_qty"  readonly="1"/>
+                                    <field name="product_uom"  readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                                    <field name="price_unit"   readonly="1"/>
+                                    <field name="taxes_id"  readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                                    <field name="price_subtotal" widget="monetary" options="{'currency_field': 'currency_id'}"  readonly="1"/> 
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                    <label for="amount_total"/>
+                                </div>
+                                <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <field name="notes" class="oe_inline" placeholder="Define your terms and conditions ..." no_open="True"/>
+                            <div class="oe_clear"/> 
+                        </page>
+                        <page string="Deliveries &amp; Invoices">
+                            <group>
+                                <group>
+                                    <label for="date_planned"/>
+                                    <div>
+                                        <field name="date_planned" required="1" no_open="True" readonly="True"/>
+                                        <button name="action_set_date_planned" type="object"
+                                            states="draft,sent"
+                                            string="Set date to all order lines"
+                                            help="This changes the scheduled date of all order lines to the given date"
+                                            class="fa fa-calendar o_icon_button oe_edit_only"/>
+                                    </div>
+                                    <field name="picking_type_id" domain="[('code','=','incoming')]" groups="stock.group_stock_multi_locations" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                                    <field name="dest_address_id" groups="stock.group_stock_multi_locations" no_open="True" readonly="True"/>
+                                    <field name="default_location_dest_id_usage" invisible="1" no_open="True" readonly="True"/>
+                                    <field name="incoterm_id" options="{'no_open': True, 'no_create': True}"  readonly="True"/>
+                                    <field name="transport_id" options="{'no_open': True, 'no_create': True}"  readonly="True" string="Transport Mode"/>
+                                </group>
+                                <group>
+                                    <field name="invoice_status" no_open="True" readonly="True"/>
+                                    <field name="payment_term_id" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                                    <field name="fiscal_position_id" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                                    <field name="date_approve" groups="base.group_no_one"/>
+                                </group> 
+                            </group>
+                        </page> 
+                    </notebook>
+                </form>
+            </field>
+        </record>
+	</data>
+</odoo>
+    		
+
+    
+  
