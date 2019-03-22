@@ -14,13 +14,23 @@
 			<form string="Text Master" delete="1" duplicate="0">
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete,Duplicate Buttons From Actions-->
 				<sheet>
+
+				<!--Created-By | Created-Date|Info.
+						Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+
+                    <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                    </div>
+
 					<group>
 						<field name="text_code" readonly="1"/>						
 						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->                    	
 						<field name="text_description" style="text-transform: uppercase;"/> <!-- style="text-transform: uppercase;"-->
 						<!--<field name="text_concat" readonly="1"/>-->
 						<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->
-						<field name='active_flag' string="Is Active" widget='radio'/> 					
+						<!-- <field name='active_flag' string="Is Active" widget='radio'/> 					 -->
 					</group>
 				</sheet>
 				<!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
@@ -44,15 +54,44 @@
 				<field name="text_description" />
 				<!--<field name="text_concat"/>-->
 				<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->				
-				<field name='active_flag' string="Is Active" widget='radio'/> 			
+				<!-- <field name='active_flag' string="Is Active" widget='radio'/> 			 -->
+
+				<!--Created-By | Created-Date|Info.
+						Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+				<field name="active" widget="boolean_toggle"/>
+
 			</tree>
 		</field>
 	</record>
+
+
+	<!--Created-By | Created-Date|Info.
+			Pradip     |21-3-2019    |Filters Active/Inactive Records and Group By Active/Inactive Records -->
+    
+    <record id="text_master_info_search" model="ir.ui.view">
+            <field name="name">text_master.info.search</field>
+            <field name="model">text_master.info</field>
+            <field name="arch" type="xml">
+                <search string="Search Item Type Master">
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Text Master Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Text Master Records" />
+                    
+                    <group string="Group By">
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Text Master Records" />
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Text Master Records" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+<!--Updated-By | Updated-Date |Info.
+		Pradip     |21-03-19      | Inactive Text Master showing tree view(field name="context") --> 
 
 	<record id="text_master_info_actions" model="ir.actions.act_window">
 		<field name="name">Text Master</field>
 		<field name="res_model">text_master.info</field>
 		<field name="view_mode">tree,form</field>
+		<field name="context">{'active_test': False}</field>
 	</record>
     
 <!--  ================================Text Master End========================================================================= -->
@@ -64,13 +103,22 @@
 			<form string="Effect Master" delete="1" duplicate="0">
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
 				<sheet>
+
+					<!--Created-By | Created-Date|Info.
+						Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+
+                    <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                    </div>
+
 					<group>
 						<field name="effect_code_no" string="Effect Code"/>							
 						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->                    	
 						<field name="effect_description" string="Effect Code Description" style="text-transform: uppercase;"/>
-						<!--<field name="unique_effect_description" />-->
 						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->						
-						<field name="active_flag" string="Is Active" widget='radio'/>						
+						<!-- <field name="active_flag" string="Is Active" widget='radio'/>						 -->
 					</group>
 				</sheet>
 				<!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
@@ -92,18 +140,47 @@
 				<field name="id" string="Sr.No."  class="o_id_code_master_info_new"/>
 				<field name="effect_code_no" string="Effect Code"/>
 				<field name="effect_description" string="Effect_Desc"/>
-				<!--<field name="unique_effect_description"/>-->
 				<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->					
-				<field name="active_flag" string="Is Active" widget='radio'/>
+				<!-- <field name="active_flag" string="Is Active" widget='radio'/> -->
+
+				<!--Created-By | Created-Date|Info.
+						Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+				<field name="active" widget="boolean_toggle"/>
+
 			</tree>
 		</field>
 	</record>
+
+	<!--Created-By | Created-Date|Info.
+			Pradip     |21-3-2019    |Filters Active/Inactive Records and Group By Active/Inactive Records -->
+    
+    <record id="effect_master_info_search" model="ir.ui.view">
+            <field name="name">effect_master.info.search</field>
+            <field name="model">effect_master.info</field>
+            <field name="arch" type="xml">
+                <search string="Search Effect Master">
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Effect Master Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Effect Master Records" />
+                    
+                    <group string="Group By">
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Effect Master Records" />
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Effect Master Records" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+<!--Updated-By | Updated-Date |Info.
+    Pradip     |21-03-19      | Inactive Effect Master showing tree view(field name="context") --> 
 
 	<record id="effect_master_info_action" model="ir.actions.act_window">
 		<field name="name">Effect Master</field>
 		<field name="res_model">effect_master.info</field>
 		<field name="view_mode">tree,form</field>
+		<field name="context">{'active_test': False}</field>
 	</record>
+
 <!--  ================================Effect Master End========================================================================= -->
 <!-- =============================================Id Code Master Start=========================================================-->
 	<record id ="id_code_master_info_form" model="ir.ui.view">
@@ -113,13 +190,22 @@
 			<form string="Id Code Master" delete="1" duplicate="0">
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
 				<sheet>
+					 <!--Created-By | Created-Date|Info.
+                        Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+
+                    <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                    </div>
+
 					<group>
 						<field name="id_code_no" string="ID Code"/>
 						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->				
 						<field name="id_code_description" string="Id Code Description" style="text-transform: uppercase;"/>
 						<!--<field name="unique_id_code_description"/>-->
 						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
-						<field name="active_flag" string="Is Active" widget='radio'/>		
+						<!-- <field name="active_flag" string="Is Active" widget='radio'/>		 -->
 					</group>
 				</sheet>
 				<!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
@@ -143,15 +229,42 @@
 				<field name="id_code_description" string="Id_Desc" />
 				<!--<field name="unique_id_code_description"/>-->
 				<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->					
-				<field name="active_flag" string="Is Active" widget='radio'/>	
+				<!-- <field name="active_flag" string="Is Active" widget='radio'/>	 -->
+			
+				<!--Created-By | Created-Date|Info.
+                    Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+                <field name="active" widget="boolean_toggle"/>
 			</tree>
 		</field>
 	</record>
+
+	<!--Created-By | Created-Date|Info.
+        Pradip     |21-3-2019    |Filters Active/Inactive Records and Group By Active/Inactive Records -->
+    
+    <record id="id_code_master_info_search" model="ir.ui.view">
+            <field name="name">id_code_master.info.search</field>
+            <field name="model">id_code_master.info</field>
+            <field name="arch" type="xml">
+                <search string="Search Item Type Master">
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Id Code Master Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Id Code Master Records" />
+                    
+                    <group string="Group By">
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Id Code Master Records" />
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Id Code Master Records" />
+                    </group>
+                </search>
+            </field>
+        </record>
 	
+	<!--Updated-By | Updated-Date |Info.
+	Pradip     |21-03-19      | Inactive Id Code Master showing tree view(field name="context") --> 
+
 	<record id="id_code_master_info_action" model="ir.actions.act_window">
 		<field name="name">Id Code Master</field>
 		<field name="res_model">id_code_master.info</field>
 		<field name="view_mode">tree,form</field>
+		<field name="context">{'active_test': False}</field>
 	</record>
 <!-- =============================================Id Code Master End=========================================================-->
 <!--==============================================Make Master Start========================================================= -->
@@ -162,13 +275,22 @@
 			<form string="Make Master" delete="0" duplicate="0">
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
 				<sheet>
+					<!--Created-By | Created-Date|Info.
+                        Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+
+                    <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                    </div>
+
 					<group>
 						<field name="make_no" delete="0" duplicate="0"/>
 						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->				
 						<field name="make_description" style="text-transform: uppercase;"/>
 						<!--<field name="unique_make_description"/>	-->
 						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
-						<field name="active_flag" string="Is Active" widget='radio'/>				
+						<!-- <field name="active_flag" string="Is Active" widget='radio'/>				 -->
 					</group>
 				</sheet>
 				<!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
@@ -191,15 +313,43 @@
 				<field name="make_description"/>
 				<!--<field name="unique_make_description"/>-->
 				<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->					
-				<field name="active_flag" string="Is Active" widget='radio'/>				
+				<!-- <field name="active_flag" string="Is Active" widget='radio'/>				 -->
+
+				<!--Created-By | Created-Date|Info.
+                    Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+                <field name="active" widget="boolean_toggle"/>
+
 			</tree>
 		</field>
 	</record>
+
+	<!--Created-By | Created-Date|Info.
+        Pradip     |21-3-2019    |Filters Active/Inactive Records and Group By Active/Inactive Records -->
+    
+    <record id="make_master_info_search" model="ir.ui.view">
+            <field name="name">make_master.info.search</field>
+            <field name="model">make_master.info</field>
+            <field name="arch" type="xml">
+                <search string="Search Item Type Master">
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Make Master Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Make Master Records" />
+                    
+                    <group string="Group By">
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Make Master Records" />
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Make Master Records" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
 	
+    <!--Updated-By | Updated-Date |Info.
+        Pradip     |21-03-19      | Inactive Make  Master showing tree view(field name="context") --> 
 	<record id="make_master_info_action" model="ir.actions.act_window">
 		<field name="name">Make Master</field>
 		<field name="res_model">make_master.info</field>
 		<field name="view_mode">tree,form</field>
+		<field name="context">{'active_test': False}</field>
 	</record>
 <!--==============================================Make Master End=========================================================== -->
 
@@ -211,11 +361,21 @@
 			<form string="MRP Type Master" delete="1" duplicate="0">
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
 				<sheet>
+
+					<!--Created-By | Created-Date|Info.
+                        Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+
+                    <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                    </div>
+
 					<group>
 						<field name="mrp_type_code"/>
 						<field name="mrp_description" style="text-transform: uppercase;"/>
 						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
-						<field name="active_flag" string="Is Active" widget='radio'/>						
+						<!-- <field name="active_flag" string="Is Active" widget='radio'/>						 -->
 					</group>
 				 </sheet>
 				 <!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
@@ -237,15 +397,43 @@
 				<field name="mrp_type_code"/>
 				<field name="mrp_description"/>
 				<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->					
-				<field name="active_flag" string="Is Active" widget='radio'/>				
+				<!-- <field name="active_flag" string="Is Active" widget='radio'/>				 -->
+				<!--Created-By | Created-Date|Info.
+                    Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+                <field name="active" widget="boolean_toggle"/>
+
 			</tree>
 		</field>
 	</record>
+
+	<!--Created-By | Created-Date|Info.
+        Pradip     |21-3-2019    |Filters Active/Inactive Records and Group By Active/Inactive Records -->
+    
+    <record id="mrp_type_master_info_search" model="ir.ui.view">
+            <field name="name">mrp_type_master.info.search</field>
+            <field name="model">mrp_type_master.info</field>
+            <field name="arch" type="xml">
+                <search string="Search MRP Type Master">
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active MRP Type Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive MRP Type Records" />
+                    
+                    <group string="Group By">
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active MRP Type Records" />
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive MRP Type Records" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+	
+    <!--Updated-By | Updated-Date |Info.
+        Pradip     |21-03-19      | Inactive MRP Type Master showing tree view(field name="context") -->
 
 	<record id="mrp_type_master_info_action" model="ir.actions.act_window">
 		<field name="name">MRP Type Master</field>
 		<field name="res_model">mrp_type_master.info</field>
 		<field name="view_mode">tree,form</field>
+		<field name="context">{'active_test': False}</field>
 	</record>
 	
 <!--==============================================MRP Type Master End======================================================== -->
@@ -257,12 +445,22 @@
 			<form string="Source Master" delete="0" duplicate="0">
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
 				<sheet>
+
+					<!--Created-By | Created-Date|Info.
+                        Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+
+                    <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                    </div>
+
 					<group>
 						<field name="source_code"/>				
 						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->				
 						<field name="source_description" style="text-transform: uppercase;"/>
 						<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->							
-						<field name="active_flag" string="Is Active" widget='radio'/>
+						<!-- <field name="active_flag" string="Is Active" widget='radio'/> -->
 					</group>
 				 </sheet>
 				<!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->				 
@@ -284,15 +482,46 @@
 				<field name="source_code"/>
 				<field name="source_description"/>
 				<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->					
-				<field name="active_flag" string="Is Active" widget='radio'/>
+				<!-- <field name="active_flag" string="Is Active" widget='radio'/> -->
+
+				<!--Created-By | Created-Date|Info.
+                    Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+                <field name="active" widget="boolean_toggle"/>
+
+
 			</tree>
 		</field>
 	</record>
+
+
+	<!--Created-By | Created-Date|Info.
+        Pradip     |21-3-2019    |Filters Active/Inactive Records and Group By Active/Inactive Records -->
+    
+    <record id="source_master_info_search" model="ir.ui.view">
+            <field name="name">source_master.info.search</field>
+            <field name="model">source_master.info</field>
+            <field name="arch" type="xml">
+                <search string="Search Source Master">
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Source Master Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Source Master Records" />
+                    
+                    <group string="Group By">
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Source Master Records" />
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Source Master Records" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+    <!--Updated-By | Updated-Date |Info.
+        Pradip     |21-03-19      | Inactive Source  Master showing tree view(field name="context") -->
 
 	<record id="source_master_info_action" model="ir.actions.act_window">
 		<field name="name">Source Master</field>
 		<field name="res_model">source_master.info</field>
 		<field name="view_mode">tree,form</field>
+		<field name="context">{'active_test': False}</field>
 	</record>
 	<!--=========================================Source Master End=============================================================== -->	
 	<!--=========================================HSN Master Start=============================================================== -->	
@@ -344,29 +573,18 @@
 		<field name="inherit_id" ref="product.product_template_only_form_view"/>
 		<field name="arch" type="xml">
 			<xpath expr="//field[@name='uom_po_id']" position="after">
-				<!--<field name="item_code_num" readonly="1"/>-->
 				<field name="drawing_number"/>	
 				<field name="revision_number"/>		
-				<!--<field name="text_master_id" attrs="{'readonly': [('default_code','!=',False )]}" options="{'no_create': True,'no_edit': True}" widget="selection" style="text-transform: uppercase;"/>-->
-				<!--<field name="item_type"/>-->
 				<!-- Updated-By:Pradip | Updated-Date:28-1-19 |Info. Only Active Flag Showing Here-->					
-				<field name="effect_code_description" domain="[('active_flag','=','Yes')]"/>
-				<field name="id_code_description" domain="[('active_flag','=','Yes')]"/>		
-				<field name="manufacturer" string="Manufacturer" domain="[('active_flag','=','yes')]"/>	
-				<!--<field name="mrp_type" options="{'no_create': True,'no_edit': True}" widget="selection"/>-->				
-				<!--<field name="source_code_master"/>-->
-				<!--<field name="hsn_num_master" invisible="1" options="{'no_create': True,'no_edit': True}" widget="selection"/>-->	
+				<!--Updated-By:Pradip |Updated-Date:21-3-19 |Info.name="effect_code_description",name="id_code_description",name="id_code_description",name="manufacturer"
+				Domain remove because by default only active id shown here-->
+				<field name="effect_code_description"/>
+				<field name="id_code_description" />		
+				<field name="manufacturer" string="Manufacturer" />	
 				<field name="mf_part_no"/>
-				<!--<field name="attach_pdf" filename="filename"/>-->
 				<field name="filename" invisible="1"/>			
-				<!--<field name="batch_qty" />--> <!-- attrs="{'readonly': [('mrp_type','=',1 )]}"-->
-				<!--<field name="reorder_level" /> --><!-- attrs="{'readonly': ['|',('mrp_type','=',1 ),('mrp_type','=',5 )]}"-->
 				<field name="bom_process_id"/>		                      
-				<!--<field name="buyer_code" options="{'no_create': True,'no_edit': True}" widget="selection"/>-->	
-				<!--<field name="bin_location"/>-->
-				<!--<field name="bulk_issue_flag"/>-->
-				<!--<field name="channel_flag"/>-->
-				<!--<field name="sr_no_application"/>-->
+			
 			</xpath>
 			
 			<!--Created-By:Pradip |Created-Date:17-1-19 |Info. Default_code is same as item_code_num -->
@@ -382,7 +600,8 @@
 		  
 		<!--Updated-By:Pradip |Updated-Date:21-1-19 |Info. According custom Designed Changes Adjust Fields  -->  
 		<xpath expr="//field[@name='l10n_in_hsn_code']" position="after">
-			<field name="source_code_master" domain="[('active_flag','=','Yes')]"/>
+			<!--Updated-By:Pradip |Updated-Date:21-3-19 |Info.name="source_code_master" Domain remove because by default only active id shown here-->
+			<field name="source_code_master"/>
 			<field name="buyer_code" options="{'no_create': True,'no_edit': True}" widget="selection"/>	
 			<field name="channel_flag"/>
 			<field name="sr_no_application"/>
@@ -391,16 +610,19 @@
 			   	
 		<!--Updated-By:Pradip |Updated-Date:21-1-19 |Info. According custom Designed Changes Adjust Fields  --> 	   	
 	   	<xpath expr="/form/sheet/notebook/page[@name='inventory']//field[@name='responsible_id']" position="after">
-			<field name="mrp_type" domain="[('active_flag','=','Yes')]" options="{'no_create': True,'no_edit': True}" widget="selection"/>			
-			<field name="batch_qty" />	
-			<field name="reorder_level" />	
+			<!--Updated-By:Pradip |Updated-Date:21-3-19 |Info.name="mrp_type" Domain remove because by default only active id shown here-->
+			<field name="mrp_type" 
+			attrs="{'required': ['|',('type','=','product'),('type','=','consu')]}"
+			options="{'no_create': True,'no_edit': True}" widget="selection"/>			
+			<field name="batch_qty" attrs="{'required': ['|',('type','=','product'),('type','=','consu')]}"/>	
+			<field name="reorder_level" attrs="{'required': ['|',('type','=','product'),('type','=','consu')]}"/>	
 	   </xpath>
 	   
 	   <xpath expr="/form/sheet/div[@class='oe_title']" position="replace">
-	   	
+	   		<!--Updated-By:Pradip |Updated-Date:21-3-19 |Info.name="text_master_id" Domain remove because by default only active id shown here-->
  			<div class="oe_title">
  						<label class="oe_edit_only" for="name" string="Text Master"/>
-                        <h5><field name="text_master_id" domain="[('active_flag','=','Yes')]" attrs="{'readonly': [('default_code','!=',False )]}" options="{'no_create': True,'no_edit': True}"  
+                        <h5><field name="text_master_id"  attrs="{'readonly': [('default_code','!=',False )]}" options="{'no_create': True,'no_edit': True}"  
                         	style="text-transform: uppercase;font-weight:normal; "/></h5> 
                         <label class="oe_edit_only" for="name" string="Product Name"/>
                         <h5><field name="name" placeholder="Product Name" style="text-transform: uppercase;font-weight:normal; "/></h5>
@@ -417,11 +639,7 @@
                     </div>	   	</xpath>
 	   
 	   
-	   <!--<xpath expr="/form/sheet/div/div[@name='options']" position="after">
-	   	<group>
-        	<field name="text_master_id" string="Text Master"/>
-				</group>
-	   	</xpath>-->
+	   
 	   
 	   
 	   
@@ -437,10 +655,10 @@
 
 			<xpath expr="//group[@name='inventory']//field[@name='route_ids']" position="after">
 				<!-- Updated-By:Pradip | Updated-Date:28-1-19 |Info. Only Active Flag Showing Here-->
-				<field name="item_type" domain="[('activeflag','=','Y')]"/>
+				<field name="item_type"   attrs="{'required': ['|',('type','=','product'),('type','=','consu')]}"/>
 				<field name="bulk_issue_flag"/>
-		   	</xpath>
-		   	
+			</xpath>
+		   	<!-- options="{'no_create': True,'no_edit': True,'no_open': True}" -->
         </field>
     </record>
 <!--=========================================Product Template Inhe {Master's form} END====================================-->

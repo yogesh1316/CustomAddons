@@ -10,7 +10,7 @@ class Operation_parameter_master(models.Model):
     _name='operation.parameter.master'
     _inherit = ['mail.thread', 'mail.activity.mixin', 'portal.mixin']
 
-    #_rec_name='operation_description'
+    _rec_name='oper_descr_id'
     _description='Operation Parameter Master'
 
     oper_descr_id=fields.Many2one('operation.master',required=True,string='Operation Description',help="Operation Description")

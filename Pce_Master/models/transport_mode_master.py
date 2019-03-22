@@ -17,10 +17,14 @@ class transport_mode_master(models.Model):
     #Pradip    |12-3-2019   | All fileds added in Chatter Box   
     
     transport_mode_code=fields.Char(string='Transport Mode Code',readonly=True,store=True,track_visibility='onchange',help='Transport Mode Code.')
-    active_flag=fields.Selection([('yes','Yes'),('no','No')],default='yes',track_visibility='onchange',help='Activate/Deactivate')
+    # active_flag=fields.Selection([('yes','Yes'),('no','No')],default='yes',track_visibility='onchange',help='Activate/Deactivate')
     transport_mode_desc=fields.Char(string='Transport Mode Description',required=True,track_visibility='onchange',help='Transport Mode Description')
     unique_transport_mode_desc=fields.Char(string='Unique Transport Mode Desc.',compute='transport_mode_desc_fun',store=True)
    
+    #Created By| Created Date|Info.
+    #Pradip    | 21-3-2019  |Active /Deactivate Flag
+    active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Deactivate Transport Mode Master Records")
+
 
 
     # Created By | Created Date |Info.

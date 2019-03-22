@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+<!--create_by | create_date | update_by | update_date
+    Pradip      11/12/2018     Pradip     13/12/2018   
+    Info.: GRN Report-->
+    <!-- Including Custom Css File-->
+  <template id="assets_pdf_css" name="Custom Report CSS" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <link href="/Purchase_Report/static/src/css/custom.css" rel="stylesheet"/>
+        </xpath>
+    </template> 
+
+    <template id="web.purchase_order_report_main_purchase_id">
+        <div class="header o_boxed_header">
+            <center>
+        	<div class="row mb8 ">
+            	<div class="col-xs-10" >
+            	<center class="fonts_size" style="font-weight: bold;padding-left: 90px;">
+                    		<u>PURCHASE ORDER</u>
+            	</center><br/>
+            	<tr>
+            		 <p style="font-weight: bold;font-size: 20px;color:black;text-transform: uppercase;padding-left: 90px;line-height:0px;"
+            		   t-field="o.company_id.name"/>
+                                <span class="fonts_size" t-field="o.company_id.street" 
+                                 style="padding-left: 90px;"/>
+                                <span t-field="o.company_id.street2" class="fonts_size"/>
+                                <span t-field="o.company_id.city" class="fonts_size"/>
+                                -
+                                <span t-field="o.company_id.zip" class="fonts_size"/>
+								<br/> 
+									    
+								<ul class="list-inline">
+									
+                               			<span style="padding-left: 15px;"  class="fonts_size">Phone:</span>
+                               	 		<span t-field="o.company_id.phone"   class="fonts_size"/>
+                            		
+										<span class="fonts_size">Email:</span>
+		                                <span t-field="o.company_id.email" class="fonts_size"/>
+                            		
+                            
+                            			<label class="fonts_size">GSTIN:</label>
+                            			<span t-field="o.company_id.vat" class="fonts_size"/>
+                            		
+                            			<label class="fonts_size">STATE CODE:</label>
+                            			<span t-field="o.company_id.state_id.id" class="fonts_size"/>
+								</ul>    
+						 
+                </tr>
+                </div>
+            
+            <div class="col-xs-2">
+            	<img t-if="o.company_id.logo" style="padding-top: 15px;" align="right" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)"/>
+           
+            		</div>
+           
+            </div>
+            </center>
+            <!-- ============================== -->
+            
+            	           <!-- <div class="page_border"/>-->
+            <table style="border: 1px solid;" width="100%">
+         					  <tbody style= "border-bottom: 1px solid;">    
+								<tr >
+									<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;border:1px solid;" >
+	    								<span style="font-weight:bold;" class="fonts_size">To :</span>
+										<span t-field="o.partner_id.name" class="fonts_size" style="padding-left: 5px;font-weight:bold;"/> 
+									<br/>
+										<span t-field="o.partner_id.street" style="padding-left: 29px;" class="fonts_size"
+										/><br/>
+										<span t-field="o.partner_id.street2" class="fonts_size" style="padding-left: 29px;"
+										 /><br/>
+										
+										<!--<normal style="padding-left: 29px;" class="fonts_size">GRAND - </normal>
+										<normal t-field="o.amount_total" class="fonts_size"/><br/>-->
+										
+										<strong style="padding-left: 29px;" class="fonts_size">GSTIN :</strong>
+										<normal t-field="o.partner_id.vat" class="fonts_size"/><br/>
+										
+										<strong style="padding-left: 29px;" class="fonts_size">STATE CODE :</strong>
+										<normal t-field="o.partner_id.state_id.id" class="fonts_size"/><br/>
+										
+										<normal style="padding-left: 29px;" class="fonts_size">Vendor Code :</normal>
+										<normal t-field="o.partner_id.id" class="fonts_size"/><br/>	
+											
+	 								 </td>
+	 								 <td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;background-color: #ffffff;">
+	    								<span style="font-weight:bold;" class="fonts_size">Purchase Order No. : </span>
+	    								<sapn t-field="o.name" style="font-weight:bold;padding-left: 5px;" class="fonts_size"/><br/>
+	    								
+	    								<normal class="fonts_size">Date</normal><normal style="padding-left: 100px;">:</normal>
+	    								<span  t-field="o.date_order" class="fonts_size" style="padding-left: 6px;" 
+	    								t-field-options='{"format": "dd/MM/yyyy"}' /><br/>
+				    								
+	    								<normal class="fonts_size">Quotation No.</normal><normal style="padding-left: 43px;">:</normal>
+	    								<normal class="fonts_size" t-field="o.name" style="padding-left: 6px;"/><br/>
+	    								
+	    								<normal class="fonts_size">Quotation Date</normal><normal style="padding-left: 36px;">:</normal>
+	    								<normal t-field="o.date_order"  class="fonts_size" style="padding-left: 6px;" 
+	    								t-field-options='{"format": "dd/MM/yyyy"}' /><br/><br/>
+	    								
+	    		<!-- ========================= -->
+	    			<t t-if="o.state=='draft'">
+	    			<normal style="padding-left: 56px;font-size: 20px;color : red;" >PO PENDING FOR APPROVAL.</normal>	
+	    				
+	    			</t>
+	    			<t t-if="o.state=='sent'">
+		    			<normal style="padding-left: 56px;font-size: 20px;color : red;">PO PENDING FOR APPROVAL.</normal>	
+					</t>
+
+					<!-- <t t-if="o.state=='purchase'">
+		    			<normal style="padding-left: 56px;font-size: 20px;color : red;">PO PENDING FOR APPROVAL.</normal>	
+					</t> -->
+
+					<!-- <t t-if="o.state=='to approve'">
+		    			<normal style="padding-left: 56px;font-size: 20px;color : red;">PO PENDING FOR APPROVAL.</normal>	
+					</t>
+	    							 -->
+				<!-- ========================= -->    									
+
+		 								 </td>
+	 								
+								</tr>   
+								      					  	
+         					  	</tbody>    
+         					  	
+         					  	<tbody style= "border-bottom: 1px solid;">    
+								<tr>
+									<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;border:1px solid;">
+									<span style="font-weight:bold;" class="fonts_size">Bill</span>
+									<span class="fonts_size" t-field="o.company_id.name" style="padding-left: 5px;font-weight:bold;"/><br/>
+									<span class="fonts_size" style="font-weight:bold;">To :</span><span class="fonts_size" t-field="o.company_id.street" style="padding-left: 5px;"/><br/>
+									<span class="fonts_size" t-field="o.company_id.street2" style="padding-left: 26px;"/><br/>									
+									<span class="fonts_size" t-field="o.company_id.city" style="padding-left: 26px;"/>-<span class="fonts_size" t-field="o.company_id.zip"/><br/>	
+									<span class="fonts_size" style="padding-left: 26px;">Phone :</span><span class="fonts_size" t-field="o.company_id.phone" /><br/>									
+										
+										</td>
+								
+									<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;background-color: #ffffff;">
+										<span style="font-weight:bold;" class="fonts_size">Ship</span>
+									<span t-field="o.company_id.name" class="fonts_size" style="padding-left: 5px;font-weight:bold;"/><br/>
+									<span class="fonts_size"  style="font-weight:bold;">To :</span><span class="fonts_size" t-field="o.company_id.street" style="padding-left: 11px;"/><br/>
+									<span class="fonts_size" t-field="o.company_id.street2" style="padding-left: 32px;"/><br/>									
+									<span class="fonts_size" t-field="o.company_id.city" style="padding-left: 32px;"/>-<span class="fonts_size" t-field="o.company_id.zip"/><br/>	
+									<span class="fonts_size"  style="padding-left: 32px;">Phone :</span><span class="fonts_size" t-field="o.company_id.phone" /><br/>		
+										</td>
+										
+								</tr>         					  	
+         					  	</tbody>  
+                    		   </table>
+        </div>
+
+        <div class="article o_report_layout_boxed">
+            <t t-raw="0" />
+            
+        </div>
+
+        <div class="footer" align="right"> <!--<div class="footer o_boxed_footer"> bottom border</div>-->
+                            
+                 <span class="fonts_size" > Page </span>
+                    <span class="page" style="font-size:14px;padding-left: 14px;"/>
+                    <span style="padding-left: 8px;" class="fonts_size"> of </span>
+                    <span class="topage"  style="font-size:14px;"/>
+        </div>
+                   
+	<!--<div class="footer" align="right">
+                    <small class="fonts_size">
+                        <span >Page </span>
+                        <span style="padding-right: 3px;" class="page" />
+                         of
+                        <span class="topage" />
+                    </small>
+                </div>-->
+        	
+        	
+        	
+        	    </template>
+
+</data>

@@ -18,25 +18,16 @@
                     <field name="operation_descr_id"/>
                 </xpath>
 
+                <!-- Updated-By-Pradip |Updated-Date-20-3-2019 | Info.Save and New Button Disable -->
+                <xpath expr="//form" position="inside">
+                    <style>
+                        .btn-primary:nth-child(2){
+                            display:none !important;
+                        }
+                    </style>
+                </xpath>
             </field>
         </record>
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         
     </data>
 </odoo>

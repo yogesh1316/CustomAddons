@@ -16,7 +16,7 @@
 
                         <group>
                             <field name="parameter_description" style="text-transform: uppercase;"/>
-                            <field name="unique_parameter_description"/>
+                            <!-- <field name="unique_parameter_description"/> -->
 
                         </group>
                     </sheet>
@@ -64,11 +64,11 @@
 
 
                     <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Parameter Master Records" />
-                    <filter name="inactive" string="Inactive" domain="[('active','=',False)]" help="Show Deactivate Parameter Master Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Parameter Master Records" />
                    
                     
                     <group string="Group By">
-                        <filter string="Active" domain="[]" context="{'group_by':'active'}" help="Display Group By Active Parameter Master Records" />
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Parameter Master Records" />
                         <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Parameter Master Records" />
                     </group>
                 </search>

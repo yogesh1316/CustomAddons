@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>		
+	<data>
+	<!--create_by | create_date | update_by | update_date
+        Pradip      11/12/2018     Pradip     13/12/2018   
+        Info.: Purchase Report -->
+		<!--Imp. Note. Plz go to settings in Language Direction Left to right,after that  enter Seprator format[3,2,0] for indian currency format -->
+
+		<template id="purchase_order_report_main_purchase_id">
+			<t t-call="web.html_container">
+        		<t t-foreach="docs" t-as="o">
+            		<t t-call="web.purchase_order_report_main_purchase_id">
+            			<div class="page" >
+            				
+            				
+							<t t-set="end" t-value="None"/>	
+								<table class="table table-condensed" style="border: 1px solid black;border-collapse: collapse;">
+                 					<thead style="border: 1px solid black;border-collapse: collapse;">
+                        				<tr>
+				                            <td style="border: 1px solid black;border-collapse: collapse;">
+				                                <span style="font-weight: bold;" class="fonts_size">Sr.<br/> No.</span>
+				                            </td>
+                            
+				                            <td style="border: 1px solid black;border-collapse: collapse;text-align: center;">
+				                                <span  style="font-weight: bold;" class="fonts_size">Part No</span>
+				                            </td>
+				                            
+				                           <td style="text-transform: capitalize;text-align: center;border: 1px solid black;border-collapse: collapse;">
+				                                <span style="font-weight: bold;" class="fonts_size">Description</span>
+				                           </td>
+                            
+				                            <td class="text-right" style="text-transform: capitalize;text-align: center;border: 1px solid black;border-collapse: collapse;">
+				                                <span style="font-weight: bold;" class="fonts_size">Qty</span>
+				                            </td>
+				                             <td class="text-right" style="text-transform: capitalize;text-align: center;border: 1px solid black;border-collapse: collapse;">
+				                                <span style="font-weight: bold;" class="fonts_size">UOM</span>
+				                            </td>
+				                            
+				                            <td class="text-right" style="text-transform: capitalize;text-align: center;border: 1px solid black;border-collapse: collapse;">
+				                                <span style="font-weight: bold;" class="fonts_size">Need By</span>
+				                            </td>
+				                            <td class="text-right" style="text-transform: capitalize;text-align: center;border: 1px solid black;border-collapse: collapse;">
+				                                <span style="font-weight: bold;" class="fonts_size">Rate</span>
+				                            </td>
+				                            <td class="text-right" style="text-transform: capitalize;text-align: center;border: 1px solid black;border-collapse: collapse;">
+				                                <span style="font-weight: bold;" class="fonts_size">GST <br/>(%)</span>
+				                            </td>
+				                            
+				                            
+				                            <td class="text-right" style="text-transform: capitalize;text-align: center;border: 1px solid black;border-collapse: collapse;">
+				                                <span style="font-weight: bold;" class="fonts_size">Amount</span>
+				                            </td>
+				                             
+				                            <td class="text-right" style="text-transform: capitalize;text-align: center;border: 1px solid black;border-collapse: collapse;">
+				                                <span style="font-weight: bold;" class="fonts_size">HSN No.</span>
+				                             </td>
+				                             
+				                             
+  <!-- <td class="text-right" style="text-transform: capitalize;text-align: center;border: 1px solid black;border-collapse: collapse;">
+        <span style="font-weight: bold;" class="fonts_size">CGST</span>
+     </td>-->
+                        				</tr>
+                    			</thead>
+                    		<tbody>
+                  
+                    	
+                    	<!-- purchase order line fields addedd below -->
+                    	<tr t-foreach="o.order_line" t-as="line">
+                            <td class="text-center" style="border: 1px solid black;border-collapse: collapse;">
+                                <span t-esc="line_index + 1" class="fonts_size"/>
+                            </td>
+                            <td class="text-left" style="border: 1px solid black;border-collapse: collapse;">
+                                <span class="fonts_size" t-field="line.product_id.manufacturer"/>
+								<strong>:</strong> 
+								<span class="fonts_size" t-field="line.product_id.mf_part_no"/>
+                             </td>
+							
+                            <td class="text-left" style="border: 1px solid black;border-collapse: collapse;">
+								<span class="fonts_size" t-field="line.product_id.default_code" style="word-break: break-word;"/>
+								<strong>;</strong> 
+									<span class="fonts_size" t-field="line.product_id.text_master_id.text_description" style="word-break: break-word;"/>                                
+                            </td>
+                            
+                            <td class="text-right" style="border: 1px solid black;border-collapse:collapse;">
+                            	<span class="fonts_size" t-field="line.product_qty"/>
+                            </td>
+							
+                            <td class="text-left" style="border: 1px solid black;border-collapse:collapse;">
+                            	<span class="fonts_size" t-field="line.product_uom"/> 
+                            </td>
+                            <td class="text-left" style="border: 1px solid black;border-collapse:collapse;">
+                            	<span class="fonts_size" t-field="o.date_planned"  t-field-options='{"format": "dd/MM/yyyy"}'/> 
+                            </td> 
+                            <td class="text-right" style="border: 1px solid black;border-collapse:collapse;">
+                            	<span class="fonts_size" t-field="line.price_unit"/>
+                              </td>
+                            
+                        
+                           <td class="text-right" style="border: 1px solid black;border-collapse:collapse;">
+                            	<span class="fonts_size" t-esc="str(line.taxes_id.name)[4:] if line.taxes_id.name else ''" />
+                            </td> 
+                            <td class="text-right" style="border: 1px solid black;border-collapse:collapse;">
+                            	<!--<span class="fonts_size" t-field="line.price_subtotal" /> ===mamcode final code-->
+                            	
+
+		<!--=update code PRY 24-12-2018==--><span class="fonts_size" t-esc="o.set_amt(line.price_subtotal)" />
+                            		
+                            		
+                            		
+                            		                            </td> 
+                             
+                              <td class="text-left" style="border: 1px solid black;border-collapse:collapse;background-color: #ffffff;">
+                            	<span class="fonts_size" t-field="line.product_id.l10n_in_hsn_code"/>
+                              </td>   
+                              
+                     	 
+                                                     
+                        </tr>
+            		</tbody>
+            	</table>	
+            	
+            	
+            	
+       
+						
+				
+ <table width="100%" style="margin-top: -20px;border-top: 0px solid black;">
+            	<tr>
+            		<td width="50%" style="font-weight: bold;padding-left: 5px;padding-top:5px;padding-bottom:5px;">
+            			<span class="fonts_size">Please mention GSTIN of supplier (Your Firm) andCustomer (PCE) on Tax Invoice</span>
+			<br/><br/>
+		
+				
+				
+				<div>
+					
+					<table  style="border-top: 0px solid black;border-bottom: 0px solid black;border-left: 0px solid black;border-right: 0px solid black;">
+						<tr>
+						<td width="28%" style="border-right: 0px solid black;">
+							<span class="fonts_size" >PAYMENT TERM :</span><span class="fonts_size" /><br/>
+
+								
+														</td>
+						<td style="background-color: #ffffff;padding-right:-5px;border-right: 0px solid black;">
+							<span  t-field="o.payment_term_id" class="fonts_size"/><br/>
+						</td>
+						</tr>
+						<tr>
+						<td width="28%" style="border-right: 0px solid black;">
+							<span class="fonts_size" >DELIVERY TERM :</span><span class="fonts_size" /><br/>
+
+								
+														</td>
+						<td style="background-color: #ffffff;padding-right:-5px;border-right: 0px solid black;">
+							<!--<span  t-field="o.deliver_term_id" class="fonts_size"/>--><br/>
+						</td>
+						</tr>
+						
+						<tr>
+						<td width="28%" style="border-right: 0px solid black;">
+							<span class="fonts_size" >TRANSPORT</span><strong class="fonts_size" 
+							style="padding-left: 30px;">:</strong><span class="fonts_size" /><br/>
+
+								
+														</td>
+						<td style="background-color: #ffffff;padding-right:-5px;border-right: 0px solid black;">
+							<!--<span  t-field="o.transport_mode_id" class="fonts_size"/>--><br/>
+						</td>
+						</tr>
+						
+							<!--<tr>
+								<td width="28%" style="border-right: 0px solid black;"><br/>
+							<span class="fonts_size" style="font-weight: bold;">Note</span><strong class="fonts_size" 
+							style="padding-left: 83px;">:</strong><span class="fonts_size" /><br/>
+
+								
+														</td>
+						<td style="background-color: #ffffff;padding-right:-5px;border-right: 0px solid black;"><br/>
+							<span  t-field="o.notes" class="fonts_size"/><br/>
+						</td>
+						</tr>-->
+					</table>
+					
+					
+					
+				</div>
+		<!--<span class="fonts_size" style="font-weight: bold;">PAYMENT TERM</span><span class="fonts_size" style="padding-left: 5px;">: </span>
+    		<span  t-field="o.payment_term_id" class="fonts_size"/><br/>-->
+    	
+		<!--<span class="fonts_size" style="font-weight: bold;">DELIVERY TERM</span><span class="fonts_size" style="padding-left: 5px;">:</span>
+			<span  t-field="o.deliver_term_id" class="fonts_size"/><br/>	-->
+				 
+		<!--<span class="fonts_size" style="font-weight: bold;">TRANSPORT</span><span class="fonts_size" style="padding-left: 31px;">:</span>
+			<span  t-field="o.transport_mode_id" class="fonts_size"/><br/><br/>-->
+			<br/><span class="fonts_size" style="font-weight : normal;">Note :</span><span t-field="o.notes" style="font-weight : normal;padding-left:5px;"></span>
+            		</td>
+            		<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;background-color: #ffffff;">
+            			<span class="fonts_size" style="font-weight: bold;">Sub Total</span><span class="fonts_size" style="padding-left: 20px;">:</span>
+			<span t-esc="o.set_amt(o.amount_untaxed)" style="float:right;margin-right:7px;" class="fonts_size" /><br/><br/><br/><br/>
+				<span  t-foreach="o.order_line.calculate_cgst_sgst()" t-as='k'>
+					<span class="fonts_size" t-esc='k[0]' /><span class="fonts_size" style="padding-left: 10px;">:</span> 
+					<!-- mam code final<span t-esc='k[1]' style="float:right;margin-right:7px;"  class="fonts_size" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/><br/>-->
+					
+<!--=update code PRY 24-12-2018==--><span class="fonts_size" t-esc="o.set_amt(k[1])" style="float:right;margin-right:7px;"/><br/>
+				 </span>
+				 	<span  t-foreach="o.order_line.caculate_igst()" t-as="igst">
+				 		 <span class="fonts_size" t-esc='igst[0]' />
+				 	 	<span class="fonts_size" style="padding-left: 21px;">:</span>
+				 	 	
+				 	 	<!--<span t-esc='(igst[1])' class="fonts_size" style="float:right;margin-right:7px;" 
+				 	       t-options='{"widget": "monetary", "display_currency": o.currency_id}'  /> mamm final code -->
+				 	 	
+<!--=update code PRY 24-12-2018==--><span class="fonts_size" t-esc="o.set_amt(igst[1])" style="float:right;margin-right:7px;"/>
+
+				 	 	<br/><!--t-options='{"widget": "monetary", "display_currency": o.currency_id}'-->
+				 	 </span>
+            		</td>
+            		
+            	</tr>
+            </table>
+            
+            
+            
+           
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            	<table width="100%" style="margin-top: -2px;border-top: 0px solid black;" >
+            		<tr><!-- border: 1px solid black;-->
+            			<td width="50%" style=" border-collapse: collapse;padding-left: 10px;padding-top:10px;padding-bottom:10px;padding-right:10px;"> 
+	            				<span style="font-weight: bold;" class="fonts_size">Amount In Words:</span>
+	            				<span style="padding-left: 10px;" class="fonts_size" t-esc="o.set_amt_in_text(o.amount_total)"/>
+	            	
+	                    		<span> <!-- border: 1px solid black; -->
+	                    			<td width="15%" style="font-weight: bold; border-collapse: collapse;padding-left: 10px;padding-top:10px;padding-bottom:10px;">
+	                    				<span style="font-weight: bold;margin-left: -5px;" class="fonts_size">Grand Total Rs.</span>
+	                				</td>
+	                			</span>
+            				</td>
+            				
+            		    <td width="37%" align="right" 
+	 style="font-weight: bold;border: 1px solid black;background-color: #ffffff;
+            border-collapse: collapse;padding-left: 10px;padding-right: 10px;padding-top:10px;padding-bottom:10px;"> 
+					 		<span style="font-weight: bold;" class="fonts_size" t-esc =" o.set_amt(o.amount_total)"/>
+					   </td>
+            		</tr>
+            		
+            	</table>     
+            	<table width="100%" style="margin-top: -2px;border-top: 0px solid black;">
+            		<tr>
+            			<td width="100%" style="font-weight: bold;background-color: #ffffff;border: 1px solid black; border-collapse: collapse;padding-left: 10px;padding-top:10px;padding-bottom:10px;">
+            				<span style="font-weight: bold;" class="fonts_size">Note :</span><br/>
+            				<span style="font-weight: normal;" class="fonts_size" >1. Order Acknowledge is required else order be treated as accepted.</span><br/>
+            				<span style="font-weight: normal;" class="fonts_size">2. Test Certificate, Tax Invoice copy and/or commercial invoice shall accompany the consignment.</span><br/>
+            				
+        					<span style="font-weight: normal;" class="fonts_size">3. Purchaser shall have right to cancel,amend or alter the PO for breach of any of the condition of w/o assigning any</span><br/>
+            				<span style="font-weight: normal;padding-left: 15px;" class="fonts_size">reasons or alter delivery schedule and shall increase no liability what so ever for the same.</span><br/>
+            				<span style="font-weight: normal;" class="fonts_size">4. Order is subject to Pune Court of Jurisdiction</span><br/>
+            				<span style="font-weight: normal;" class="fonts_size">5. All taxes and Duties should be currently applicable(as per government law)</span><br/>
+            				<span style="font-weight: normal;" class="fonts_size">6. In case of chage of rate ,discount,make or any other major change,please inform us before the supply.</span><br/>
+            			</td>
+            		</tr>
+            	</table>
+            	
+            	<table width="100%" style="border-top: 0px solid black;">
+            		<td width="100%" style="background-color: #ffffff;">
+                           <br/><br/>
+                            	<span style="font-weight: bold;padding-left: 5px;" class="fonts_size">Prepared By :</span>
+                            	<span style="font-weight: bold;padding-left: 355px;" class="fonts_size">Approved By :</span>
+                            	
+                            	<br/><br/>
+                        </td>
+            	</table> 
+			</div>
+            
+           
+
+
+
+
+		</t>
+	</t>
+</t>
+</template>
+	
+	<template id="report_purchase_main_menu">
+		<t t-call="web.html_container">
+	        <t t-foreach="docs" t-as="o">
+	            <t t-call="Purchase_Report.purchase_order_report_main_purchase_id" t-lang="o.partner_id.lang"/>
+	            </t>
+	        </t>
+		</template>
+	</data> 
+</odoo>

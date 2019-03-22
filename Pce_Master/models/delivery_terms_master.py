@@ -16,11 +16,15 @@ class delivery_term_master(models.Model):
     #Updated-By:Pradip|Updated-Date:12-3-19|Info.all fields added in chatter Box 
 
     deliv_term_code=fields.Char(string='Delivery Term Code',store=True ,track_visibility='onchange',help='Delivery Term Code') 
-    active_flag=fields.Selection([('yes','Yes'),('no','No')],default='yes',track_visibility='onchange',help='Activate/Deactivate')
+    # active_flag=fields.Selection([('yes','Yes'),('no','No')],default='yes',track_visibility='onchange',help='Activate/Deactivate')
     delivery_term=fields.Char(string='Delivery Term',required=True,track_visibility='onchange',help='Delivery Term Description.')
     unique_delivery_term=fields.Char(string='Unique Delivery Term',compute='unique_delivery_term_fun',store=True)
     
-    sample_active=fields.Boolean(string="Sample Test Active")
+    # sample_active=fields.Boolean(string="Sample Test Active")
+
+    #Created By| Created Date|Info.
+    #Pradip    | 21-3-2019  |Active /Deactivate Flag
+    active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Deactivate Delivery Term Records")
 
 
 
