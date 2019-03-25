@@ -5,16 +5,26 @@
         <field name="name">Transport Mode Master</field>
         <field name="model">transport_mode.master</field>
         <field name="arch" type="xml">
-            <form string="Transport Mode Master" delete="0" duplicate="0">
+            <form string="Transport Mode Master" delete="1" duplicate="0">
+            	<sheet>
             	<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
                 <group string="Transport Mode">
                     <group name="Transport Mode Master">
                     	<field name="transport_mode_code" readonly="1"/>
-                        <field name='transport_mode_desc' /> 
+						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->                    	                    	
+                        <field name='transport_mode_desc' style="text-transform: uppercase;"  /> 
                         <!--<field name='unique_transport_mode_desc' />-->
                         <field name='active_flag' string="Is Active" widget='radio'/>                
                     </group>
                 </group>
+                
+                </sheet>
+                 <!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
+                  <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>

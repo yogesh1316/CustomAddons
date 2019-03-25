@@ -491,13 +491,15 @@ class MrpProduction(models.Model):
                             productqty = 0    
                             for qty in self.move_raw_ids.filtered(lambda x: x.state not in ('done','cancel')):       
                                 productqty =   qty.reserved_availability / qty.unit_factor 
-                                if math.floor(productqty) != 0:
-                                    temp.append(math.floor(productqty))   
-                            minqty = min(temp)
-                            if minqty == 0:
-                                raise UserError(_('In sufficient stock for child item') )                                
-                            else:                         
-                                move.quantity_done = float_round(minqty * move.unit_factor, precision_rounding=rounding)
+                                if productqty:
+                                    if math.floor(productqty) != 0:
+                                        temp.append(math.floor(productqty))   
+                            if temp:
+                                minqty = min(temp)
+                                if minqty == 0:
+                                    raise UserError(_('In sufficient stock for child item') )                                
+                                else:                         
+                                    move.quantity_done = float_round(minqty * move.unit_factor, precision_rounding=rounding)
 
             if minqty:
                 if self.produced_qty < 0:
@@ -663,7 +665,9 @@ class StockMove(models.Model):
                             available_move_lines[(move_line.location_id, move_line.lot_id, move_line.result_package_id, move_line.owner_id)] -= move_line.product_qty
                     for (location_id, lot_id, package_id, owner_id), quantity in available_move_lines.items():
                         need = move.product_qty - sum(move.move_line_ids.mapped('product_qty'))
-                        taken_quantity = move._update_reserved_quantity(need, quantity, location_id, lot_id, package_id, owner_id)
+                        taken_quantity = move._update_reserved_quantity(need, quantity, location_id, lot_id, package_id, owner_id)                        
+                        # Update : If Product is make_to_order then taken_quantity directly come from PO so we update that taken_quantity in issue_qty 19/03/19
+                        move.write({'issue_qty': taken_quantity})
                         if float_is_zero(taken_quantity, precision_rounding=move.product_id.uom_id.rounding):
                             continue
                         if need - taken_quantity == 0.0:

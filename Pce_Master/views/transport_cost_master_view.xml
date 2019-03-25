@@ -1,52 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 	
-	
-	
-		<template id="my_assets_id21" name="website assets for my module" inherit_id="web.assets_backend">
+	<template id="my_assets_id21" name="website assets for my module" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
         <link rel="stylesheet" href="/Pce_Master/static/src/css/custom_css.css"/>
         </xpath>
     </template>
-	
-    
-     	<!--<record id="transport_cost_master_searc_view" model="ir.ui.view">
-        <field name="name">transport_cost.master</field>
-        <field name="model">transport_cost.master</field>
-        <field name="arch" type="xml">
-            <search>
-				<field name='active_flag' string="Is Active" widget='radio'/>                
-            </search>
-        </field>
-    	</record>-->
-    
-    
-    
 	
 	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Transport Cost Master Form View--> 
     <record id="transport_cost_master_form_view" model="ir.ui.view" >
         <field name="name">Transport Cost Master</field>
         <field name="model">transport_cost.master</field>
         <field name="arch" type="xml">
-            <form string="Transport Cost Master" delete='0' duplicate='0' >
-            	
-            	
-            	<!--<sheet >--> 
-            		
+            <form string="Transport Cost Master" delete='1' duplicate='0' >
+            	<sheet>
             	<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
                 <group string="Transport Cost">
                     <group name="Transport Cost Master">
                     	<!--<field name="id" readonly="1"/>-->
                     	<field name="transport_cost_code" />
-                        <field name='transport_cost_desc' /> 
+						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->                    	
+                        <field name='transport_cost_desc' style="text-transform: uppercase;" /> 
                         <!--<field name='unique_transport_cost_desc' />-->
                         <field name='active_flag' string="Is Active" widget='radio'
                          />                
                     </group>
                 </group>
-                
-                
-                <!--</sheet>-->
+                 </sheet>
+                 <!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
+                  <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
                 
             </form>
         </field>
