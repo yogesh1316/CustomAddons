@@ -6,13 +6,24 @@
         <field name="model">item.type.master</field>
         <field name="arch" type="xml">
             <form string="Item Type Master">
+            	<sheet>
                 <group string="Item Type Details">
                     <group name="Item_Type_Master">
-                        <field name='item_type_name' /> 
+                    	<field name="item_type_code"/>
+						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->                    	
+                        <field name='item_type_name' style="text-transform: uppercase;" /> 
+                        	<!--<field name='unique_item_name' /> -->
                     	<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->
                         <field name='activeflag' string="Is Active" widget='radio'/>                        
                     </group>
                 </group>
+                </sheet>
+                <!--Created-By:Pradip Created-Date:12-03-2019 Info. Chatter Box -->
+                 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
@@ -22,6 +33,8 @@
         <field name="arch" type="xml">
             <tree string="Item Type Info">
                 <field name='id' string="Id" width="10px" class="o_id_code_master_info_new"/>
+								<field name="item_type_code" string="Item Type Code"  class="o_id_code_master_info_new"/>                
+                	                
                 <field name='item_type_name' string="Item Type Name" />
 				<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->                
             	<field name='activeflag' string="Is Active" widget='radio'/>   

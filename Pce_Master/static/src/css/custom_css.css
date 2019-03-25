@@ -2,7 +2,40 @@
 	text-align: left !important;
  
 }
- 
+.o_material_group_master ,th{
+	text-align: left !important;
+	max-width: 30px;
+	text-align: center;
+} 
+
+
+.o_material_master ,th{
+	text-align: left !important;
+	max-width: 40px;
+	text-align: center;
+}
+
+.o_operation_master ,th{
+	text-align: left !important;
+	max-width: 5px;
+	text-align: center;
+}
+
+.o_parameter_master ,th{
+	text-align: left !important;
+	max-width: 5px;
+	text-align: center;
+}
+
+
+/* .o_operation_parameter ,th{
+	text-align: center !important;
+	max-width: 40px;
+
+} */
+
+
+
 
 .sheet_size,sheet{
 

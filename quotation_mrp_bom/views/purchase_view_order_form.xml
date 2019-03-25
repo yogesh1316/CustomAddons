@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--    |Created By      |Created Date | Info.
+        |Pradip          |21 Feb.,2019 |Follwing Columns Width Adjusted Only   -->
+        <record model="ir.ui.view" id="purchase_view_order_form_inherit">
+            <field name="name">purchase.order.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr='//field[@name="order_line"]/tree/field[@name="product_id"]' position="replace">
+                    <field name="product_id" 
+                        attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}" 
+                        context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}" 
+                        force_save="1"
+                        style="min-width: 380px;"/>
+                </xpath>
+
+                <xpath expr='//field[@name="order_line"]/tree/field[@name="name"]' position="replace">
+                    <field name="name" style="min-width: 380px;"/>
+                </xpath>
+
+                <xpath expr='//field[@name="order_line"]/tree/field[@name="product_uom"]' position="replace">
+                    <field name="product_uom" 
+                        groups="product.group_uom" 
+                        attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}" 
+                        force_save="1"
+                        string="Product (U.O.M)"
+                        style="min-width: 65px;"/>
+                </xpath>
+
+                <xpath expr='//field[@name="order_line"]/tree/field[@name="price_unit"]' position="replace">
+                    <field name="price_unit" style="min-width: 67px;"/>
+                </xpath>
+
+                <xpath expr='//field[@name="order_line"]/tree/field[@name="taxes_id"]' position="replace">
+                    <field name="taxes_id" 
+                        widget="many2many_tags" 
+                        domain="[('type_tax_use','=','purchase')]" 
+                        context="{'default_type_tax_use': 'purchase'}" 
+                        options="{'no_create': True}"
+                        style="min-width: 50px;"/>
+                </xpath>
+            </field>
+        </record> 
+
+    </data>
+</odoo>

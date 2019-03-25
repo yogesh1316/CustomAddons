@@ -12,7 +12,7 @@
     'category': 'Master',
     'version': '1.1',
     # any module necessary for this one to work correctly
-    'depends': ['sale','product','sale_margin','purchase','account','base',],
+    'depends': ['sale','product','sale_margin','purchase','account','base','delivery','mrp','mail'],
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',        
@@ -27,6 +27,19 @@
         'views/delivery_terms_master_view.xml',
         'views/transport_mode_master_view.xml',
         'views/transport_cost_master_view.xml',
+
+        'views/material_group_master_view.xml',
+        'views/material_master_view.xml',
+
+        'views/operation_master_view.xml',
+        'views/parameter_master_view.xml',
+
+        'views/operation_parameter_master_view.xml',
+        
+        'views/mrp_routing_work_center_form_view.xml',
+
+        'views/mrp_routing_work_center_form_view.xml',
+
     ],
     # only loaded in demonstration mode
     
