@@ -10,7 +10,7 @@
 
 				<field name="origin" position="after">
 					<field name="subcontract_prod" attrs="{'readonly': [('state', '=','done')]}"/>
-					<field name="subcontract_parentchildprod" widget="radio" attrs="{'invisible': [('subcontract_prod', '=', False)],'readonly': [('state', '=','done')]}"/>
+					<field name="subcontract_parentchildprod" widget="radio" attrs="{'invisible': [('subcontract_prod', '=', False)],'required':[('subcontract_prod', '!=', False)], 'readonly': [('state', '=','done')]}"/>
 					<field name="vendor" attrs="{'invisible': [('subcontract_prod', '=', False)],'required':[('subcontract_prod', '!=', False)], 'readonly': [('state', '=','done')]}"/>
 				</field>
 				<xpath expr="//button[@name='issue_item_qty']" position="after">
@@ -56,6 +56,14 @@
 				<xpath expr="/form/sheet/notebook/page/field/tree/field[@name='product_uom']" position="attributes">
 					<attribute name="attrs">{'readonly': [('parent.mrp_id', '!=', False)]}</attribute>
 				</xpath>
+
+				<button name="action_view_invoice" position="after">
+					<button class="oe_stat_button" name="action_deliveryorder_view" type="object" icon="fa fa-truck" attrs="{'invisible': ['|',('state', 'in', ('draft','sent','to approve')),('mrp_id', '=', False)]}">
+						<field string="Delivery Challan" name="delivery_count" widget="statinfo"/>
+						<field name="delivery_ids" invisible="1"/>
+					</button>
+				</button>
+
 			</field>
 		</record>
 
@@ -69,7 +77,7 @@
 					<field name="po_number" attrs="{'readonly': [('state', '=', 'done')],'invisible': [('subcontract', '=', False)]}"/>
 					<button name="get_bom_materials" type="object" class="oe_highlight" string="Update" attrs="{'readonly': [('state', '=', 'done')],'invisible': ['|', ('subcontract', '=', False), ('picking_type_code', 'in', ('incoming','internal','mrp_operation'))]}"/>
 					<field name="flag" invisible="1"/>
-					<field name="dc_number" attrs="{'readonly': [('state', '=', 'done')],'invisible': [('location_id', '!=', 18)]}"/>   <!--22 check subcotract location -->
+					<field name="dc_number" attrs="{'readonly': [('state', '=', 'done')],'invisible': [('location_id', '!=', 18)]}"/>		<!--22 check subcotract location -->
 				</field>
 				<xpath expr="//button[@name='button_validate']" position="replace">
 					<button name="button_validate" attrs="{'invisible': ['|',('show_validate', '=', False),('subcontract', '=', True)]}" string="Validate" groups="stock.group_stock_user" type="object" class="oe_highlight"/>
@@ -92,6 +100,35 @@
                 </xpath> -->
 			</field>
 		</record>
+		<record id="view_delivery_order_filter" model="ir.ui.view">
+			<field name="name">stock.picking.select</field>
+			<field name="model">stock.picking</field>
+			<field name="arch" type="xml">
+				<search string="Search Invoice">
+					<field name="po_number" string="Invoice" filter_domain="[('po_number','ilike',self)]"/>
+					<filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_delivery_order_subcontract" model="ir.actions.act_window">
+			<field name="name">Delivery Challan</field>
+			<field name="res_model">stock.picking</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+			<field eval="False" name="view_id"/>
+			<field name="domain">[('po_number', '=', active_id)]</field>
+			<field name="context">{'default_state': 'draft', 'default_po_number': active_id}</field>
+			<field name="search_view_id" ref="view_delivery_order_filter"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+          			Click to Create a new Sub Contract Delivery Challan.
+				</p>
+				<p>
+          			You can control the Delivery Challan as per material issued.
+				</p>
+			</field>
+		</record>
 
 		<!-- To Display the destination location in Sales and Purchase page of Vendor Master -->
 		<record id="res_partner_view_inherit" model="ir.ui.view">
@@ -104,24 +141,5 @@
 				</xpath>
 			</field>
 		</record>
-
-		<!-- <record id="view_move_form_inherit" model="ir.ui.view">
-			<field name="name">stock.move.form</field>
-			<field name="model">stock.move</field>
-			<field name="inherit_id" ref="stock.view_move_form"/>
-			<field name="arch" type="xml">
-				<xpath expr="/form" position="attributes">
-					<attribute name="create">true</attribute>
-					<attribute name="edit">true</attribute>					
-				</xpath>
-				<field name="move_orig_ids" position="attributes">
-					<attribute name="readonly">0</attribute>
-				</field>
-				<field name="move_dest_ids" position="attributes">
-					<attribute name="readonly">0</attribute>
-				</field>
-			</field>			
-		</record> -->
-
 	</data>
 </odoo>
