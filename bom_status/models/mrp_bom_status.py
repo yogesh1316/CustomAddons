@@ -111,10 +111,10 @@ class MrpBom(models.Model):
                 
            
 
-    @api.multi
-    def confirm_save(self):
-        action = self.env.ref('bom_status.act_mrp_product_produce').read()[0]
-        return action
+    # @api.multi
+    # def confirm_save(self):
+    #     action = self.env.ref('bom_status.act_mrp_product_produce').read()[0]
+    #     return action
 
 
     

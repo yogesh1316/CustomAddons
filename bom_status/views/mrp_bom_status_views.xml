@@ -14,7 +14,7 @@
 				</xpath> -->
         <xpath expr="//sheet " position="before">
           <header>
-            <button name="confirm_save" string="Confirm Bom" type="object" class="oe_stat_button" attrs="{'invisible': [('status', '!=',3)]}"/>
+            <button name="%(action_view_change_standard_price)d" string="Confirm Bom" type="action" class="oe_stat_button" attrs="{'invisible': [('status', '!=',3)]}"/>
           </header>
         </xpath>
         <xpath expr="//field[@name='type']" position="after">
