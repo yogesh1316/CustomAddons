@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <!--Report id and calling to template-->
+        <report
+            id="report_sale_order_id"
+            string="Print Sale Order Acceptance Report" 
+  			model="sale.order"        
+            report_type="qweb-pdf"
+            name="sale_report.so_report_menu_order_id"
+            file="sale_report.so_report_menu_order_id"
+            attachment_use="True"
+            print_report_name="('sale_report - %s' % (object.name))"/>
+
+        <!--It specifies the page layout and page size -->
+        <record id="paperformat_saleorder_report_of_PO" model="report.paperformat">
+		     <field name="name">SaleOrder Report</field>
+		     <field name="default" eval="True"/>
+    <field name="format">A4</field>
+    <field name="page_height">0</field>
+    <field name="page_width">0</field>
+    <field name="orientation">Portrait</field>
+    <field name="margin_top">90</field>
+    <field name="margin_bottom">27.5</field>
+    <field name="margin_left">7</field>
+    <field name="margin_right">7</field>
+    <field name="header_line" eval="False" />
+    <field name="header_spacing">73</field>
+    <field name="dpi">90</field>
+    	</record>
+    
+    	<record id="sale_report.report_sale_order_id" model="ir.actions.report">
+      		<field name="paperformat_id" ref="sale_report.paperformat_saleorder_report_of_PO" />
+    	</record>
+        
+            	
+    </data>
+</odoo>
+
