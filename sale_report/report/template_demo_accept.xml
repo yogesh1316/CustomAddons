@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data><!--create_by | create_date | update_by | update_date
+    Ajinkya      29/01/2019     Ajinkya     07/02/2019   
+    Info.: Sale Order Report--><!-- Including Custom Css File-->
+    <template id="assets_pdf_css" name="Custom Report CSS" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <link href="/sale_report/static/src/css/custom.css" rel="stylesheet"/>
+        </xpath>
+    </template>
+    <template id="web.so_report_menu_order_id">
+        <div class="header o_boxed_header">
+          <!-- company address code left hand side code details-->
+                <table width="100%" style="border-collapse: collapse;white-space:nowrap;" id="upp">
+                    <thead style="border-collapse: collapse;">
+                        <tr>
+                            <td width="50%" style="padding-left: 5px;padding-bottom:5px;padding-top:5px;white-space:nowrap;">
+                                <img t-if="o.company_id.logo" t-att-src="'data:/home/ajinkya/odoo-11.0/custom_addons/sale_report/static/src/img;base64,%s' % to_text(o.company_id.logo)"/>
+                                <br/>
+                                <strong>
+                                    <span style="font-weight: bold;color:black;text-transform: uppercase;padding-left: 2px;padding-top:5px;" t-field="o.company_id.name"/>
+                                </strong>
+                                <br/>
+                                <span class="fonts_size" t-field="o.company_id.street" style="padding-left: 5px;"/>
+                                <br/>
+                                <span t-field="o.company_id.street2" class="fonts_size"/>
+                                <br/>
+                                <span t-field="o.company_id.city" class="fonts_size" style="padding-left: 5px;text-transform: uppercase;"/>
+                -
+                <span t-field="o.company_id.zip" class="fonts_size"/>
+                                <br/>
+                                <span style="padding-left: 5px;" class="fonts_size">Phone:</span>
+                                <span t-field="o.company_id.phone" class="fonts_size"/>
+                                <br/>
+                                <span class="fonts_size" style="padding-left: 5px;">Email id:</span>
+                                <span t-field="o.company_id.email" class="fonts_size"/>
+                                <br/>
+                            </td>
+                            <!-- right hand side in header code-->
+                            <td style="border-collapse: collapse;">
+                                <span style="font-weight: bold;color:black;" class="box">ORDER ACCEPTANCE</span>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <span style="font-weight: bold;padding-left:230px;padding-bottom:5px;padding-right:250px" class="fonts_size">QA No :</span>
+                                <br/>
+                                <span style="font-weight: bold;padding-left:230px;padding-bottom:5px;padding-bottom:5px;" class="fonts_size">Date :</span>
+                                <br/>
+                                <span style="font-weight: bold;padding-left:230px;padding-bottom:5px;padding-bottom:5px;" class="fonts_size">Amend No :</span>
+                                <br/>
+                                <span style="font-weight: bold;padding-left:230px;padding-bottom:5px;padding-bottom:5px;" class="fonts_size">Amend Date :</span>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+                <!-- Bill To and Ship To detaiils code below company address cust no -->
+                <table width="100%" style="border-top:none;">
+                    <thead style="border-collapse: collapse;">
+                        <tr><!--Bill To Tag start-->
+                            <td style="border-collapse: collapse;margin: 5px" class="alignleft">
+                                <span style="font-weight: bold;float:left;padding-left:5px;padding-top:5px;padding-bottom:5px;padding-bottom:5px;border-right:1px solid; position:absolute;height:130px;" class="fonts_size">BILL TO</span>
+                                <span style="font-weight: bold;color:black;text-transform: uppercase;margin-left:70px;padding-left: 5px;padding-top:5px;" t-field="o.partner_id.name" class="fonts_size"/>
+                                <br/>
+                                <span class="fonts_size" t-field="o.partner_shipping_id.street" style="margin-left:70px;padding-left: 5px;"/>
+                                <br/>
+                                <span t-field="o.partner_id.street2" class="fonts_size" style="margin-left:70px;padding-left: 5px;"/>
+                                <br/>
+                                <span t-field="o.partner_id.city" class="fonts_size" style="margin-left:70px;padding-left: 5px;text-transform: uppercase;"/>
+                -
+                    <span style="margin-left:70px;padding-left: 5px;" t-field="o.partner_id.zip" class="fonts_size"/>
+                                <br/>
+                                <span style="margin-left:70px;padding-left: 5px;" class="fonts_size">Country:</span>
+                                <span t-field="o.partner_id.country_id.name" class="fonts_size"/>
+                                <br/>
+                                <span style="margin-left:70px;padding-left: 5px;" class="fonts_size">State:</span>
+                                <span t-field="o.partner_id.state_id.name" class="fonts_size"/>
+                                <br/>
+                                <span style="margin-left:70px;padding-left: 5px;" class="fonts_size">Email:</span>
+                                <span t-field="o.partner_id.email" class="fonts_size"/>
+                                <br/>
+                            </td>
+                            <!--Bill To Tag End-->
+                            <!--Cust Code Tag-->
+                            <span style="font-weight: bold;margin-left:410px;padding-left:5px;padding-top:5px;padding-bottom:5px;padding-bottom:5px;" class="fonts_size">Cust Code :</span><!--Ship To Tag start-->
+                            <!--Ship TO Code Tag start-->
+                            <td style="border-collapse: collapse;" class="alignright">
+                                <span style="font-weight: bold;padding-left:5px;padding-top:5px;padding-bottom:5px;padding-bottom:5px;border-right:1px solid; position:absolute;height:130px;" class="fonts_size">Ship TO </span>
+                                <span style="font-weight: bold;color:black;text-transform: uppercase;margin-left:70px;padding-left: 5px;padding-top:5px;" t-field="o.partner_id.name" class="fonts_size"/>
+                                <br/>
+                                <span class="fonts_size" t-field="o.partner_shipping_id.street" style="margin-left:70px;padding-left: 5px;"/>
+                                <br/>
+                                <span t-field="o.partner_id.street2" class="fonts_size" style="margin-left:70px;padding-left: 5px;"/>
+                                <br/>
+                                <span t-field="o.partner_id.city" class="fonts_size" style="margin-left:70px;padding-left: 5px;text-transform: uppercase;"/>
+                -
+                    <span style="margin-left:70px;padding-left: 5px;" t-field="o.partner_id.zip" class="fonts_size"/>
+                                <br/>
+                                <span style="margin-left:70px;padding-left: 5px;" class="fonts_size">Country:</span>
+                                <span t-field="o.partner_id.country_id.name" class="fonts_size"/>
+                                <br/>
+                                <span style="margin-left:70px;padding-left: 5px;" class="fonts_size">State:</span>
+                                <span t-field="o.partner_id.state_id.name" class="fonts_size"/>
+                                <br/>
+                                <span style="margin-left:70px;padding-left: 5px;" class="fonts_size">Email:</span>
+                                <span t-field="o.partner_id.email" class="fonts_size"/>
+                                <br/>
+                            </td><!--Ship To Tag End -->
+                        </tr>
+                    </thead>
+                </table>
+                <div class="page_border"/>
+            </div>
+            <div class="article o_report_layout_boxed">
+                <t t-raw="0"/>
+            </div>
+
+
+            <div class="footer " align="center"> 
+		
+
+    <span  class="fonts_size" > Page </span>
+		<span class="page"  style="font-size:14px;padding-left: 14px;"/>
+		<span style="padding-left: 8px;" class="fonts_size"> of </span>
+		<span class="topage"  style="font-size:14px;" />
+           
+        </div>
+    </template>
+</data>

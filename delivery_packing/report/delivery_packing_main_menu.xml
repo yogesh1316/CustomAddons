@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <!--create_by | create_date | update_by | update_date
+    Ajinkya      20/02/2019     Ajinkya     27/02/2019   
+    Info.: Packing Report-->
+        <template id="deliveryp_report_menu_order_id_dp">
+            <tbody t-call="web.html_container">
+                <tr t-foreach="docs" t-as="o">
+                    <tr t-call="web.deliveryp_report_menu_order_id_dp">
+                        <div class="page">
+                            
+                                <span style="font-weight: bold;padding-left: 5px;color:black;" class="fonts_size">Material Description :</span>
+                                <br/> <br/>
+                                <span style="font-weight: bold;padding-left: 5px;padding-top:25px;color:black;" class="fonts_size">Mode Of Delivery : </span><span style="font-weight: bold;padding-left: 5px;padding-top:10px;color:black;" class="fonts_size">MAHINDRA LOGISTICS </span>
+                            
+
+                            <table class="table table-condensed" style="border: 1px solid black;border-collapse: collapse;">
+                                <thead style="border: 1px solid black;border-collapse: collapse;"><!--Second Table Header start -->
+                                    <tr>
+                                        <td class="text-center" style="border: 1px solid black;border-collapse: collapse;" width="1%">
+                                            <span style="font-weight: bold;" class="fonts_size">Sr.No.</span>
+                                        </td>
+                                        <td class="text-center" width="10%" style="border: 1px solid black;border-collapse: collapse;">
+                                            <span style="font-weight: bold;" class="fonts_size">Item Code</span>
+                                        </td><br/>
+                                        <td class="text-center" width="5%" style="border: 1px solid black;border-collapse: collapse;">
+                                            <span style="font-weight: bold;" class="fonts_size">PCE Part No</span>
+                                        </td>
+                                        <td class="text-center" width="110%" style="border: 1px solid black;border-collapse: collapse;">
+                                            <span style="font-weight: bold;" class="fonts_size">System</span>
+                                        </td>
+                                        <td class="text-center" width="3%" style="border: 1px solid black;border-collapse: collapse;">
+                                            <span style="font-weight: bold;" class="fonts_size">Qty</span>
+                                        </td>
+                                        <td class="text-center" width="2%" style="border: 1px solid black;border-collapse: collapse;background-color: #FFFFFF;">
+                                            <span style="font-weight: bold;" class="fonts_size">Packing Details</span>
+                                        </td>
+                                    </tr>
+                                    <tbody><!--Details of the second table -->
+                                        <tr t-foreach="o.move_lines" t-as="line">
+                                            <td class="text-left" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;">
+                                                <span style="color:black;" t-esc="line_index + 1" class="fonts_size"/>
+                                            </td>
+                                            <td class="text-left" style="border: 1px solid black;border-collapse: collapse;">
+                                                <span  style="color:black;" class="fonts_size" t-field="line.product_id.name"/>
+                                            </td>
+                                            <td class="text-left" style="border: 1px solid black;border-collapse: collapse;">
+                                                <span style="color:black;" class="fonts_size">30061591</span>
+                                            </td>
+                                            <td class="text-left" style="border: 1px solid black;border-collapse: collapse;"></td>
+                                            <td class="text-center" style="border: 1px solid black;border-collapse: collapse;">
+                                                <span style="color:black;" class="fonts_size" t-field="line.quantity_done"/>
+                                            </td>
+                                            <td class="text-left" style="border: 1px solid black;border-collapse: collapse; background-color: #FFFFFF;">
+                                                <span class="fonts_size" style="color:black;">Packed in 1 Box</span><!-- <t t-set="total_qty" t-value="total_qty+line.product_uom_qty"/> -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2" colspan="4" style="border: 1px solid black;border-collapse: collapse;">
+                                                <span class="fonts_size" style="float:right;padding-right:20px;color:black;">Total</span>
+                                                <br/>
+                                                <span class="fonts_size" style="padding-left:5px;color:black;">Payment Terms:</span><span class="fonts_size" style="font-weight: bold;padding-left:50px;">100 % AGAINST DELIVERY </span>
+                                                <br/><br/><br/>
+                                                <span class="fonts_size" style="padding-left:5px;color:black;">Excise Invoice No :</span><!--Space Coming -->
+                                                <br/>
+                                                <br/>
+                                            </td>
+                                                <td  class="text-right" style="border: 1px solid black;border-collapse: collapse;">
+                                                    <span class="fonts_size" style="color:black;">57</span>
+                                                </td>
+                                                <td class="text-center" style="border: 1px solid black;border-collapse: collapse;background-color: #FFFFFF;">
+                                                    <span class="fonts_size" style="color:black;">Total 1 Box</span>
+                                                </td>
+                                              <tr>  
+                                                 <td colspan="2" class="text-right" style="border: 1px solid black;border-collapse: collapse;margin:550px;background-color: #FFFFFF;">
+                                                 <span class="fonts_size" style="float:left;color:black;">Dimention:</span>
+                                                <br/><br/>
+                                                <span class="fonts_size" style="float:left;color:black;">Box No   :</span><!--Space Coming -->
+                                                <br/>
+                                                </td>  
+                                            </tr>
+                                            
+                                        </tr>
+                                            <tr>
+                                            <!-- <td colspan="4" class="text-right" style="font-weight: bold;border: 1px solid black;border-collapse: collapse;margin:550px">
+                                                <span class="fonts_size"/>
+                                            </td>
+                                            <td class="text-right" style="border: 1px solid black;border-collapse: collapse;">
+                                                <span class="fonts_size"/>
+                                            </td> -->
+                                        </tr>
+                                        </tbody>
+                                        </thead>
+                                    </table>
+                                   
+                                        <table  class="table table-condensed" style="border: 1px solid black;border-collapse: collapse;margin-top:-20px;">
+                                        
+                                        <tr>
+                                            <td rowspan="1" colspan="3" width="50%" class="text-left" style="border: 1px solid black;border-collapse: collapse;">
+                                                <span class="fonts_size" style="padding-left:5px;color:black;">MVAT TIN No.</span><span style="padding-left:15px;">:</span>
+                                                <span class="fonts_size" style="padding-left:10px;color:black;">27480268762V w.e.f. 1-4-06</span>
+                                                <br/>
+                                                <span class="fonts_size" style="padding-left: 5px;color:black;">CST TIN No. </span><span style="padding-left:20px;">:</span>
+                                                <br/>
+                                                <span class="fonts_size" style="padding-left: 5px;color:black;">ECC No.</span><span style="padding-left:42px;">:</span>
+                                                <span class="fonts_size" style="padding-left:10px;color:black;">AABPU2557MXM001</span>
+                                                <br/>
+                                                <span class="fonts_size" style="padding-left: 5px;color:black;">PAN No.</span><span style="padding-left:42px;">:</span>
+                                                <span class="fonts_size" style="padding-left:10px;color:black;">AABPU2557M</span>
+                                                <br/>
+                                                <span class="fonts_size" style="padding-left: 5px;color:black;">CIN No.</span><span style="padding-left:45px;">:</span>
+                                                <br/>
+                                                <span class="fonts_size" style="padding-left: 5px;color:black;">LBT No.   </span><span style="padding-left:42px;">:</span>
+                                            </td>
+                                            <td rowspan="2  " colspan="1" class="text-left" style="padding-left: 5px;padding-top:25px;">
+                                                <span class="fonts_size" style="padding-top:10px;padding-left: 2px;font-weight: bold;color:black;">HO Address</span>
+                                                <br/>
+                                                <strong>
+                                                    <span class="fonts_size" style="font-weight: bold;color:black;text-transform: uppercase;padding-left: 2px;padding-top:5px;" t-field="o.company_id.name"/>
+                                                </strong>
+                                                <br/><br/>
+                                                <span class="fonts_size" t-field="o.company_id.street" style="padding-top:10px;padding-left: 5px;font-weight: bold;color:black;"/>
+                                                <br/>
+                                                <span t-field="o.company_id.street2" class="fonts_size" style="padding-left: 5px;font-weight: bold;color:black;"/>
+                                                <br/>
+                                                <span t-field="o.company_id.city" class="fonts_size" style="padding-left: 5px;text-transform: uppercase;font-weight: bold;color:black;"/>
+                                                -           
+                                                <span t-field="o.company_id.zip" class="fonts_size" style="padding-left: 5px;font-weight: bold;color:black;"/>
+                                            </td>
+                                            <td rowspan="2" colspan="2" class="text-left" style="font-weight: bold;border: 1px solid black;border-collapse: collapse;margin:680px;padding-top:25px;background-color: #FFFFFF;" >
+                                                <span  style="padding-left: 5px;font-weight: bold;color:black;" class="fonts_size">FOR</span>
+                                                <br/>
+                                                <span class="fonts_size" style="font-weight: bold;color:black;text-transform: uppercase;padding-left: 5 px;padding-top:5px;" t-field="o.company_id.name"/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                               
+                                                
+                                                <br/>
+                                                <span class="fonts_size" style="padding-left: 25px;font-weight: bold;color:black;">Authorised Signatory</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="text-left"  style="background-color: #FFFFFF;color:black;">
+                                                <span class="fonts_size">We hereby certify that Our Registration certificate under the<BR/> 
+                                                                        Maharastra value Added Tax Act 2002/2005 is in fource on the<BR/>
+                                                                        date on which the sale of the goods specified in this Tax Invoice is<BR/>
+                                                                        made by us and that the trasaction of sale covered by this tax<BR/>
+                                                                        invoice has been effected by us and it shall be accounted for in<BR/>
+                                                                        the turn over of sales while filling of return and Due Tax,Id<BR/>
+                                                                        any,payable on the sale has been paid or shall be paid.</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-left" style="background-color: #FFFFFF;color:black;">
+                                                <span class="fonts_size">Rejection or short supply if any to be notified immediately<BR/>
+    All dealing subjected to Bombay Jurisdiction .<BR/>
+    We are not liable to any damages on transit.<BR/>
+    Interest @ 12% PA will be charged extra on delayed payments.</span>
+                                            </td>
+                                        </tr>
+                                    
+                                
+                            </table><!-- <div style="height:60px;border:1px solid #000;">
+                        <span style="font-weight: bold;padding-left: 5px;padding-top:5px;" class="fonts_size">Rejection or short supply if any to be notified immediately
+    All dealing subjected to Bombay Jurisdiction .
+    We are not liable to any damages on transit.
+    Interest @ 12% PA will be charged extra on delayed payments.</span>
+                       
+                        </div> -->
+                        </div>
+                    </tr>
+                </tr>
+            </tbody>
+        </template>
+        <template id="report_delivery_picking_main_menu">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="delivery_packing.deliveryp_report_menu_order_id_dp" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
