@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','mrp','stock','Pce_Master'],
+    'depends': ['base','mrp','stock','Pce_Master','sale_stock'],
 
     # always loaded
     'data': [
@@ -27,6 +27,8 @@
         'views/mrp_production_view.xml',
         'views/mrp_workorder_view_inhe.xml',
         'views/mtn_view.xml',
+        'views/stock_picking_inherit.xml',
+        'views/change_mrp_menu_name.xml',
         'report/mrp_pro_document_print.xml',
         'report/report_menu.xml',        
     ],   
