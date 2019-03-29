@@ -31,6 +31,8 @@ class purchaseorderreport(models.Model):
                     li.append(line.product_id.name)
 
                 return set(li)
+
+                
     @api.multi
     def get_loged_user_name(self):
         for order in self:

@@ -24,9 +24,6 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        #'views/purchase_order_line_view.xml',
-        # 'views/templates.xml',
         'report/import_purchase_main_menu.xml',
         'report/import_purchase_menu.xml',
         'report/template_demo.xml',

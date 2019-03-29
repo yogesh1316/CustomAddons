@@ -9,7 +9,6 @@
 }*/
 
 
-
 .header{
     margin-left: -15px;
     margin-right: -15px;
@@ -18,7 +17,7 @@
     padding-right: 10px;
     padding-top: -10px;
    /* height:100mm;*/
-    
+
 /*padding-bottom: 10px;
        border-bottom: 1px solid #000;*/
 }
@@ -92,7 +91,7 @@ span.fonts_size_adjust,normal.fonts_size_adjust {
 	right: 10px;
 	top:55px;
 	z-index: -1;
-	padding-right:10px; 
+	padding-right:10px;
 	width:50px;
 	height: 55px;
 }
@@ -104,7 +103,7 @@ span.fonts_size_adjust,normal.fonts_size_adjust {
  /*   border: 1px solid #000;
     font-size: 15px;
     background-color: #ffffff;;
-    
+
 }*/
 /* .o_report_layout_boxed table tbody tr td:last-child {
     background-color: #ffffff;;

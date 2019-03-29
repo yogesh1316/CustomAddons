@@ -30,7 +30,7 @@
             <field name="header_spacing">73</field>
             <field name="dpi">92</field>
     	</record>
-
+        
         <!--Created-By | Created-Date|Info.
             Ajinkya    |25-3-2019    |Paperformat Id Set, By default related Report -->
         <record id="import_purchase_report.import_purchase_report_menu_id" model="ir.actions.report">

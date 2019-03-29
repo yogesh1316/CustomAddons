@@ -20,7 +20,7 @@
 												<t t-if="j!= len(o.get_desc())-1">
 													<t t-set = "z" t-value="str(z)+i+','"/>
 													<t t-set = "j" t-value="j+1"/>
-													
+												
 												</t>
 												<t t-else="">
 													<t t-set="z" t-value="z+i"/>
