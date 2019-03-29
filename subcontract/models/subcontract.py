@@ -85,6 +85,29 @@ class PurchaseOrder(models.Model):
     # Add Field to know which Operation is done on PO report for subcontract
     subcontract_operation= fields.Char(string='Operation in PO')  
 
+    delivery_count = fields.Integer(compute="_compute_dc", string='Delivery Challan', copy=False, default=0, store=True)
+    delivery_ids = fields.Many2many('stock.picking', compute="_compute_dc", string='Bills', copy=False, store=True)
+
+    @api.multi
+    def _compute_dc(self):
+        for order in self:
+            stock_picking_obj = self.env['stock.picking']
+            poid = stock_picking_obj.search([('po_number','=',order.id)])    
+            order.delivery_ids = poid       
+            order.delivery_count = len(poid)
+
+    @api.multi
+    def action_deliveryorder_view(self):
+        '''
+        This function returns an action that display existing Delivery Challan of given subcontract purchase order ids.
+        When only one found, show the Delivery Challan immediately.
+        '''
+        action = self.env.ref('subcontract.action_delivery_order_subcontract')
+        result = action.read()[0]
+        #override the context to get rid of the default filtering
+        result['context'] = {'state': 'draft', 'default_po_number': self.id,'default_partner_id': self.partner_id.id}
+        return result
+
 class Picking(models.Model):
     _inherit = 'stock.picking'
 
@@ -246,9 +269,7 @@ class Picking(models.Model):
                                     }
                             
                             ids = workorder_pdir_generate_obj.create(wo_data)
-
                     self.dc_number.button_validate()   
-
             elif self.purchase_id.mrp_id.subcontract_parentchildprod  =='2':
                 for dline in self.dc_number.move_lines:
                     for line in self.move_lines:
@@ -267,10 +288,8 @@ class Picking(models.Model):
                                                 'workorder_id': woline.id,
                                                 }
                             
-                                        ids = workorder_pdir_generate_obj.create(wo_data)                                        
-
+                                        ids = workorder_pdir_generate_obj.create(wo_data)                                       
                                 self.dc_number.button_validate()        
-
             elif self.purchase_id.mrp_id.subcontract_parentchildprod  =='3':
                 for dline in self.dc_number.move_lines:
                     for line in self.move_lines:
@@ -305,14 +324,12 @@ class Picking(models.Model):
                                     }
                             
                             ids = workorder_pdir_generate_obj.create(wo_data)
-
-                    print('in, close DC')
                     #self.dc_number.button_validate()
         else:
             raise UserError(_('Select DC number'))           
      
     
-    # This function is create dc_numberr the PO and subcontract category in DC
+    # This function is create DC on PO and subcontract category
     @api.multi
     def get_bom_materials(self):
         list_prod = []        

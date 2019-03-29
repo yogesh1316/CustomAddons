@@ -191,7 +191,7 @@ class PDIR_generate(models.Model):
     fname = fields.Char('File Name',store=True,size=32)
 
     production_id = fields.Many2one(
-        'mrp.production', 'Manufacturing Order',
+        'mrp.production', 'Work Order',
         index=True, ondelete='cascade', store=True)
     product_id = fields.Many2one(
         'product.product', 'Product',
