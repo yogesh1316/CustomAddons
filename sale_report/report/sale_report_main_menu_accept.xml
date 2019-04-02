@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data><!--create_by | create_date | update_by | update_date
+        Ajinkya      30/01/2019    Ajinkya     01/02/2019   
+        Info.: Sale Order Acceptance Report -->
+		<template id="so_report_menu_order_id">
+			<tbody t-call="web.html_container">
+				<tr t-foreach="docs" t-as="o">
+					<tr t-call="web.so_report_menu_order_id">
+						<div class="page">
+						<!--Starting Table start-->
+							<table class="table table-condensed" style="border: 1px solid black;border-collapse: collapse;">
+								<thead style="border: 1px solid black;border-collapse: collapse;">
+								<!--First Table Header-->
+									<tr>
+										<td class="text-center" style="border: 1px solid black;border-collapse: collapse;">
+											<span style="font-weight: bold;" class="fonts_size">SALES PERSON.</span>
+										</td>
+										<td class="text-center" style="border: 1px solid black;border-collapse: collapse;">
+											<span style="font-weight: bold;" class="fonts_size">PURCHASE NUMBER </span>
+										</td>
+										<td class="text-center" style="border: 1px solid black;border-collapse: collapse;">
+											<span style="font-weight: bold;" class="fonts_size">SHIPPING TERMS</span>
+										</td>
+										<td class="text-center" style="border: 1px solid black;border-collapse: collapse;">
+											<span style="font-weight: bold;" class="fonts_size">SHIP VIA</span>
+										</td>
+										<td class="text-center" style="border: 1px solid black;border-collapse: collapse;">
+											<span style="font-weight: bold;" class="fonts_size">PAYMENT TERMS</span>
+										</td>
+									</tr>
+								</thead>
+								<tbody> 
+								<!--First table header details -->
+									<tr>
+										<td class="text-center" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;">
+											<span>Ajikya</span>
+										</td>
+										<td class="text-left" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;"></td>
+										<td class="text-left" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;"></td>
+										<td class="text-left" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;"></td>
+										<td class="text-left" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;"></td>
+									</tr>
+								</tbody>
+							</table><!--Starting Table End -->
+							<!--Second Table start -->
+							<table class="table table-condensed" style="border: 1px solid black;border-collapse: collapse;">
+								<thead style="border: 1px solid black;border-collapse: collapse;">
+								<!--Second table header start -->
+									<tr>
+										<td class="text-center" style="border: 1px solid black;border-collapse: collapse;" width="1%">
+											<span style="font-weight: bold;" class="fonts_size">Sr.<br/>
+ No.</span>
+										</td>
+										<td class="text-center" width="2%" style="border: 1px solid black;border-collapse: collapse;text-align: left;">
+											<span style="font-weight: bold;" class="fonts_size">Customer <br/>
+ Code</span>
+										</td>
+										<td class="text-center" width="2%" style="border: 1px solid black;border-collapse: collapse;text-align: left;">
+											<span style="font-weight: bold;" class="fonts_size">Description</span>
+										</td>
+										<td class="text-center" width="2%" style="border: 1px solid black;border-collapse: collapse;text-align: left;">
+											<span style="font-weight: bold;" class="fonts_size">Need By <br/>
+ Code</span>
+										</td>
+										<td class="text-center" width="2%" style="border: 1px solid black;border-collapse: collapse;text-align: left;">
+											<span style="font-weight: bold;" class="fonts_size">Committed</span>
+										</td>
+										<td class="text-center" width="2%" style="border: 1px solid black;border-collapse: collapse;text-align: left;">
+											<span style="font-weight: bold;" class="fonts_size">Qty</span>
+										</td>
+										<td class="text-center" width="2%" style="border: 1px solid black;border-collapse: collapse;text-align: left;">
+											<span style="font-weight: bold;" class="fonts_size">Unit Price</span>
+										</td>
+										<td class="text-center" width="2%" style="border: 1px solid black;border-collapse: collapse;text-align: left;">
+											<span style="font-weight: bold;" class="fonts_size">Total Price</span>
+										</td>
+									</tr>
+								</thead>
+									<!--Second table header end -->
+								<t t-set="total" t-value="0"/>
+								<t t-set="total_qty" t-value="0"/>
+								<tbody>
+								<!--Details of the second table -->
+									<tr t-foreach="o.order_line" t-as="line">
+										<td class="text-right" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;">
+											<span t-esc="line_index + 1" class="fonts_size"/>
+										</td>
+										<td class="text-right" style="border: 1px solid black;border-collapse: collapse;"></td>
+										<td class="text-right" style="border: 1px solid black;border-collapse: collapse;">
+											<span class="fonts_size" t-field="line.product_id.name"/>
+										</td>
+										<td class="text-right" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;"></td>
+										<td class="text-right" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;"></td>
+										<td class="text-right" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;">
+											<span class="fonts_size" t-field="line.product_uom_qty"/>
+											<t t-set="total_qty" t-value="total_qty+line.product_uom_qty"/>
+										</td>
+										<td class="text-right" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;">
+											<span class="fonts_size" t-field="line.price_unit"/>
+										</td>
+										<td class="text-right" style="border: 1px solid black;border-collapse: collapse;font-weight: bold;">
+											<span class="fonts_size" t-field="line.price_subtotal"/>
+										</td>
+									</tr>
+									<!-- Third last line blank row start-->
+									<td class="text-right">
+										<span t-esc="total_bag"/><!-- blank1-->
+										<br/>
+									</td>
+									<td class="text-right">
+										<span t-esc="total_bag"/><!-- blank2-->
+										<br/>
+									</td>
+									<td class="text-right">
+										<span t-esc="total_bag"/><!-- blank3-->
+										<br/>
+									</td>
+									<td class="text-right">
+										<span t-esc="total_bag"/><!-- blank4-->
+										<br/>
+									</td>
+									<td class="text-right">
+										<span class="fonts_size" t-esc="total_bag"/><!-- blank5-->
+										<br/>
+									</td>
+									<td class="text-right">
+										<span t-esc="total_qty"/><!-- blank6-->
+										<br/>
+									</td>
+									<td class="text-center">
+										<span t-esc="total_bag"/><!--blank 7-->
+										<br/>
+									</td>
+									<td class="text-right">
+										<span/><!-- blank8-->
+										<br/>
+									</td>
+									<!-- Third last line blank row end-->
+									<!-- total tag in rs start-->
+									<tr>
+										<td colspan="7" class="text-right" style="font-weight: bold;border: 1px solid black;border-collapse: collapse;margin:550px">
+											<span class="fonts_size">TOTAL in Rs</span>
+											<br/>
+										</td>
+										<td class="text-right" style="border: 1px solid black;border-collapse: collapse;">
+											<span class="fonts_size" t-esc="o.amount_total"/>
+										</td>
+									</tr>
+									<!-- total in rs end-->
+									<!-- total basic value in rs start-->
+									<tr>
+										<td colspan="7" class="text-right" style="border: 1px solid black;border-collapse: collapse;margin:550px">
+											<span class="fonts_size">Total Basic Value in Rs</span>
+										</td>
+										<td class="text-right" style="border: 1px solid black;border-collapse: collapse;">
+											<span class="fonts_size" t-esc="o.amount_total"/>
+										</td>
+									</tr>
+									<!-- total basic value in rs end-->
+								</tbody>
+								<!--Details of the second table end -->
+							</table>
+							<!--Second Table end -->
+							<!-- Taxes Box start -->
+							<table>
+								<thead>
+									<tr>
+										<td>
+											<span style="font-weight: bold;float:left;padding-left:5px;padding-top:5px;padding-bottom:5px;padding-bottom:5px;" class="fonts_size">Taxes and Charges extra as applicable</span>
+											<br/>
+											<span   t-foreach="o.order_line.calculate_cgst_sgst()" t-as="k"><!--SGST & CGST -->
+												<span class="fonts_size" t-esc="k[0]"/>
+												<span class="fonts_size" style="padding-left: 21px;">:</span>
+												<span class="fonts_size" t-esc="o.set_amt(k[1])" style="float:right;margin-right:7px;"/>
+												<br/>
+											</span>
+											<span t-foreach="o.order_line.caculate_igst()" t-as="igst"><!--IGST -->
+												<span class="fonts_size" t-esc="igst[0]"/>
+												<span class="fonts_size" style="padding-left: 21px;">:</span>
+												<span class="fonts_size" t-esc="o.set_amt(igst[1])" style="float:right;margin-right:7px;"/>
+												<br/>
+											</span>
+										</td>
+									</tr>
+								</thead>
+							</table>
+							<!-- Taxes Box end -->
+							<br/>
+							<br/>
+							<!--GST No  -->
+							<span style="font-weight: bold;padding-left: 5px;">GSTIN No.</span>
+							<span style="font-weight: bold;" t-field="o.company_id.vat"/>
+							<!--state code  -->
+							<span style="font-weight: bold;padding-left: 30px;">STATE Code.</span>
+							<span style="font-weight: bold;" t-field="o.company_id.state_id.id"/>
+							<br/>
+							<br/>
+							<!-- Total amount in rs block start-->
+							<table width="100%">
+								<thead>
+									<tr>
+										<td class="text-center" style="border: 1px solid black;border-collapse: collapse;height:20px">
+											<span style="font-weight: bold;" class="fonts_size">Amount In Words</span>
+										</td>
+										<td class="text-center" style="border: 1px solid black;border-collapse: collapse;">
+											<span style="font-weight: bold;" class="fonts_size" t-esc="o.set_amt_in_text(o.amount_total)"/>
+										</td>
+									</tr>
+								</thead>
+							</table>
+							<!-- Total amount in rs block end-->
+							<br/>
+							<br/>
+							<!--Terms and Condition block start -->
+							<table width="100%" height="50px" style="border: 1px solid black;border-collapse: collapse;">
+								<tr >
+									<td width="64%" class="font" >
+										<strong>
+											<span style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">Terms and Conditions:</span>
+										</strong>
+										<br/>
+										<span style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">1) Interest at bank rate will be charged @ 18% p.a. for payment after due date.</span>
+										<br/>
+										<span style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">2) Our responsibility ceases once the goods have been handed over to carrier.</span>
+										<br/>
+										<span style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">3) All disputes subject to pune Jurisdiction.</span>
+										<br/>
+										<span style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">4) In case of any damage, it should be reported to us immediately on receipt of goods with extent of</span>
+									</td>
+									<td width="36%">
+										<p class="font" style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">Rejection or short supply if any, to be notified to
+us within one week of delivery. All dealings
+subjected to Mumbai Jurisdiction. We are not
+liable to any damages in transit. Interest @ 12%
+PA will be charged extra on delayed payments.</p>
+										<br/>
+									</td>
+								</tr>
+							</table>
+							<!--Terms and Condition block end -->
+							<br/>
+							<br/>
+							<!--Thanks Tag start-->
+								<span style="border: 1px solid black;border-collapse: collapse;font-weight: bold;color:black;margin-left:70px;padding-left: 5px;padding-right:5px;" class="fonts_size">THANK YOU FOR YOUR BUSINESS</span>
+							<!--Authorised sign To Tag start-->
+								<span style="margin-top:-150px	;font-weight: bold;color:black;margin-left:590px;padding-left: 5px;" class="fonts_size">POWER CONTROL ENGINEERS</span>
+								<br/>
+								<span style="font-weight: bold;color:black;margin-left:590px;padding-left: 25px;padding-top:5px;" class="fonts_size">
+									<i>AMOL DILIP APSHANKAR</i>
+								</span>
+								<br/>
+								<span class="fonts_size" style="margin-left:590px;padding-left: 45px;" size="2">Authorised Signatory</span>
+								<br/>
+								<br/>
+							<!--Authorised sign To Tag end-->
+						</div>
+					</tr>
+				</tr>
+			</tbody>
+		</template>
+		<template id="report_purchase_main_menu">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="sale_report.so_report_menu_order_id" t-lang="o.partner_id.lang"/>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

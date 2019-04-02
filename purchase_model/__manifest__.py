@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-   
 {
     'name': "Purchase_Custom_model",
 
@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','purchase'],
+    'depends': ['base','purchase','subcontract','stock','Pce_Master'],
 
     # always loaded
     'data': [

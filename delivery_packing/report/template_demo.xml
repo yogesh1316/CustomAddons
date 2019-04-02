@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data><!--create_by | create_date | update_by | update_date
+    Ajinkya      20/02/2019     Ajinkya     27/02/2019   
+    Info.: Packing Report--><!-- Including Custom Css File-->
+    <template id="assets_pdf_css" name="Custom Report CSS" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <link href="/delivery_packing/static/src/css/custom.css" rel="stylesheet"/>
+        </xpath>
+    </template> 
+    <template id="web.deliveryp_report_menu_order_id_dp">
+        <div class="header o_boxed_header">
+          
+                <table style="border: 1px solid;" width="100%">
+         					  <tbody style= "border-bottom: 1px solid;">    
+								<tr >
+									<td width="50%" style="padding-left: 5px;padding-top:15px;padding-bottom:5px;border:1px solid;" >
+										<u><span t-field="o.company_id.name" class="fonts_size" style="padding-left: 5px;font-weight: bold;color:black;text-transform: uppercase;" 
+									/></u><br/>
+										<span t-field="o.company_id.street" style="padding-left: 5px;font-weight: bold;color:black;" class="fonts_size"
+										/><br/>
+										<span t-field="o.company_id.street2" class="fonts_size" style="padding-left: 5px;font-weight: bold;color:black;"
+										 /><br/>
+										<span t-field="o.company_id.city" class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;t"/>
+                -                      <br/>
+                                        <span t-field="o.company_id.zip" class="fonts_size" style="font-weight: bold;color:black;padding-top:15px;padding-left: 5px;"/>
+									 </td>
+	 								 <td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;background-color: #ffffff;">
+	    								<span class="fonts_size" style="padding-left: 200px;font-weight: bold;"><u>Packing Slip </u></span><br/>
+	    								
+	    								
+	    								<normal style="font-weight: bold;color:black;" class="fonts_size">Ph NO:</normal>
+	    							    <span t-field="o.company_id.phone" class="fonts_size" style="padding-left: 5px;"/> <br/>
+				    								
+	    								<normal style="font-weight: bold;color:black;" class="fonts_size">FAX:</normal>
+	    								<!-- <normal class="fonts_size" t-field="o.name" style="padding-left: 6px;"/><br/> -->
+	    								
+	    								<normal style="font-weight: bold;color:black;" class="fonts_size">Email:</normal>
+	    								 <span t-field="o.company_id.email" class="fonts_size" style="padding-left: 5px;"/> 
+		 								 </td>							
+								</tr>   			  	
+         					  	</tbody>	
+         					  	<tbody style= "border-bottom: 1px solid;">    
+								<tr>
+									<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;border:1px solid;">
+									<span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;"><u>BUYER,</u></span><br/>
+									<span class="fonts_size" t-field="o.company_id.name" style="padding-left: 5px;font-weight: bold;color:black;"/><br/>
+									<span class="fonts_size" t-field="o.company_id.street" style="padding-left: 5px;"/><br/>
+									<span class="fonts_size" t-field="o.company_id.street2" style="padding-left: 5px;"/><br/>									
+									<span class="fonts_size" t-field="o.company_id.city" style="padding-left: 5px;"/>-<span class="fonts_size" t-field="o.company_id.zip"/><br/>	
+									<span class="fonts_size" style="padding-left: 5px;">Phone :</span><span class="fonts_size" t-field="o.company_id.phone" /><br/>										
+										</td>
+									<td width="50%" style="padding-left: 5px;padding-bottom:5px;padding-top:15px;white-space:nowrap;" rowspan="2">
+                                <span style="font-weight: bold;color:black;padding-left: 5px;" class="fonts_size">Order NO</span><span style="padding-left:50px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.origin" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/>
+                                <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Amendment NO</span><span style="padding-left:20px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.origin" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/>
+                                <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Order DATE</span><span style="padding-left:40px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.scheduled_date" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/>
+                               <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Invoice No </span><span style="padding-left:43px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.origin" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/>
+                                <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Invoice DATE </span><span style="padding-left:30px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.scheduled_date" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/><br/>
+                                <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Challan No </span><span style="padding-left:42px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.origin" style="font-weight: bold;color:black;padding-left:100px;"/><br/>
+                                 <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Challan Date </span><span style="padding-left:33 px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.scheduled_date" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/>
+                            </td>		
+								</tr>         					  	
+         					  	<!-- </tbody>
+                                   <tbody style= "border-bottom: 1px solid;">     -->
+								<tr>
+									<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;border:1px solid;">
+									<span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Consignee,</span><br/>
+									<span class="fonts_size" t-field="o.company_id.name" style="padding-left: 5px;font-weight: bold;color:black;"/><br/>
+									<span class="fonts_size" t-field="o.company_id.street" style="padding-left: 5px;"/><br/>
+									<span class="fonts_size" t-field="o.company_id.street2" style="padding-left: 5px;"/><br/>									
+									<span class="fonts_size" t-field="o.company_id.city" style="padding-left: 5px;"/>-<span class="fonts_size" t-field="o.company_id.zip"/><br/>	
+									<span style="font-weight: bold;color:black;padding-left: 5px;" class="fonts_size">VAT TIN No. :</span> <span class="fonts_size" style="font-weight: bold;color:black;padding-left:10px;">27410344315 V wef 1.4.2006</span><br/>
+                                <span style="font-weight: bold;color:black;padding-left: 5px;" class="fonts_size">CST TIN No. :</span> <span class="fonts_size" style="font-weight: bold;color:black;padding-left:10px;">27410344315 V wef 1.4.2006</span><br/>
+                                <span style="font-weight: bold;color:black;padding-left: 5px;" class="fonts_size">ECC     No.</span><span style="padding-left:20px;">:</span> <span class="fonts_size" style="font-weight: bold;color:black;padding-left:10px;">AABPU2557MXM001</span><br/>											
+									</td>	
+								</tr>         					  	
+         					  	</tbody>   
+                    		   </table>
+
+                <div class="page_border"/>
+            </div>
+            <div class="article o_report_layout_boxed">
+                <t t-raw="0"/>
+            </div>
+
+
+            <div class="footer " align="center"> 
+		
+
+    <span  class="fonts_size" > Page </span>
+		<span class="page"  style="font-size:14px;padding-left: 14px;"/>
+		<span style="padding-left: 10px;" class="fonts_size"> of </span>
+		<span class="topage"  style="font-size:14px;" />
+           
+        </div>
+    </template>
+</data>
