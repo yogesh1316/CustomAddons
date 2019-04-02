@@ -17,6 +17,8 @@ import locale
 class purchaseorderreport(models.Model):
     _inherit = "purchase.order"
     
+    
+
     @api.one
     def _check_user_group(self):
         self.is_manager = self.user.has_group('base.group_sale_manager')
