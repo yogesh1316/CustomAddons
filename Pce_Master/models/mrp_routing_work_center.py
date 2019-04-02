@@ -13,7 +13,7 @@ class MrpRoutingWorkcenter_inherited(models.Model):
 
     name = fields.Char('Operation', compute='oper_desc_id_to_name_cpy',store=True)
 
-    operation_descr_id = fields.Many2one('operation.master','Operation')
+    operation_descr_id = fields.Many2one('operation.master','Operation',required=True) # 1-4-2019updatedby-pradip required=true ,bcause-update-set issue to jeevan
 
   
    

@@ -21,11 +21,11 @@
                         context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
                         attrs="{'readonly': [('product_updatable', '=', False)]}"
                         force_save="1"
-                        style="min-width: 380px;"/>
+                        style="min-width: 350px;" />
                 </xpath> 
 
                 <xpath expr='//field[@name="order_line"]/tree/field[@name="name"]' position="replace">
-                    <field name="name" style="min-width: 380px;"/>
+                    <field name="name" style="min-width: 350px;"/>
                 </xpath>
             
                 <xpath expr='//field[@name="order_line"]/tree/field[@name="product_uom"]' position="replace">

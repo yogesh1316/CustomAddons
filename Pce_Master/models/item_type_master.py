@@ -18,9 +18,14 @@ class item_type_master(models.Model):
 
     item_type_name=fields.Char(string='Item Type Name',required=True,track_visibility='onchange',help='Item Type Description.')
     unique_item_name=fields.Char('Unique Item type name' ,compute='item_name_fun',store=True)
-    activeflag=fields.Selection([('Y','Yes'),('N','No')],default='Y', track_visibility='onchange' ,help="Hide or Show Item Type.")
+    # activeflag=fields.Selection([('Y','Yes'),('N','No')],default='Y', track_visibility='onchange' ,help="Hide or Show Item Type.")
     item_type_code=fields.Integer(string='Item Type Code', track_visibility='onchange' ,help="Unique Item Type Code.")
     complete_name=fields.Char(string='Complete Name',compute='_compute_fields_combination')
+
+    #Created By| Created Date|Info.
+    #Pradip    | 21-3-2019  |Active /Deactivate Flag
+    active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Inactive Item Type Records")
+
 
     # Create-By | Created-Date |Info.
     # Pradip    |  7/3/2019    

@@ -70,11 +70,11 @@
 
 
                     <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Material Group Records" />
-                    <filter name="inactive" string="Inactive" domain="[('active','=',False)]" help="Show Deactivate Material Group Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Material Group Records" />
                    
                     
                     <group string="Group By">
-                        <filter string="Active" domain="[]" context="{'group_by':'active'}" help="Display Group By Active Material Group Records" />
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Material Group Records" />
                         <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Material Group Records" />
                     </group>
                 </search>

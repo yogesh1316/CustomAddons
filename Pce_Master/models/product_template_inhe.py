@@ -14,12 +14,12 @@ class product_template_inhe(models.Model):
     effect_code_description=fields.Many2one('effect_master.info',string='Effect Code Descrip.',required=True)      
     id_code_description=fields.Many2one('id_code_master.info',string="Id Code Descrip.",required=True)
     manufacturer=fields.Many2one('make_master.info',string='Manufacturer',required=True)
-    mrp_type=fields.Many2one('mrp_type_master.info',string='MRP Type',required=True,track_visibility='onchange',help='MRP Type')#,compute='mrp_type_fun'
+    mrp_type=fields.Many2one('mrp_type_master.info',string='MRP Type',track_visibility='onchange',help='MRP Type')#,compute='mrp_type_fun'
     source_code_master=fields.Many2one('source_master.info',string='Source Code',required=True)
     mf_part_no=fields.Char(string='Mf. Part No.',track_visibility='onchange',help='Mf. Part No.')
     filename=fields.Char()
-    batch_qty=fields.Float(string='Batch Qty.',required=True ,default=0.0,track_visibility='onchange',help='Batch Qty.')
-    reorder_level=fields.Float(string='Reorder Level',required=True,default=0.0,track_visibility='onchange',help='Reorder Level')
+    batch_qty=fields.Float(string='Batch Qty.',default=0.0,track_visibility='onchange',help='Batch Qty.')
+    reorder_level=fields.Float(string='Reorder Level',default=0.0,track_visibility='onchange',help='Reorder Level')
 #     lead_time=fields.Integer(string='Lead Time (Days)')
     buyer_code=fields.Many2one('res.users',string='Buyer Code',required=True)
     bin_location=fields.Char(string='Bin Location')
@@ -27,7 +27,7 @@ class product_template_inhe(models.Model):
     channel_flag=fields.Selection([('red','Red'),('green','Green')],'Channel Flag',track_visibility='onchange',help='Channel Flag')
     sr_no_application=fields.Selection([('yes','Yes'),('no','No')],'SrNo.Application')
     unique_product=fields.Char(string="Unique Product Name",compute='unique_product__name_fun',store=True)
-    item_type=fields.Many2one('item.type.master',string='Item Type',required=True,track_visibility='onchange',help='Item Type')
+    item_type=fields.Many2one('item.type.master',string='Item Type',track_visibility='onchange',help='Item Type')
     
     bom_process_id=fields.Integer(string="Process Id")
     

@@ -73,10 +73,10 @@
             <field name="arch" type="xml">
                 <search string="Search Operation Parameter">
                     <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Operation Master Records" />
-                    <filter name="inactive" string="Inactive" domain="[('active','=',False)]" help="Show Deactivate Operation Master Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Operation Master Records" />
                     
                     <group string="Group By">
-                        <filter string="Active" domain="[]" context="{'group_by':'active'}" help="Display Group By Active Operation Master Records" />
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Operation Master Records" />
                         <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Operation Master Records" />
                     </group>
                 </search>
