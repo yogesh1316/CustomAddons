@@ -82,8 +82,8 @@ class MrpProductProduce(models.TransientModel):
         pol_obj = self.env['purchase.order.line']
         if self.production_id.subcontract_prod and not self.production_id.purchase_ids:
 
-            # Update : Subcontract PO sequence no change as per ERP, start with 'OP' 15/03/2019
-            name = self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','OP') or '/'
+            # Update : Subcontract PO sequence no change as per ERP, Schedule('SS') 15/03/2019
+            name = self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','SS') or '/'
 
             vals_item = {
                 'partner_id': self.production_id.vendor.id,
