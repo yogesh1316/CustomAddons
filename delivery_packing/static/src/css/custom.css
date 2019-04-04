@@ -23,10 +23,18 @@
 }
 table, th, td {
     border: 1px solid black;
+
+  }
+
+  hr{
+    font-size: 12px;
+
   }
   table th, table td {
   width: auto;
   }
+  
+
   table th {
   text-align: left;
 } 

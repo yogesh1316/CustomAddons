@@ -19,14 +19,42 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
+            
                 <!-- Add your xpath here -->
                 <xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="replace">
                     <field name="sale_id" invisible="1"/>
-                    <!-- <field name="po_number" invisible="1"/> -->
                     <field name="partner_id" string="Customer" attrs="{'invisible': [('sale_id','=',False)]}"/>
                     <!-- <field name="vendor" string="Vendor" attrs="{'invisible': [('po_number','=',False)]}"/> -->
-
                 </xpath>
+
+                <xpath expr="//page[@name='extra']" position="after">
+                <page string="Packing Details"  attrs="{'invisible': [('sale_id','=',False)]}">
+                <group>
+                 <group>
+                    <field name="material_description"/>
+                    <field name="dimension"/>
+                    <field name="country_of_final_dest"/>
+                    <field name="port_of_landing"/>
+                </group>
+                <group>
+                    <field name="port_of_discharge"/>
+                    <field name="net_wt"/>
+                    <field name="gross_wt"/>
+                </group>
+                </group>
+                </page>
+                </xpath>
+                 <xpath expr="//field[@name='name']" position="after">
+                     <!-- Add your fields here -->
+                     
+                 </xpath>
+
+
+
+
+
+
+
             </field>
         </record>
 
