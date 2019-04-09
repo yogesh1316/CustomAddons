@@ -40,7 +40,11 @@
             <field name="model">operation.master</field>
             <field name="arch" type="xml">
                 <tree string="Operation Master" delete="1" duplicate="1">
+<<<<<<< HEAD
                    <!-- <field name="id" string="Oper. No." class="o_operation_master"/>-->
+=======
+                    <field name="id" string="Oper. No." class="o_operation_master"/>
+>>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
                     <field name="operation_description" />
                     <field name="active" widget="boolean_toggle"/>
                 </tree>
@@ -84,4 +88,8 @@
 
 
     </data>
+<<<<<<< HEAD
 </odoo>
+=======
+</odoo>
+>>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1

@@ -95,4 +95,8 @@ class StockMove(models.Model):
             # record won't be found.
             if recompute:
                 move.recompute()
+<<<<<<< HEAD
         return True
+=======
+        return True
+>>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1

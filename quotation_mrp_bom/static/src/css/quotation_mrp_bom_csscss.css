@@ -1,0 +1,18 @@
+ .o_attribute_value_ids ,th{
+	text-align: left !important;
+	min-width: 45px;
+ }
+
+ .o_operation_id ,th{
+	/* text-align: left !important; */
+	min-width: 65px;
+ }
+
+ /* .o_product_id_name ,th{
+	text-align: left !important;
+	min-width: 10px;
+ } */
+
+ /* .text_high textarea {
+    height: 10%;
+} */

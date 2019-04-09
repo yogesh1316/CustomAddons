@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <data>
+                <menuitem name="Quotation Mrp Bom" id="mrp_bom_quotation_submenu" parent="mrp.menu_mrp_bom" action="qutation_mrp_bom_action_window" />
+<!--    |Created By      |Created Date | Info.
+        |Pradip          |21 Feb.,2019 |Follwing Columns Width Adjusted Only   -->
+
+
+
+
+	<template id="my_assets_id1" name="website assets for my module" inherit_id="web.assets_backend">
+                <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/quotation_mrp_bom/static/src/css/quotation_mrp_bom_csscss.css"/>
+                </xpath>
+        </template>
+
+                <record model="ir.ui.view" id="mrp_bom_view_order_form_inheruted">
+                        <field name="name">mrp.bom.form.inherit</field>
+                        <field name="model">mrp.bom</field>
+                        <field name="inherit_id" ref="mrp.mrp_bom_form_view" />
+                        <field name="arch" type="xml">
+                                <xpath expr="//field[@name='bom_line_ids']/tree//field[@name='product_id']" position="replace">
+                                        <field name="product_id" context="{'default_type': 'product'}" style="min-width: 380px;" />
+                                </xpath>
+                                <xpath expr="//field[@name='bom_line_ids']/tree//field[@name='product_qty']" position="replace">
+                                        <field name="product_qty" string="Product Qty." style="min-width: 15px;" />
+                                </xpath>
+                                <xpath expr="//field[@name='bom_line_ids']/tree//field[@name='product_uom_id']" position="replace">
+                                        <field name="product_uom_id" options="{'no_open':True,'no_create':True}" groups="product.group_uom" string="Product (U.O.M)" style="max-width: 75px;" />
+                                </xpath>
+
+
+                                <xpath expr="//field[@name='bom_line_ids']/tree//field[@name='attribute_value_ids']" position="replace">
+                                        <field name="attribute_value_ids" widget="many2many_tags"
+                                        class="o_attribute_value_ids"
+                                         options="{'no_create': True}" domain="[('product_ids.product_tmpl_id', '=', parent.product_tmpl_id)]" groups="product.group_product_variant" />
+
+                                </xpath>
+
+                                        <!-- style="min-width: 45px;"  -->
+                                 <xpath expr="//field[@name='bom_line_ids']/tree//field[@name='operation_id']" position="replace">
+                                        <field name="operation_id" 
+                                        
+                                        class="o_operation_id"
+                                        groups="mrp.group_mrp_routings" domain="[('routing_id', '=', parent.routing_id)]" options="{'no_quick_create':True,'no_create_edit':True}" />
+                                </xpath>
+
+                        </field>
+                </record>
+
+        </data>
+</odoo>
