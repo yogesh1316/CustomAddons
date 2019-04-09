@@ -1,0 +1,50 @@
+ .o_id_code_master_info_new ,th{
+	text-align: left !important;
+ 
+}
+.o_material_group_master ,th{
+	text-align: left !important;
+	max-width: 30px;
+	text-align: center;
+} 
+
+
+.o_material_master ,th{
+	text-align: left !important;
+	max-width: 40px;
+	text-align: center;
+}
+
+.o_operation_master ,th{
+	text-align: left !important;
+	max-width: 5px;
+	text-align: center;
+}
+
+.o_parameter_master ,th{
+	text-align: left !important;
+	max-width: 5px;
+	text-align: center;
+}
+
+
+
+
+
+.sheet_size,sheet{
+
+min-width: 210%;
+max-width: 390%;
+margin: 0 auto;
+
+
+
+
+}
+ 
+.form_size,form{
+
+min-width: 210%;
+max-width: 190%;
+margin: 0 auto;
+}

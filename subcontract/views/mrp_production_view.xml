@@ -1,0 +1,23 @@
+<odoo>
+    <record model="ir.ui.view" id="view_mrp_product_produce_wizard_inhe">
+        <field name="name">mrp.production.form</field>
+        <field name="model">mrp.product.produce</field>       
+        <field name="inherit_id" ref="mrp.view_mrp_product_produce_wizard"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <data>               
+                <xpath expr="//field[@name='produce_line_ids']" position="replace">
+                    <field name="workorder_ids" nolabel="1">
+                        <tree string="Send for PO" delete="0" editable="bottom" >
+                            <field name="subcontract_operation"  style="width: 20px;" string="Select"/>    
+                            <field name="id" string="id" invisible="1"/>                        
+                            <field name="name" string="Routing"/>  
+                            <field name="state" invisible="1"/>   
+                            <button name="delete" icon="fa-trash-o" style="width: 20px;" type="object" />                           
+                        </tree>
+                    </field>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

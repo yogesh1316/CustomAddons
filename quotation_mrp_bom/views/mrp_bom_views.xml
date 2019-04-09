@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   
+        <menuitem name="Quotation Mrp Bom" id="mrp_bom_quotation_submenu" parent="mrp.menu_mrp_bom" action="qutation_mrp_bom_action_window"/>
+</odoo>

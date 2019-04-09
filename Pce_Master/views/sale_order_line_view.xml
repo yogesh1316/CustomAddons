@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<!--Created-By:Pradip Created-Date:18-1-19 Info. When Select Product Name then 'manu_fact','mf_part_nums' these two columns selected Product Id Against -->
+	<!--<record model="ir.ui.view" id="ship_orderline">
+	    <field name="model">sale.order</field>
+	    <field name="name">sale.order.form</field>
+	    <field name="inherit_id" ref="sale.view_order_form"/>
+	    <field name="arch" type="xml">  
+	        <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom_qty']" position="before">
+	            <field name="manu_fact" invisible="1"/>
+	            <field name="mf_part_nums" invisible="1"/>
+	        </xpath>
+	    </field>
+	</record>-->
+</odoo>

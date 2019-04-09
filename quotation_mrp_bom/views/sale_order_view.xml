@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="quotation_mrp_bom_new" model="ir.actions.act_window">
+            <field name="name">Quotation MRP BOM</field>
+            <field name="res_model">quotation.mrp_bom</field>
+            <field name="view_mode">form,tree,graph</field>
+            <!-- <field name="domain">[('quotation_mrp_bom_id', '=', active_id)]</field> -->
+            <!-- <field name="context">{ 'default_quotation_mrp_bom_id': active_id}</field> -->
+        </record>
+        <record id="sale_action_quotations_mrp_boms" model="ir.actions.act_window">
+            <field name="name">Quotation MRP BOM</field>
+            <field name="res_model">quotation.mrp_bom</field>
+            <!-- <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/> -->
+            <field name="domain">[('order_id', '=', active_id)]</field>
+            <field name="context">{'search_default_order_id': [active_id], 'default_order_id': active_id}</field>
+        </record>
+        <record model="ir.ui.view" id="view_order_form_inherited">
+            <field name="name">sale.order.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//button[@name='action_cancel']" position="after">
+                    <button string="Create Quotation BOM" name='%(quotation_mrp_bom_new)d' type="action" class="oe_highlight" context="{'default_order_id': id}"/>
+                </xpath> -->
+                 <xpath expr="//button[@name='action_view_invoice']" position="after">
+                    <button class="oe_stat_button" type="action" name="%(sale_action_quotations_mrp_boms)d" icon="fa-pencil-square-o" context="{'default_order_line_id': active_id}">
+                        <div class="o_stat_info">
+                            <field name="quote_bom_number" class="o_stat_value"/>
+                            <span class="o_stat_text">Quotation BOM(s) </span>
+                        </div>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='price_total']" position="after">
+                <!-- Doubt -->
+                <field name="order_id" invisible="1"/>
+                    <!-- <button string="Create Quotation BOM" name='%(quotation_mrp_bom_new)d' type="action" class="oe_highlight" context="{'default_order_line_id': id,'default_order_id':order_id,'default_product_id':product_id,'default_description':name,'default_currency_id':currency_id,'default_pricelist_id':pricelist_id}"/> -->
+                    <button string="Create Quotation BOM" name='quotation_mrp_bom_new' type="object" class="oe_highlight"/>
+                    <field name="pricelist_id" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

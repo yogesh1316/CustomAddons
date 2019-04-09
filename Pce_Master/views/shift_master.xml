@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="shift_model_form" model="ir.ui.view" >
+        <field name="name">Shift Master</field>
+        <field name="model">shift.master</field>
+        <field name="arch" type="xml">
+            <form string="Shift Master">
+                <group string="Shift Master Details">
+                    <group name="Shift_Master">
+                        <field name='shift_name'/>
+                        <field name='from_hours' />
+                        <!-- <field name="from_hours" widget="timepicker" options="{'step': '30', 'disableTextInput': false}"/> -->
+                        <field name='to_hours'/>
+                        <field name='total_hours'/>
+                        
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="shift_info_tree" model="ir.ui.view">
+        <field name="name">Shift Master Info</field>
+        <field name="model">shift.master</field>
+        <field name="arch" type="xml">
+            <tree string="Shift Info">
+                <field name='shift_name'/>
+                <field name='from_hours'/>
+                <field name='to_hours'/>
+                <field name='total_hours'/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="shift_info_action" model="ir.actions.act_window">
+        <field name="name">Shift Master</field>
+        <field name="res_model">shift.master</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="master_menu" name="Master" />
+    <menuitem action="shift_info_action" id="mnu_shift_master" name="Shift Master" parent="master_menu"/>
+    
+
+
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+<!-- model.name form view -->
+   <record id="spec_attrib_master_form" model="ir.ui.view">
+     <field name="name">model.name.view.form</field>
+     <field name="model">spec.attrib.master</field>
+     <field name="arch" type="xml">
+       <form string="">
+         <sheet>
+           <group>
+             <!-- Add your fields here -->
+             <field name="attribute_text"/>
+             <field name="attribute_note"/>
+             <field name="uom"/>
+             
+           </group>
+         </sheet>
+       </form>
+     </field>
+   </record>
+   <!-- model.name tree view -->
+   <record id="spec_attrib_master_tree" model="ir.ui.view">
+     <field name="name">model.name.view.tree</field>
+     <field name="model">spec.attrib.master</field>
+     <field name="arch" type="xml">
+       <tree>
+         <!-- Add your fields here -->
+             <field name="attribute_text"/>
+             <field name="attribute_note"/>
+             <field name="uom"/>
+         
+       </tree>
+     </field>
+   </record>
+   <!-- model.name action window -->
+   <record id="spec_attrib_master_action" model="ir.actions.act_window">
+     <field name="name">Attributes</field>
+     <field name="res_model">spec.attrib.master</field>
+     <field name="view_mode">tree,form</field>
+   </record>
+      <menuitem id="attr_menu_act" name="attrib master" parent="datasheet.spec_master_menu_act" action="spec_attrib_master_action" />  
+
+  </data>
+</odoo> 
+   
