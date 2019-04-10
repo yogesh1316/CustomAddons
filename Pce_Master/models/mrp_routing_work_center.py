@@ -11,11 +11,7 @@ class MrpRoutingWorkcenter_inherited(models.Model):
 
     _sql_constraints = [('name valida', 'unique(name,routing_id)', 'Please Enter Unique Combination of Routing Name and Work Center Operation'),]
 
-<<<<<<< HEAD
     name = fields.Char('Operation', compute='oper_desc_id_to_name_cpy',readonly=False,store=True)
-=======
-    name = fields.Char('Operation', compute='oper_desc_id_to_name_cpy',store=True)
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
 
     operation_descr_id = fields.Many2one('operation.master','Operation',required=True) # 1-4-2019updatedby-pradip required=true ,bcause-update-set issue to jeevan
 
