@@ -171,7 +171,6 @@ class MrpProduction(models.Model):
 
     def _generate_finished_moves(self,values):
         print("Generate finished move ids",values)
-<<<<<<< HEAD
         if 'sale_schedule_line_ids' in values:
             if values['sale_schedule_line_ids']:
                 sale_order_schedule_id=values['sale_schedule_line_ids'][0][2][0]
@@ -179,8 +178,6 @@ class MrpProduction(models.Model):
                 sale_order_schedule_id=False
         else:
             sale_order_schedule_id=False
-=======
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
         move = self.env['stock.move'].create({
             'name': self.name,
             'date': self.date_planned_start,
@@ -196,11 +193,7 @@ class MrpProduction(models.Model):
             'group_id': self.procurement_group_id.id,
             'propagate': self.propagate,
             'move_dest_ids': [(4, x.id) for x in self.move_dest_ids],
-<<<<<<< HEAD
             'sale_order_schedule_id':sale_order_schedule_id#values['sale_schedule_line_ids'][0][2][0] if 'sale_schedule_line_ids' in values else False
-=======
-            'sale_order_schedule_id':values['sale_schedule_line_ids'][0][2][0] if 'sale_schedule_line_ids' in values else False
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
         })
         move._action_confirm()
         return move
@@ -235,7 +228,6 @@ class MrpProduction(models.Model):
             'sale_id': self.procurement_group_id.sale_id.id,
             'partner_id': self.procurement_group_id.partner_id.id,
         })
-<<<<<<< HEAD
         if 'sale_schedule_line_ids' in values:
             if values['sale_schedule_line_ids']:
                 sale_order_schedule_id=values['sale_schedule_line_ids'][0][2][0]
@@ -243,8 +235,6 @@ class MrpProduction(models.Model):
                 sale_order_schedule_id=False
         else:
             sale_order_schedule_id=False
-=======
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
         data = {
             'sequence': bom_line.sequence,
             'name': self.name,
@@ -265,13 +255,8 @@ class MrpProduction(models.Model):
             'warehouse_id': source_location.get_warehouse().id,
             'group_id': group_id.id,
             'propagate': self.propagate,
-<<<<<<< HEAD
             'unit_factor': quantity / original_quantity,#
             'sale_order_schedule_id':sale_order_schedule_id#values['sale_schedule_line_ids'][0][2][0] if 'sale_schedule_line_ids' in values else False
-=======
-            'unit_factor': quantity / original_quantity,
-            'sale_order_schedule_id':values['sale_schedule_line_ids'][0][2][0] if 'sale_schedule_line_ids' in values else False
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
         }
         return self.env['stock.move'].create(data)
 
@@ -310,11 +295,7 @@ class ProcurementRule(models.Model):
         print("--------------_<<<>>>>------------",values)
         #sale_order_line_obj=self.env['sale.order.line'].browse(values['sale_line_id'])
         return {
-<<<<<<< HEAD
             'sale_schedule_line_ids':[(6,0,[values['sale_order_schedule_id']])] if values['sale_order_schedule_id'] else print("No sale schedule"),
-=======
-            'sale_schedule_line_ids':[(6,0,[values['sale_order_schedule_id']])],
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
             'origin': origin,
             'product_id': product_id.id,
             'product_qty': product_qty,
