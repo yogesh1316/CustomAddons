@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api,_
-<<<<<<< HEAD
 from odoo.exceptions import UserError
-=======
-
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
 class quotation_mrp_bom(models.Model):
     _name = "quotation.mrp_bom"
     _rec_name="name"
@@ -39,12 +35,9 @@ class quotation_mrp_bom(models.Model):
     mrp_bom_ids=fields.One2many('mrp.bom','quotation_mrp_bom_id')
     description=fields.Text(string="Description",required=True,help="Description of the Product")
     total=fields.Monetary(string="Amount Total",readonly=True,compute='_amount_all')
-<<<<<<< HEAD
     
     
     
-=======
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
     @api.depends('quotation_mrp_bom_line.price_subtotal')
     def _amount_all(self):
         for order in self:
@@ -54,7 +47,6 @@ class quotation_mrp_bom(models.Model):
             order.update({
                 'total':amt_total
             })
-<<<<<<< HEAD
     
     def context_values(self,values):
         for order in self:
@@ -109,17 +101,6 @@ class quotation_mrp_bom(models.Model):
         new_id = super(quotation_mrp_bom,self).create(vals)
         return new_id
 
-=======
-    # @api.depends('quotation_mrp_bom_line.unit_price')
-    # def _amount_all(self):
-    #     for order in self:
-    #         amt_total=0
-    #         for line in order.quotation_mrp_bom_line:
-    #             amt_total+=line.unit_price
-    #         order.update({
-    #             'total':amt_total
-    #         })
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
     @api.depends('quotation_mrp_bom_line')
     def _compute_mrp_bom_nos(self):
         for quotation_bom in self:
@@ -128,31 +109,17 @@ class quotation_mrp_bom(models.Model):
                 if order.id:
                     nbr += 1
             quotation_bom.mrp_bom_number = nbr
-<<<<<<< HEAD
-=======
-    @api.model
-    def create(self,vals):
-        if vals:
-            vals['name'] = self.env['ir.sequence'].next_by_code("quotation.mrp.bom")
-        new_id = super(quotation_mrp_bom,self).create(vals)
-        return new_id
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
     
 class quotation_mrp_bom_line(models.Model):
     _name = "quotation.mrp_bom.line"
     quotation_mrp_bom_id = fields.Many2one("quotation.mrp_bom")
     name=fields.Char("Description",required=True,help="Description of the Product")
     product_id = fields.Many2one('product.product',string="Product")    
-<<<<<<< HEAD
     product_qty = fields.Float('Product Quantity',help="Quantity of the product",default=1.00)
-=======
-    product_qty = fields.Float('Product Quantity',help="Quantity of the product")
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
     product_uom_id = fields.Many2one('product.uom', 'Product Unit of Measure',oldname='product_uom',help="Unit of Measure (Unit of Measure) is the unit of measurement for the inventory control")
     sequence = fields.Integer('Sequence', default=1,help="Gives the sequence order when displaying.")
     attribute_value_ids = fields.Many2many('product.attribute.value', string='Variants',help="BOM Product Variants needed form apply this line.")
     active=fields.Boolean('Active',default=True)
-<<<<<<< HEAD
     unit_price=fields.Float(string="Cost Price",default=0.00)
     price_subtotal=fields.Float(string='Sub Total',readonly=True,compute='set_price_subtotal',store=True,default=0.00)
 
@@ -169,17 +136,3 @@ class quotation_mrp_bom_line(models.Model):
     def set_price_subtotal(self):
         for order in self:
             order.price_subtotal=(order.product_qty * order.unit_price)
-=======
-    unit_price=fields.Float(string="Cost Price")
-    price_subtotal=fields.Float(string='Sub Total',readonly=True,compute='set_price_subtotal',store=True)
-    @api.onchange('product_id','unit_price')
-    def _set_unit_price(self):
-        if self.unit_price:
-            self.unit_price=self.unit_price
-        else:
-            self.unit_price=self.product_id.standard_price
-    @api.depends('unit_price','product_qty')
-    def set_price_subtotal(self):
-        for order in self:
-            order.price_subtotal=order.product_qty * order.unit_price
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1

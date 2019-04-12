@@ -18,31 +18,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-<<<<<<< HEAD
-    'depends': ['base','mrp','sale','product'],
-=======
     'depends': ['base','mrp','sale','product','sale_margin'],
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
 
     # always loaded
     'data': [
         'views/quotation_mrp_bom.xml',
         'views/sale_order_view.xml',
-<<<<<<< HEAD
         'views/mrp_bom_views.xml'
-=======
-       'views/mrp_bom_views.xml',
-       'views/sale_order_line_view.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.Sale.order.line.views ,Column width Adjust
-	    'views/purchase_view_order_form.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.purchase.order.line.views ,Column width Adjust
-        'views/mrp_bom_views_line.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.mrp.bom.line.views ,Column width Adjust
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1

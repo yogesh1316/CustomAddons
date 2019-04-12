@@ -10,13 +10,8 @@ class SaleOrder(models.Model):
     def _compute_bom_nos(self):
         for order in self:
             if order.order_line:
-<<<<<<< HEAD
                 nbr = 0
                 for line in order.order_line:
-=======
-                for line in order.order_line:
-                    nbr = 0
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
                     if line.quotation_bom_ids:
                         for bom in line.quotation_bom_ids:
                             if bom.id:
@@ -35,7 +30,6 @@ class SaleOrderLine(models.Model):
     product_id = fields.Many2one('product.product', string='Product', domain=[('sale_ok', '=', True)], change_default=True, ondelete='restrict',required=False)
     pricelist_id = fields.Many2one(related="order_id.pricelist_id", string='Pricelist' , help="Pricelist for current sales order.")
     currency_id = fields.Many2one("res.currency", related='order_id.currency_id', string="Currency")
-<<<<<<< HEAD
     
     @api.multi
     def quotation_mrp_bom_new(self):
@@ -64,5 +58,3 @@ class SaleOrderLine(models.Model):
                 'view_mode':'form'
                 }
         return result
-=======
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
