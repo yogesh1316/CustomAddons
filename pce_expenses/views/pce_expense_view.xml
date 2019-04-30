@@ -1,0 +1,112 @@
+<odoo>
+  <data>
+    <!-- model.name inherit form view -->
+    <record id="hr_expense_inherit_view_id" model="ir.ui.view">
+      <field name="name">hr_expense.inherit.view.form</field>
+      <field name="model">hr.expense</field>
+      <field name="inherit_id" ref="hr_expense.hr_expense_form_view"/>
+      <field name="arch" type="xml">
+       <xpath expr="//form//sheet//group//group//field[@name='product_id']" position="replace">
+          <field name="product_id"  options="{'no_open': True, 'no_create': True}" context="{'default_can_be_expensed': 1}"/>
+        </xpath>
+       <xpath expr="//form//sheet//group//group[2]//field[@name='account_id']" position="replace">
+        <field name="account_id" options="{'no_open': True, 'no_create': True}" domain="[('internal_type', '=', 'other')]" groups="account.group_account_user"/>
+        </xpath>
+       <xpath expr="//form//sheet//group//group[2]//field[@name='employee_id']" position="replace">
+          <field name="employee_id" options="{'no_open': True, 'no_create': True}" groups="hr_expense.group_hr_expense_user"/>
+        </xpath>
+        <xpath expr="//form//sheet//group//group//field[@name='tax_ids']" position="replace">
+          <field name="tax_ids" options="{'no_open': True, 'no_create': True}" domain="[('type_tax_use', '=', 'purchase')]" widget="many2many_tags" groups="account.group_account_user"/>
+        </xpath>
+
+        <!-- Add your xpath here -->
+        <!-- <xpath expr="/form/header/button[@name='submit_expenses']" position="replace"> -->
+        <!-- Add your fields here -->
+        <!-- <button name="submit_expenses" string="Submit to Manager" type="object" class="oe_highlight o_expense_submit" attrs="{'invisible': [('state', '=','draft')]}"/>  -->
+        <!-- </xpath> -->
+        <xpath expr="/form/sheet/div" position="after">
+          <!-- Add your fields here -->
+          <h1 class="hidden-xs">
+            <field name="iou_no" attrs="{'invisible': [('name','=','/')]}" readonly="1"/>
+          </h1>
+        </xpath>
+        <xpath expr="//field[@name='unit_amount']" position="after">
+          <!-- Add your fields here -->
+          <field name="cust_id" options="{'no_open': True, 'no_create': True}"/>
+          <field name="exp_type_id" options="{'no_open': True, 'no_create': True}"/>
+          <field name="tour_date"/>
+          <field name="mode_of_payment"/>
+
+        </xpath>
+        <xpath expr="//field[@name='sale_order_id']" position="replace">
+          <field name="sale_order_id" options="{'no_open': True, 'no_create': True}" context="{'sale_show_partner_name': True}"/>
+        </xpath>
+
+      </field>
+    </record>
+
+    <!-- model.name inherit form view -->
+    <record id="hr_expense_view_id" model="ir.ui.view">
+      <field name="name">hr_expense.inherit.view.form</field>
+      <field name="model">hr.expense.sheet</field>
+      <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+      <field name="arch" type="xml">
+        <!-- Add your xpath here -->
+        <xpath expr="//field[@name='name']" position="before">
+          <!-- Add your fields here -->
+          <h1 class="hidden-xs">
+            <field name="exp_iou_no" attrs="{'readonly': [('state','in',['submit','approve','post','done'])]}"/>
+          </h1>
+        </xpath>
+        <xpath expr="//field[@name='payment_mode']" position="after">
+          <!-- Add your fields here -->
+          <field name="approve_date"/>
+          <field name="pay_mode" options="{'no_open': True, 'no_create': True}" attrs="{'readonly': [('state','in',['submit','approve','post','done'])]}"/>
+
+
+        </xpath>
+        <xpath expr="//form//header//button[@name='approve_expense_sheets']" position="replace">
+          <!-- Add your fields here -->
+          <button name="approve_expense_sheets" states="submit" string="Approve" type="object" groups="hr_expense.group_hr_expense_manager" class="oe_highlight o_expense_sheet_approve"/>
+        </xpath>
+        <!-- <xpath expr="//form//header//button[@name='527']" position="replace"> 
+          <button name="527" states="submit,approve" context="{'hr_expense_refuse_model':'hr.expense.sheet'}" string="Refuse" type="action" groups="hr_expense.group_hr_expense_manager"/>
+        </xpath>  -->
+        <xpath expr="//form//sheet//notebook//page//group//group//field[@name='journal_id']" position="replace">
+          <!-- Add your fields here -->
+          <field name="journal_id" domain="[('type', '=', 'purchase')]" options="{'no_open': True, 'no_create': True}" attrs="{'invisible': [('payment_mode', '!=', 'own_account')],'readonly': [('state','in',['submit','approve','post','done'])]}"/>
+        </xpath>
+        <xpath expr="//form//sheet//notebook//page//group//group//field[@name='accounting_date']" position="replace">
+          <field name="accounting_date" groups="account.group_account_user" attrs="{'invisible': [('state', 'not in', ['approve', 'post', 'done'])],'readonly': [('state','in',['submit','approve','post','done'])]}"/>
+         </xpath>
+         <xpath expr="//form//sheet//notebook//page//group//group//field[@name='bank_journal_id']" position="replace">
+          <!-- Add your fields here -->
+          <field name="bank_journal_id" domain="[('type', '=', 'purchase')]" options="{'no_open': True, 'no_create': True}" attrs="{'invisible': [('payment_mode', '!=', 'own_account')],'readonly': [('state','in',['submit','approve','post','done'])]}"/>
+        </xpath>
+        <xpath expr="//form//sheet//notebook//page//group//group//field[@name='account_move_id']" position="replace">
+          <field name="account_move_id" groups="account.group_account_user" options="{'no_open': True, 'no_create': True}" attrs="{'invisible': [('state', 'not in', ['approve', 'post', 'done'])],'readonly': [('state','in',['submit','approve','post','done'])]}"/>
+         </xpath>
+
+
+
+      </field>
+    </record>
+
+    <!-- <record id="hr_expense_product" model="ir.actions.act_window">
+            <field name="name">Expense Products</field>
+            <field name="res_model">product.product</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_product"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{"default_can_be_expensed": 1, 'default_type': 'service'}</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a new expense category.
+              </p>
+            </field>
+        </record> --> -->
+
+
+  </data>
+</odoo>
