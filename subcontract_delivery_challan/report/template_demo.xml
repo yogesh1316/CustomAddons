@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+
+    <template id="assets_pdf_stock_picking_css" name="stock_picking_ Report CSS" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <link href="/subcontract_delivery_challan/static/src/css/custom_css_stock_picking.css" rel="stylesheet"/>
+        </xpath>
+    </template>
+
+    <template id="web.stock_picking_report_main_id">
+         <!-- <div class="header o_boxed_header"> 
+            <center>
+                <strong style="font-size: 20px;font-family:Arial;">Delivery Challan</strong>
+            </center>
+         </div> -->
+
+        <div class="article o_report_layout_boxed">
+            <t t-raw="0" />
+        </div>
+
+        <div class="footer " align="right">
+            <span class="fonts_size"> Page </span>
+            <span class="page" style="font-size:14px;padding-left: 14px;"/>
+            <span style="padding-left: 8px;" class="fonts_size"> of </span>
+            <span class="topage" style="font-size:14px;" />
+        </div>
+    </template>
+</data>
