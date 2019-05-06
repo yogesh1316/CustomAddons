@@ -38,7 +38,7 @@
  				<!--<field name="unique_reason_desc"/>-->  
  				<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->
 				<field name='active_flag' string="Is Active" widget='radio'/> 
-	            </tree>
+	        </tree>
         </field>
     </record>
 

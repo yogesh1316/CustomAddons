@@ -19,6 +19,7 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
     _description = 'Manufacturing Order '
 
+            
     # Field inherit for change the name and required rule
     date_planned_start = fields.Datetime(
         'Planned Start', copy=False, 
@@ -28,6 +29,7 @@ class MrpProduction(models.Model):
         'Planned End', copy=False,
         index=True, 
         states={'confirmed': [('readonly', False)]})
+   
 
     cum_setup_time = fields.Float(string='Cumulative setup time', help="Setup time required for Operation")
     cum_ope_time = fields.Float(string='Cumulative operation time', help="Time required to perform Operation")
@@ -89,16 +91,20 @@ class MrpProduction(models.Model):
             #production._generate_moves()
         return production   
 
+    # Update : End date calculate on Quantity update 
+    @api.constrains('product_qty')
+    def _change_end_date_cal(self):
+        self.date_planned_start_cal()
+        
     # Calculate Planned end date on start date with lead or cumulative time
-    @api.onchange('date_planned_start')    
+    @api.onchange('date_planned_start','product_qty')    
     def date_planned_start_cal(self):        
         self.date_planned_finished=''        
         cum_time=''                    
         if self.date_planned_start:                          
             if self.product_id:
                 day=self._day_cal()    
-                planneddate = self._planneddatecal(self.date_planned_start,day,'S')
-                
+                planneddate = self._planneddatecal(self.date_planned_start,day,'S')                
                 self.date_planned_finished = planneddate
             
     # Calculate Planned start date on end date with lead or cumulative time
