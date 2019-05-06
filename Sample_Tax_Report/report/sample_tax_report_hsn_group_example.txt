@@ -1,0 +1,17 @@
+
+https://www.odoo.com/forum/help-1/question/how-to-groups-the-same-value-report-in-qweb-odoo-137491
+<t t-set="i" t-value="1" />
+
+<t t-foreach="request.env['x_surat_usul'].search([])" t-as="obj">
+
+    <tr t-foreach="obj.x_pengajuan_materiil" t-as="a">
+
+        <td class="text-center"><span t-esc="i"/><t t-set="i" t-value="i+1"/> </td>
+
+        <td><span t-field="a.x_komponen" /></td>
+
+        <td><span t-field="a.x_jum_ang_approve" /></td>
+
+    </tr>
+
+</t>
