@@ -6,57 +6,86 @@
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_tree"/>
             <field name="arch" type="xml">
-                <!-- Add your xpath here -->
                 <xpath expr="//field[@name='origin']" position="after">
-                    <!-- Add your fields here -->
                     <field name="customer"/>
                 </xpath>
             </field>
         </record>
+        
+        
         <!-- model.name inherit form view -->
         <record id="stk_pick_inherit_form" model="ir.ui.view">
             <field name="name">model.form</field>
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
-            
-                <!-- Add your xpath here -->
-                <xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="replace">
+                <xpath expr="/form/sheet/div" position="after">
+                    <field name="test" invisible="1"/>
+                    <label string="Packing Slip" attrs="{'invisible': [('picking_type_code','!=','outgoing')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="replace">
+                    <field name="name" attrs="{'invisible':[('test','=','Pick')]}" readonly="True"/>  
+                </xpath>
+                <xpath expr="/form/sheet/div" position="after">
+                    <label string="Dispatch Clearance" attrs="{'invisible': [('test','!=','Pick')]}"/>
+                </xpath> 
+                <xpath expr="/form/sheet/notebook/page[2]/field/tree/field[@name='quantity_done']" position="after">
+                    <field name="test_pick" invisible="1"/>
+                    <field name="po_quantity"/>
+                    <field name="challan_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Quality To Stock'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}"/>
+                    <field name="receive_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Quality To Stock'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}"/>
+                    <field name="inspected_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','Quality To Stock'),('test_pick','=','Receipts'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}"/>
+                    <field name="accepted_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Receipts'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}"/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page[2]/field/tree/field[@name='quantity_done']" position="after">
+                    <field name="sale_line_id" invisible="1"/>
+                    <field name="dispatch_clerance" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Receipts'),('test_pick','=','Quality To Stock'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}"/>
+                    <field name="packing_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Receipts'),('test_pick','=','Quality To Stock'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Manufacturing')]}"/>
+                </xpath>                                                    
+                <xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
                     <field name="sale_id" invisible="1"/>
-                    <field name="partner_id" string="Customer" attrs="{'invisible': [('sale_id','=',False)]}"/>
-                    <!-- <field name="vendor" string="Vendor" attrs="{'invisible': [('po_number','=',False)]}"/> -->
+                    <field name="sale_customer" string="Customer" attrs="{'invisible':[('sale_id','=',False)]}" options="{'no_open': True, 'no_create': True}" readonly="'|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Quality To Stock'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')"/>
                 </xpath>
-
+                <!-- <xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
+                    <field name="vendor"  attrs="{'invisible':[('sale_id','!=',False)]}"/>
+                </xpath>   -->
+                <xpath expr="/form/sheet/group/group/field[@name='scheduled_date']" position="replace">
+                    <field name="scheduled_date" string="GRN Date" attrs="{'readonly': [('id', '=', False)], 'required': [('id', '!=', False)]}"/>
+                </xpath>
                 <xpath expr="//page[@name='extra']" position="after">
-                <page string="Packing Details"  attrs="{'invisible': [('sale_id','=',False)]}">
-                <group>
-                 <group>
-                    <field name="material_description"/>
-                    <field name="dimension"/>
-                    <field name="country_of_final_dest"/>
-                    <field name="port_of_landing"/>
-                </group>
-                <group>
-                    <field name="port_of_discharge"/>
-                    <field name="net_wt"/>
-                    <field name="gross_wt"/>
-                </group>
-                </group>
-                </page>
+                    <page string="Packing Details" name="packing_details"  attrs="{'invisible': [('sale_id','=',False)]}">
+                        <group>
+                            <group>
+                                <field name="material_description"/>
+                                <field name="dimension"/>
+                                <field name="country_of_final_dest"/>
+                                <field name="port_of_landing"/>
+                            </group>
+                            <group>
+                                <field name="port_of_discharge"/>
+                                <field name="net_wt"/>
+                                <field name="gross_wt"/>
+                            </group>
+                        </group>
+                    </page>
                 </xpath>
-                 <xpath expr="//field[@name='name']" position="after">
-                     <!-- Add your fields here -->
-                     
-                 </xpath>
-
-
-
-
-
-
-
+                <xpath expr="//page[@name='packing_details']" position="after">
+                    <page string="BOE Details" attrs="{'invisible': [('sale_id','!=',False)]}">
+                        <group>
+                            <group>
+                                <field name="awb_no" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="mode" string="MODE" options="{'no_open': True, 'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="boe_no" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="boe_date" options="{'no_open': True, 'no_create': True}"/>             
+                            </group>
+                        </group>
+                    </page> 
+                </xpath>
             </field>
         </record>
+
 
         <!-- model.name inherit tree view -->
         <record id="view_id" model="ir.ui.view">
@@ -64,11 +93,29 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.vpicktree"/>
             <field name="arch" type="xml">
-                <!-- Add your xpath here -->
                 <xpath expr="/tree/field[@name='partner_id']" position="replace">
-                    <field name="partner_id" string="Customer/Supplier"/>
+                    <!-- <field name="vendor" string="Customer/Supplier"/> -->
+                    <!-- <field name="partner_id" string="Customer/Supplier"/> -->
+                </xpath> 
+                <xpath expr="/tree/field[@name='name']" position="before">
+                    <field name="sale_id" invisible="1"/>
+                    <field name="grn_name" string="Grn No"/>
                 </xpath>
             </field>
-        </record>
+        </record> 
+
+
+       <!-- model.name inherit tree view -->
+        <!-- <record id="inhe_stock_move_tree_view_id" model="ir.ui.view">
+            <field name="name">model.name.inherit.view.tree</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.stock_move_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    
+                </xpath>
+                
+            </field>
+         </record> -->
     </data>
 </odoo>
