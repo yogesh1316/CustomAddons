@@ -6,7 +6,7 @@
     <!--Report id and calling to template-->
         <report
             id="report_delivery_packing_id"
-            string="Print Delivery Packing" 
+            string="Delivery Packing" 
   			model="stock.picking"        
             report_type="qweb-pdf"
             name="delivery_packing.deliveryp_report_menu_order_id_dp"
@@ -27,7 +27,7 @@
             <field name="margin_left">4</field>
             <field name="margin_right">10</field>
             <field name="header_line" eval="False" />   
-            <field name="header_spacing">75</field>
+            <field name="header_spacing">70</field>
             <field name="dpi">90</field>
         </record> 
     
