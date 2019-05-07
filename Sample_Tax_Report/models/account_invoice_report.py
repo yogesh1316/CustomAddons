@@ -11,7 +11,7 @@ from odoo.addons import decimal_precision as dp
 import locale
 import datetime
 
-#create_by | create_date | update_by | update_date
+#create_by  | create_date | update_by | update_date
 #Pradip      27/12/2018   12:00PM  Pradip       
 #Info.: TAX Report
 

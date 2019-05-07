@@ -16,6 +16,6 @@
             'views/account_invoice_inhe.xml',
              ],
     'installable': True,
-    'auto_install': False,
+    'auto_install':False,
     'application': False,
 }

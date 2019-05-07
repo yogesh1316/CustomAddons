@@ -6,13 +6,11 @@
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//form//header//button[@name='action_invoice_draft']" position="after" >
-            <button name="%(act_invoice_wizard_inhe)d" type="action" string="type"/>
-            </xpath>
+            
          <xpath expr="//form//sheet//group//group//field[@name='date_invoice']" position="before" >
-            <field name="invoice_type"/>
+            <field name="invoice_type" widget="radio"/>
             </xpath>
-            <!-- Add your xpath here -->
+            <!-- Add your xpath heres   -->
             <!-- ADD HAN_CODE Invoice line order  29/06/18--> 
            <!-- <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after" groups="base.group_user">
                 <field name="l10n_in_hsn_code" style="min-width: 92px;" />

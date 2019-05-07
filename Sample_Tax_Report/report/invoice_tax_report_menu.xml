@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<!--create_by | create_date | update_by | update_date
+	<!--create_by | create_date  | update_by  | update_date
         Pradip      11/12/2018     Pradip     13/12/2018   
         Info.: Purchase Report -->
     <data><!--id="purchase_report_menu_id"
