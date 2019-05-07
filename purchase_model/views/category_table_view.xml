@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- create_by | create_date | update_by | update_date
+Yogeshwar Chaudahri |        |Yogeshwar Chaudhari | 29/04/2019 -->
+<odoo>
+    <data>
+        <record id="category_view_form" model="ir.ui.view">
+            <field name="name">category.purchase.master.form</field>
+            <field name="model">category.purchase.master</field>
+            <field name="arch" type="xml">
+                <form string="Category Purchase">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="po_category"/>
+                                <field name="category_name"/>
+                            </group>
+                            <group>
+                                <field name="product_type"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="category_purchase_tree" model="ir.ui.view">
+		    <field name="name">category.purchase.master</field>
+		    <field name="model">category.purchase.master</field>
+		    <field name="arch" type="xml">
+			    <tree string="Category Purchase Tree">
+			    	<field name="po_category"/>
+                    <field name="category_name"/>
+                    <field name="product_type"/>
+                    <field name="active" widget="boolean_toggle"/>
+			    </tree>
+		    </field>
+	    </record>
+
+        <record id="category_purchase_action" model="ir.actions.act_window">
+		    <field name="name">Category Purchase  Master</field>
+		    <field name="res_model">category.purchase.master</field>
+		    <field name="view_mode">tree,form</field>
+	    </record>
+
+
+        <record id="operation_master_search" model="ir.ui.view">
+            <field name="name">category.purchase.master.search</field>
+            <field name="model">category.purchase.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Purchase Category Master">
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Purchase Category Master Records" />
+                    <filter name="inactive" string="Inactive" domain="[('active','=',False)]" help="Show Deactivate Purchase Category Master Records" />
+                                       
+                    <group string="Group By">
+                        <filter string="Active" domain="[]" context="{'group_by':'active'}" help="Display Group By Active Purchase Category Master Records" />
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Purchase Category Master Records" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <menuitem id="categoty_purchase_menu_id" name="Purchase Category"
+            parent="purchase.menu_purchase_root"
+            action="purchase_model.category_purchase_action"/>
+    </data>
+</odoo>
+
+
+
+	

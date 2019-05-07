@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- create_by | create_date | update_by | update_date
+Yogeshwar Chaudahri | 2/05/2019 |-->
+<odoo>
+    <data>
+        <record id="indent_type_view_form" model="ir.ui.view">
+            <field name="name">indent.type.master.form</field>
+            <field name="model">indent.type.master</field>
+            <field name="arch" type="xml">
+                <form string="Indent Type">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="indent_type"/>
+                                <field name="indent_name"/>
+                            </group>
+                            <group>
+                                <field name="product_type"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="indent_type_tree" model="ir.ui.view">
+		    <field name="name">indent.type.master</field>
+		    <field name="model">indent.type.master</field>
+		    <field name="arch" type="xml">
+			    <tree string="Category Purchase Tree">
+			    	<field name="indent_type"/>
+                    <field name="indent_name"/>
+                    <field name="product_type"/>
+                    <field name="active" widget="boolean_toggle"/>
+			    </tree>
+		    </field>
+	    </record>
+
+        <record id="indent_type_action" model="ir.actions.act_window">
+		    <field name="name">Indent Type Master</field>
+		    <field name="res_model">indent.type.master</field>
+		    <field name="view_mode">tree,form</field>
+	    </record>
+
+
+        <record id="indent_type_master_search" model="ir.ui.view">
+            <field name="name">indent.type.master.search</field>
+            <field name="model">indent.type.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Indent Type Master">
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Indent Type Master Records" />
+                    <filter name="inactive" string="Inactive" domain="[('active','=',False)]" help="Show Deactivate Indent Type Master Records" />
+                                       
+                    <group string="Group By">
+                        <filter string="Active" domain="[]" context="{'group_by':'active'}" help="Display Group By Active Indent Type Master Records" />
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Indent Type Master Records" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <menuitem id="indent_type_menu_id" name="Indent Type"
+            parent="purchase.menu_purchase_root"
+            action="purchase_model.indent_type_action"/>
+    </data>
+</odoo>
+
+
+
+	

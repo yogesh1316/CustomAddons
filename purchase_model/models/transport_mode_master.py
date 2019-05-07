@@ -7,6 +7,7 @@ from odoo.exceptions import UserError
 
 class transport_mode_master(models.Model):
     _name='transport_mode.master'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name ="transport_mode_desc"  
     _description="Transport Mode Master"
     
