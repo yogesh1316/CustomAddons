@@ -33,7 +33,6 @@
     	</record>
         
      
-      
       <record id="subcontract_delivery_challan.stock_picking_report_menu_id" model="ir.actions.report">
       		<field name="paperformat_id" ref="subcontract_delivery_challan.paperformat_tax_report" />
     	</record>  
