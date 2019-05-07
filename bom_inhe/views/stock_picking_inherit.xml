@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- model name inherit tree view -->
+        <!-- model.name inherit tree view -->
         <record id="purchase_order_inherit_tree_view_id" model="ir.ui.view">
             <field name="name">model.name.inherit.view.tree</field>
             <field name="model">purchase.order</field>
@@ -13,7 +14,7 @@
         </record>
         
         
-        <!-- model name inherit form view -->
+        <!-- model.name inherit form view -->
         <record id="stk_pick_inherit_form" model="ir.ui.view">
             <field name="name">model.form</field>
             <field name="model">stock.picking</field>
@@ -31,26 +32,28 @@
                 </xpath> 
                 <xpath expr="/form/sheet/notebook/page[2]/field/tree/field[@name='quantity_done']" position="after">
                     <field name="test_pick" invisible="1"/>
-                    <field name="po_quantity"/>
+                    <field name="po_quantity" invisible="1"/>
                     <field name="challan_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Quality To Stock'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}"/>
-                    <field name="receive_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Quality To Stock'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}"/>
-                    <field name="inspected_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','Quality To Stock'),('test_pick','=','Receipts'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}"/>
-                    <field name="accepted_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Receipts'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}"/>
+                    <field name="receive_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Quality To Stock'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}" invisible="1"/>
+                    <field name="inspected_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','Quality To Stock'),('test_pick','=','Receipts'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}" invisible="1"/>
+                    <field name="accepted_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Receipts'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}" invisible="1"/>
                 </xpath>
                 <xpath expr="/form/sheet/notebook/page[2]/field/tree/field[@name='quantity_done']" position="after">
-                    <field name="sale_line_id" invisible="1"/>
-                    <field name="dispatch_clerance" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Receipts'),('test_pick','=','Quality To Stock'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}"/>
-                    <field name="packing_quantity" attrs="{'readonly': ['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Receipts'),('test_pick','=','Quality To Stock'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Manufacturing')]}"/>
-                </xpath>                                                    
+                    <field name="dispatch_clerance" invisible="1"/>
+                    <field name="packing_quantity" attrs="{'readonly':['|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Receipts'),('test_pick','=','Quality To Stock'),('test_pick','=','Pick'),('test_pick','=','Manufacturing')]}" invisible="1"/>
+                    <!-- attrs="{'readonly':['|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Receipts'),('test_pick','=','Quality To Stock'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')]}" -->
+                </xpath>                                                 
                 <xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
                     <field name="sale_id" invisible="1"/>
                     <field name="sale_customer" string="Customer" attrs="{'invisible':[('sale_id','=',False)]}" options="{'no_open': True, 'no_create': True}" readonly="'|','|','|','|','|', ('test_pick','=','In To Quality'),('test_pick','=','Quality To Stock'),('test_pick','=','Pick'),('test_pick','=','Pack'),('test_pick','=','Delivery Orders'),('test_pick','=','Manufacturing')"/>
                 </xpath>
                 <!-- <xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
-                    <field name="vendor"  attrs="{'invisible':[('sale_id','!=',False)]}"/>
-                </xpath>   -->
-                <xpath expr="/form/sheet/group/group/field[@name='scheduled_date']" position="replace">
-                    <field name="scheduled_date" string="GRN Date" attrs="{'readonly': [('id', '=', False)], 'required': [('id', '!=', False)]}"/>
+                    <field name="test" invisible="1"/>
+                    <field name="vendor"  attrs="{'invisible':[('sale_id','!=',False)]}" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="partner_id" string="Vendor" options="{'no_open': True, 'no_create': True}" attrs="{'invisible':['|','|','|','|', ('grn_name','!=',True)('sale_id','=',False),('test','=','Pick'),('test','=','Pack'),('test','=','Delivery Orders')]}" readonly="'|','|', ('test_pick','=','In To Quality'),('test_pick','=','Receipts'),('test_pick','=','Quality To Stock')"/>
+                </xpath>    -->
+                <xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="replace">
+                    <field name="partner_id" attrs="{'invisible': [('picking_type_code', '=', 'internal')]}" invisible="1"/>
                 </xpath>
                 <xpath expr="//page[@name='extra']" position="after">
                     <page string="Packing Details" name="packing_details"  attrs="{'invisible': [('sale_id','=',False)]}">
@@ -83,6 +86,58 @@
                         </group>
                     </page> 
                 </xpath>
+                <xpath expr="//form//sheet//group" position="after">
+                      <!-- Below Table For GRN -->
+                    <table attrs="{'invisible':['|','|','|', '|','|',  ('test','=','In To Quality'),('test','=','Quality To Stock'),('test','=','Pick'),('test','=','Pack'),('test','=','Delivery Orders'),('test','=','Internal Transfers')]}">
+                        <tr>
+                            <td style="color:black;">Note for the below table:<br/>
+							    <span><b>a.&#x20;</b></span><span style="color:black;" >Initial Demand is &#x20;</span> <strong>PO Quantity</strong><br/>
+                                <span><b>b.&#x20;</b></span> <span style="color:black;">Done is &#x20;</span> <strong>Received Quantity</strong><br/>
+                        	</td>
+                        </tr>
+                    </table>
+
+                        <!-- Below Table For In To Quality -->
+                    <table attrs="{'invisible':['|','|','|', '|','|',  ('test','=','Receipts'),('test','=','Quality To Stock'),('test','=','Pick'),('test','=','Pack'),('test','=','Delivery Orders'),('test','=','Internal Transfers')]}">
+                        <tr>
+                            <td style="color:black;">Note for the below table:<br/>
+							    <span><b>a.&#x20;</b></span><span style="color:black;" >Initial Demand is &#x20;</span> <strong>Received Quantity</strong><br/>
+                                <span><b>b.&#x20;</b></span> <span style="color:black;">Done is &#x20;</span> <strong>Inspected Quantity</strong><br/>
+                        	</td>
+                        </tr>
+                    </table>
+                        
+                        <!-- Below Table For Quality To Stock -->
+                    <table attrs="{'invisible':['|','|','|', '|','|',  ('test','=','Receipts'),('test','=','In To Quality'),('test','=','Pick'),('test','=','Pack'),('test','=','Delivery Orders'),('test','=','Internal Transfers')]}">
+                        <tr>
+                            <td style="color:black;">Note for the below table:<br/>
+							    <span><b>a.&#x20;</b></span><span style="color:black;" >Initial Demand is &#x20;</span> <strong>Inspected Quantity</strong><br/>
+                                <span><b>b.&#x20;</b></span> <span style="color:black;">Done is &#x20;</span> <strong>Accepted Quantity</strong><br/>
+                        	</td>
+                        </tr>
+                    </table>
+                        
+                        <!-- Below Table For Dispatch Clearance -->
+                    <table attrs="{'invisible':['|','|','|','|','|','|', ('test','=','Receipts'),('test','=','Delivery Orders'),('test','=','Manufacturing'),('test','=','Pack'),('test','=','Internal Transfers'),('test','=','In To Quality'),('test','=','Quality To Stock')]}">
+                        <tr>
+                            <td style="color:black;">Note for the below table:<br/>
+							    <span><b>a.&#x20;</b></span><span style="color:black;" >Initial Demand Can Be&#x20;</span> <strong>Dispatched Quantity</strong><br/>
+                                <span><b>b.&#x20;</b></span> <span style="color:black;">Reserved Quantity Can Be&#x20;</span> <strong>Dispatched Quantity</strong><br/>
+                        	    <span><b>c.&#x20;</b></span> <span style="color:black;">Done is &#x20;</span> <strong>Dispatched Quantity</strong><br/>
+                            </td>
+                        </tr>
+                    </table>
+                        
+                        <!-- Below Table For Accepted Quantity -->
+                     <table attrs="{'invisible':['|','|','|','|','|','|', ('test','=','Receipts'),('test','=','Pick'),('test','=','Manufacturing'),('test','=','Pack'),('test','=','Internal Transfers'),('test','=','In To Quality'),('test','=','Quality To Stock')]}">
+                        <tr>
+                            <td style="color:black;">Note for the below table:<br/>
+							    <!-- <span><b>a.</b></span><span style="color:black;" >Initial Quantity is &#x20;</span> <strong>Receive Quantity</strong><br/> -->
+                                <span><b>a.&#x20;</b></span> <span style="color:black;">Done is &#x20;</span> <strong>Packing Quantity</strong><br/>
+                        	</td>
+                        </tr>
+                    </table>
+                </xpath>
             </field>
         </record>
 
@@ -94,8 +149,7 @@
             <field name="inherit_id" ref="stock.vpicktree"/>
             <field name="arch" type="xml">
                 <xpath expr="/tree/field[@name='partner_id']" position="replace">
-                    <!-- <field name="vendor" string="Customer/Supplier"/> -->
-                    <!-- <field name="partner_id" string="Customer/Supplier"/> -->
+                    <field name="partner_id" string="Customer/Supplier"/>
                 </xpath> 
                 <xpath expr="/tree/field[@name='name']" position="before">
                     <field name="sale_id" invisible="1"/>
