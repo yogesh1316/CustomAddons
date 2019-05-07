@@ -17,7 +17,6 @@
         <div class="article o_report_layout_boxed">
             <t t-raw="0" />
         </div>
-
         <div class="footer " align="right">
             <span class="fonts_size"> Page </span>
             <span class="page" style="font-size:14px;padding-left: 14px;"/>
