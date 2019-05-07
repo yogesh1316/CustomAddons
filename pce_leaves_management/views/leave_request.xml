@@ -28,7 +28,7 @@
            <field name="date_from" attrs="{'required':[('type', '=', 'remove')],'readonly':[('state', 'in', ('validate'))]}" class="oe_inline"/>
         </xpath>
         <xpath expr="//form//sheet//group//group//div//div//field[@name='date_to']" position="replace">
-          <!-- Add your fields here -->
+          <!-- Add your field here -->
           <field name="date_to" attrs="{'required':[('type', '=', 'remove')],'readonly':[('state', 'in', ('validate'))]}" class="oe_inline"/>
          </xpath>
         <xpath expr="//form//sheet//group//group//div[2]//field[@name='number_of_days_temp']" position="replace">
