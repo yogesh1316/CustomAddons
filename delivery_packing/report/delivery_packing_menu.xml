@@ -14,7 +14,7 @@
             attachment_use="True"
             print_report_name="('delivery_packing - %s' % (object.name))"/>
 
-        <!--It specifies the page layout and page size -->
+        <!--It specifie the page layout and page size -->
         <record id="paperformat_saleorder_report_of_PO" model="report.paperformat">
 		     <field name="name">Delivery Packing Report</field>
 		     <field name="default" eval="True"/>
