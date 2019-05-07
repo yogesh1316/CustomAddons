@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>    <!--create_by | create_date | update_by | update_date
     Chandrakant      10/04/2019       
-    Info.: Expense Report-->    <!-- Including Custom Css File-->
+    Info.: Expense Report-->    <!-- Including Custom Css Files-->
     <template id="assets_pdf_css" name="Custom Report CSS" inherit_id="web.report_assets_common">
         <xpath expr="." position="inside">
             <link href="/pce_expense_report/static/src/css/custom.css" rel="stylesheet"/>

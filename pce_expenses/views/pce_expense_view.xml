@@ -21,7 +21,7 @@
 
         <!-- Add your xpath here -->
         <!-- <xpath expr="/form/header/button[@name='submit_expenses']" position="replace"> -->
-        <!-- Add your fields here -->
+        <!-- Add your field here -->
         <!-- <button name="submit_expenses" string="Submit to Manager" type="object" class="oe_highlight o_expense_submit" attrs="{'invisible': [('state', '=','draft')]}"/>  -->
         <!-- </xpath> -->
         <xpath expr="/form/sheet/div" position="after">

@@ -37,7 +37,7 @@ class HrExpense(models.Model):
         if self.cust_id:
             sales=[]
             domain={}
-            sale_obj=self.env['sale.order'] #creating sale order object
+            sale_obj=self.env['sale.order'] #creating sale order objects
             sales_ids=sale_obj.search([('partner_id','=',self.cust_id.id)])
             for i in sales_ids:
                 sales.append(i.id)

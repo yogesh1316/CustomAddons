@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <data>
+    <!--expense menu -->
     <report
+    
         id="report_pce_expense_id"
         string="Print Expense Report" 
   		model="hr.expense.sheet"        

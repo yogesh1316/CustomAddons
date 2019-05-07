@@ -13,7 +13,7 @@
                 </button>
               </div>
               <group>
-                <!-- Add your fields here -->
+                <!-- Add your field here -->
                 <field name="seq_no"/>
                 <field name="text"/>
               </group>
