@@ -34,12 +34,7 @@
                 <xpath expr="//field[@name='order_line']/tree//field[@name='price_total']" position="after">
                 <!-- Doubt -->
                 <field name="order_id" invisible="1"/>
-<<<<<<< HEAD
-                    <!-- <button string="Create Quotation BOM" name='%(quotation_mrp_bom_new)d' type="action" class="oe_highlight" context="{'default_order_line_id': id,'default_order_id':order_id,'default_product_id':product_id,'default_description':name,'default_currency_id':currency_id,'default_pricelist_id':pricelist_id}"/> -->
-                    <button string="Create Quotation BOM" name='quotation_mrp_bom_new' type="object" class="oe_highlight"/>
-=======
                     <button string="Create Quotation BOM" name='%(quotation_mrp_bom_new)d' type="action" class="oe_highlight" context="{'default_order_line_id': id,'default_order_id':order_id,'default_product_id':product_id,'default_description':name,'default_currency_id':currency_id,'default_pricelist_id':pricelist_id}"/>
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
                     <field name="pricelist_id" invisible="1"/>
                     <field name="currency_id" invisible="1"/>
                 </xpath>

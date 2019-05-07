@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>    <!--create_by | create_date | update_by | update_date
+    Chandrakant      10/04/2019       
+    Info.: Expense Report-->    <!-- Including Custom Css Files-->
+    <template id="assets_pdf_css" name="Custom Report CSS" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <link href="/pce_expense_report/static/src/css/custom.css" rel="stylesheet"/>
+        </xpath>
+    </template>
+    <template id="web.pce_expense_report_menu_order_id_dp">
+        <!-- <div class="header o_boxed_header">
+            <div class="page_border"/>
+        </div> -->
+        <div class="article o_report_layout_boxed">
+            <t t-raw="0"/>
+        </div>
+        <!-- <div class="footer " align="center">
+            <span class="fonts_size"> Page </span>
+            <span class="page" style="font-size:14px;padding-left: 14px;"/>
+            <span style="padding-left: 10px;" class="fonts_size"> of </span>
+            <span class="topage" style="font-size:14px;" />
+        </div> -->
+    </template>
+</data>

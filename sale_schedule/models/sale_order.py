@@ -35,44 +35,7 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     schedule_lines=fields.One2many('sale.order.schedule','order_line_id')
-<<<<<<< HEAD
-    released_qty=fields.Float(string="Released Quantity",store=True,compute='set_released_qty')
-    scheduled_qty=fields.Float(string="Scheduled Quantity", store=True,compute="set_scheduled_qty" )
-    @api.depends("schedule_lines.qty_release")
-    def set_scheduled_qty(self):
-        for order in self:
-            total=0.0
-            total_scheduled=0.0
-            if order.schedule_lines:
-                for line in order.schedule_lines:
-                    if line.qty_release:
-                        total+=line.qty_release
-                    if line.qty_release and line.state=='release':
-                        total_scheduled+=line.qty_release
-                if total > order.product_uom_qty:
-                    raise UserError(_("The Scheduled Quantity is more than Ordered Quantity"))
-                else:
-                    if total_scheduled:
-                        order.scheduled_qty=total_scheduled
-    @api.depends("schedule_lines.qty_release")
-    def set_released_qty(self):
-        for order in self:
-            total=0.0
-            total_released=0.0
-            if order.schedule_lines:
-                for line in order.schedule_lines:
-                    if line.qty_release:
-                        total+=line.qty_release
-                    if line.qty_release and line.state=='close':
-                        total_released+=line.qty_release
-                if total > order.product_uom_qty:
-                    raise UserError(_("The Released Quantity is more than Ordered Quantity"))
-                else:
-                    if total_released:
-                        order.released_qty=total_released
-=======
     released_qty=fields.Float(string="Released Quantity")
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
 
     @api.multi
     def view_sale_order_schedule(self):
@@ -155,11 +118,7 @@ class SaleOrderLine(models.Model):
                         print("_____-----^^^--^^^-----_____")
                         product_qty=schedule_line._get_qty_procurement()
                         date_planned= datetime.strptime(schedule_line.release_date, DEFAULT_SERVER_DATETIME_FORMAT)\
-<<<<<<< HEAD
-                    + timedelta(days=line.customer_lead or 0.0) - timedelta(days=line.order_id.company_id.security_lead)
-=======
                     + timedelta(days=self.customer_lead or 0.0) - timedelta(days=self.order_id.company_id.security_lead)
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
                         values.update({
                             'date_planned' :date_planned.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
                         })
@@ -170,13 +129,6 @@ class SaleOrderLine(models.Model):
                         
                     if errors:
                         raise UserError('\n'.join(errors))
-<<<<<<< HEAD
-                    else:
-                        schedule_line.write({
-                        'state':'close'
-                        })
-=======
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
         return True
 
 
@@ -190,15 +142,6 @@ class SaleOrderSchedule(models.Model):
 
     name = fields.Char(string='Name')
     mo_lines= fields.Many2many('mrp.production', 'sale_order_schedule_mo_rel','sale_order_schedule_id','mo_id', copy=False)
-<<<<<<< HEAD
-    order_line_id=fields.Many2one('sale.order.line',store=True)
-    product_id=fields.Many2one('product.product',string="Product",store=True)
-    product_uom_id=fields.Many2one('product.uom', string='Unit of Measure',store=True)
-    product_qty=fields.Float('Quantity',store=True)
-    state=fields.Selection([('release','Release'),('open','Open'),('close','Close')],store=True,default='open')
-    qty_release=fields.Float(string="Release Quantity", store=True)
-    release_date = fields.Datetime(string='Release Date', store=True)
-=======
     order_line_id=fields.Many2one('sale.order.line')
     product_id=fields.Many2one('product.product',string="Product")
     product_uom_id=fields.Many2one('product.uom', string='Unit of Measure')
@@ -206,7 +149,6 @@ class SaleOrderSchedule(models.Model):
     state=fields.Selection([('release','Release'),('open','Open'),('close','Close')])
     qty_release=fields.Float(string="Release Quantity")
     release_date = fields.Datetime(string='Release Date')
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
     procurement_group_id=fields.Many2one('procurement.group')
     
     @api.multi
@@ -216,10 +158,4 @@ class SaleOrderSchedule(models.Model):
         Changes by Jeevan Gangarde March 2019
         """
         for schedule_line in self:
-<<<<<<< HEAD
             return schedule_line.qty_release
-
-  
-=======
-            return schedule_line.qty_release
->>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1

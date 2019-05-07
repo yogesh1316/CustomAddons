@@ -17,7 +17,7 @@ class product_categories_attribute(models.Model):
     
 
     
-class product_categories_attribute(models.Model):
+class prod_categories_attri(models.Model):
     _name = 'category.attribute'
     _rec_name='attribute'
 

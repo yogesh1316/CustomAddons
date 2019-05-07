@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    <!--expense menu -->
+    <report
+    
+        id="report_pce_expense_id"
+        string="Print Expense Report" 
+  		model="hr.expense.sheet"        
+        report_type="qweb-pdf"
+        name="pce_expenses.pce_expense_report_menu_order_id_dp"
+        file="pce_expenses.pce_expense_report_menu_order_id_dp"
+        attachment_use="True"
+        print_report_name="('pce_expense_report - %s' % (object.name))"/>
+
+    <record id="print_pce_expense_report" model="report.paperformat">
+		     <field name="name">Print Expense Report</field>
+		     <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">59</field> 
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False" />   
+            <field name="header_spacing">75</field>
+            <field name="dpi">90</field>
+        </record> 
+
+        <record id="pce_expenses.report_pce_expense_id" model="ir.actions.report">
+      		<field name="paperformat_id" ref="pce_expenses.print_pce_expense_report" />
+    	</record>
+        
+    
+
+</data>
+</odoo>

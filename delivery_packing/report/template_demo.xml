@@ -28,50 +28,78 @@
 	    								<span class="fonts_size" style="padding-left: 200px;font-weight: bold;"><u>Packing Slip </u></span><br/>
 	    								
 	    								
-	    								<normal style="font-weight: bold;color:black;" class="fonts_size">Ph NO:</normal>
+	    								<normal style="font-weight: bold;color:black;" class="fonts_size">Ph No.<span style="font-weight: bold;padding-left:6px;color:black;">:</span></normal>
 	    							    <span t-field="o.company_id.phone" class="fonts_size" style="padding-left: 5px;"/> <br/>
 				    								
-	    								<normal style="font-weight: bold;color:black;" class="fonts_size">FAX:</normal>
-	    								<!-- <normal class="fonts_size" t-field="o.name" style="padding-left: 6px;"/><br/> -->
+	    								<normal style="font-weight: bold;color:black;" class="fonts_size">FAX.<span style="font-weight: bold;padding-left:19px;color:black;">:</span></normal>
+	    								 <normal class="fonts_size" t-field="o.name" style="padding-left: 6px;"/><br/> 
 	    								
-	    								<normal style="font-weight: bold;color:black;" class="fonts_size">Email:</normal>
+	    								<normal style="font-weight: bold;color:black;" class="fonts_size">Email.<span style="font-weight: bold;padding-left:10px;color:black;">:</span></normal>
 	    								 <span t-field="o.company_id.email" class="fonts_size" style="padding-left: 5px;"/> 
 		 								 </td>							
 								</tr>   			  	
          					  	</tbody>	
-         					  	<tbody style= "border-bottom: 1px solid;">    
-								<tr>
+         					  	<tbody style= "border-bottom: 1px solid;"> 
+								      
+								<tr>		
 									<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;border:1px solid;">
-									<span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;"><u>BUYER,</u></span><br/>
-									<span class="fonts_size" t-field="o.company_id.name" style="padding-left: 5px;font-weight: bold;color:black;"/><br/>
-									<span class="fonts_size" t-field="o.company_id.street" style="padding-left: 5px;"/><br/>
-									<span class="fonts_size" t-field="o.company_id.street2" style="padding-left: 5px;"/><br/>									
-									<span class="fonts_size" t-field="o.company_id.city" style="padding-left: 5px;"/>-<span class="fonts_size" t-field="o.company_id.zip"/><br/>	
-									<span class="fonts_size" style="padding-left: 5px;">Phone :</span><span class="fonts_size" t-field="o.company_id.phone" /><br/>										
-										</td>
-									<td width="50%" style="padding-left: 5px;padding-bottom:5px;padding-top:15px;white-space:nowrap;" rowspan="2">
-                                <span style="font-weight: bold;color:black;padding-left: 5px;" class="fonts_size">Order NO</span><span style="padding-left:50px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.origin" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/>
-                                <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Amendment NO</span><span style="padding-left:20px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.origin" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/>
-                                <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Order DATE</span><span style="padding-left:40px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.scheduled_date" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/>
-                               <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Invoice No </span><span style="padding-left:43px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.origin" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/>
-                                <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Invoice DATE </span><span style="padding-left:30px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.scheduled_date" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/><br/>
-                                <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Challan No </span><span style="padding-left:42px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.origin" style="font-weight: bold;color:black;padding-left:100px;"/><br/>
-                                 <span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Challan Date </span><span style="padding-left:33 px;font-weight: bold;color:black;">:</span><span class="fonts_size" t-field="o.scheduled_date" style="font-weight: bold;color:black;padding-left:100px;"/><br/><br/>
-                            </td>		
-								</tr>         					  	
+										<span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;"><u>BUYER,</u></span><br/>
+										<span class="fonts_size" t-field="o.company_id.name" style="padding-left: 5px;font-weight: bold;color:black;"/><br/>
+										<span class="fonts_size" t-field="o.company_id.street" style="padding-left: 5px;"/><br/>
+										<span class="fonts_size" t-field="o.company_id.street2" style="padding-left: 5px;"/><br/>									
+										<span class="fonts_size" t-field="o.company_id.city" style="padding-left: 5px;"/>-<span class="fonts_size" t-field="o.company_id.zip"/><br/>	
+										<span class="fonts_size" style="padding-left: 5px;">Phone :</span><span class="fonts_size" t-field="o.company_id.phone" /><br/>										
+									</td>
+									<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;border:1px solid;" rowspan="2">
+										<table style="border: none;background-color: #ffffff;">
+											<td style="border: none;background-color: #ffffff;">
+												<span style="font-weight: bold;color:black;" class="fonts_size">Order No     <span style="font-weight: bold;padding-left:51px;color:black;">:</span></span><br/>
+												<span class="fonts_size" style="font-weight: bold;color:black;">Amendment No <span style="font-weight: bold;padding-left:8px;color:black;">:</span></span><br/>
+												<span class="fonts_size" style="font-weight: bold;color:black;">Order Date   <span style="font-weight: bold;padding-left:39px;color:black;">:</span></span><br/><br/>
+												<span class="fonts_size" style="font-weight: bold;color:black;">Invoice No   <span style="font-weight: bold;padding-left:41px;color:black;">:</span></span><br/>
+												<span class="fonts_size" style="font-weight: bold;color:black;">Invoice Date <span style="font-weight: bold;padding-left:28px;color:black;">:</span></span><br/><br/>
+												<span class="fonts_size" style="font-weight: bold;color:black;">Challan No   <span style="font-weight: bold;padding-left:39px;color:black;">:</span></span><br/>
+												<span class="fonts_size" style="font-weight: bold;color:black;">Challan Date <span style="font-weight: bold;padding-left:26px;color:black;">:</span></span>
+											</td>
+											<!-- <td style="border: none;background-color: #ffffff;">
+												<br/>
+												<span style="font-weight: bold;padding-left:5px;color:black;">:</span><br/>
+												<span style="font-weight: bold;padding-left:5px;color:black;padding-top:4px;">:</span><br/>
+												<span style="font-weight: bold;padding-left:5px;color:black;padding-top:4px;">:</span><br/>
+												<span style="font-weight: bold;padding-left:5px;color:black;padding-top:4px;">:</span><br/>
+												<span style="font-weight: bold;padding-left:5px;color:black;padding-top:4px;">:</span><br/>
+												<span style="font-weight: bold;padding-left:5px;color:black;padding-top:4px;">:</span>
+											</td> -->
+											<td style="border: none;background-color: #ffffff;">
+												<span class="fonts_size" t-field="o.origin" style="font-weight: bold;padding-left:5px;:black;"/><br/>
+												<span class="fonts_size" t-field="o.origin" style="font-weight: bold;padding-left:5px;color:black;"/><br/>
+												<span class="fonts_size" t-field="o.scheduled_date" t-field-options='{"format": "dd/MM/yyyy"}' style="font-weight: bold;padding-left:5px;color:black;"/><br/><br/>
+												<span class="fonts_size" t-field="o.invoice_no" style="font-weight: bold;padding-left:5px;color:black;"/><br/>
+												<span class="fonts_size" t-field="o.invoice_date"  t-field-options='{"format": "dd/MM/yyyy"}' style="font-weight: bold;padding-left:5px;color:black;"/><br/><br/>
+												<span class="fonts_size" t-field="o.name" style="font-weight: bold;padding-left:5px;color:black;"/><br/>
+												<span class="fonts_size" t-field="o.scheduled_date"  t-field-options='{"format": "dd/MM/yyyy"}' style="font-weight: bold;padding-left:5px;color:black;"/>
+											</td>
+										</table>
+									</td>
+
+										
+								</tr> 
+								       					  	
          					  	<!-- </tbody>
                                    <tbody style= "border-bottom: 1px solid;">     -->
 								<tr>
+								
 									<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;border:1px solid;">
 									<span class="fonts_size" style="font-weight: bold;color:black;padding-left: 5px;">Consignee,</span><br/>
 									<span class="fonts_size" t-field="o.company_id.name" style="padding-left: 5px;font-weight: bold;color:black;"/><br/>
 									<span class="fonts_size" t-field="o.company_id.street" style="padding-left: 5px;"/><br/>
 									<span class="fonts_size" t-field="o.company_id.street2" style="padding-left: 5px;"/><br/>									
 									<span class="fonts_size" t-field="o.company_id.city" style="padding-left: 5px;"/>-<span class="fonts_size" t-field="o.company_id.zip"/><br/>	
-									<span style="font-weight: bold;color:black;padding-left: 5px;" class="fonts_size">VAT TIN No. :</span> <span class="fonts_size" style="font-weight: bold;color:black;padding-left:10px;">27410344315 V wef 1.4.2006</span><br/>
-                                <span style="font-weight: bold;color:black;padding-left: 5px;" class="fonts_size">CST TIN No. :</span> <span class="fonts_size" style="font-weight: bold;color:black;padding-left:10px;">27410344315 V wef 1.4.2006</span><br/>
-                                <span style="font-weight: bold;color:black;padding-left: 5px;" class="fonts_size">ECC     No.</span><span style="padding-left:20px;">:</span> <span class="fonts_size" style="font-weight: bold;color:black;padding-left:10px;">AABPU2557MXM001</span><br/>											
-									</td>	
+									<span style="font-weight: bold;color:black;padding-left: 5px;" class="fonts_size">VAT TIN No. <span style="font-weight: bold;padding-left:2px;color:black;">:</span></span> <span class="fonts_size" style="font-weight: bold;color:black;padding-left:20px;">27410344315 V wef 1.4.2006</span><br/>
+                                <span style="font-weight: bold;color:black;padding-left: 5px;" class="fonts_size">CST TIN No. <span style="font-weight: bold;padding-left:2px;color:black;">:</span></span> <span class="fonts_size" style="font-weight: bold;color:black;padding-left:20px;">27410344315 V wef 1.4.2006</span><br/>
+                                <span style="font-weight: bold;color:black;padding-left: 5px;" class="fonts_size">ECC No.<span style="font-weight: bold;padding-left:31px;color:black;">:</span></span><span style="padding-left:20px;"></span> <span class="fonts_size" style="font-weight: bold;color:black;">AABPU2557MXM001</span><br/>											
+									</td>
+										
 								</tr>         					  	
          					  	</tbody>   
                     		   </table>
@@ -85,7 +113,7 @@
 
             <div class="footer " align="center"> 
 		
-
+               <!-- -->
     <span  class="fonts_size" > Page </span>
 		<span class="page"  style="font-size:14px;padding-left: 14px;"/>
 		<span style="padding-left: 10px;" class="fonts_size"> of </span>

@@ -12,7 +12,7 @@
   
     margin-left: -15px;
     margin-right: -15px;
-   /* border-top: 1px solid #000;   top border (page)*/
+    border-top: 00px solid #000;   top border (page)
     padding-left: 00px;
     padding-top: 00px;
     padding-right: 00px;
@@ -23,10 +23,18 @@
 }
 table, th, td {
     border: 1px solid black;
+
+  }
+
+  hr{
+    font-size: 12px;
+
   }
   table th, table td {
   width: auto;
   }
+  
+
   table th {
   text-align: left;
 } 
@@ -78,21 +86,21 @@ padding-bottom: 0px;
 
 
 /* Magic happens here */
-.page_border{
+/* .page_border{
     border: solid;
     border-left: 1px solid #000;
     border-right: 1px solid #000;
     position: fixed;
     z-index: 9999;
-/* If you don't get full page border, play around with the height */
+/* If you don't get full page border, play around with the height 
     height: 302mm;
     left: 0px;
     top:0;
     width:100%
-}
+} */
 
 span.fonts_size,normal.fonts_size {
-  font-size: 12px;
+  font-size: 14px;
   font-family:Arial;
 }
 

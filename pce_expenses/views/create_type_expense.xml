@@ -1,0 +1,56 @@
+<odoo>
+<data>
+  <!-- model.name form view -->
+  <record id="expense_type_master_view_form" model="ir.ui.view">
+      <field name="name">expense.type.master.view.form</field>
+      <field name="model">expense.type.master</field>
+      <field name="arch" type="xml">
+          <form string="">
+              <sheet>
+              <div class="oe_button_box" name="button_box">
+                <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                    <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                </button>
+              </div>
+              <group>
+                <!-- Add your field here -->
+                <field name="seq_no"/>
+                <field name="text"/>
+              </group>
+              </sheet>
+          </form>
+      </field>
+  </record>
+  <!-- model.name tree view -->
+  <record id="model_name_view_tree" model="ir.ui.view">
+      <field name="name">model.name.view.tree</field>
+      <field name="model">expense.type.master</field>
+      <field name="arch" type="xml">
+          <tree>
+              <!-- Add your fields here -->
+              <field name="seq_no"/>
+              <field name="text"/>
+              <field name="active" widget="boolean_toggle"/>
+          </tree>
+      </field>
+  </record>
+  <!-- model.name action window -->
+  <record id="expense_model_name_action" model="ir.actions.act_window">
+      <field name="name">Expense Type</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">expense.type.master</field>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{'active_test': False}</field>
+      <field name="view_type">form</field>
+      <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+              <!-- Add Text Here -->
+          </p><p>
+              <!-- More details about what a user can do with this object will be OK --> 
+          </p>
+      </field>
+  </record>
+  <!-- This Menu Item must have a parent and an action -->
+  <menuitem id="expense_menu_act" name="Expense Type Master" parent="hr_expense.menu_hr_expense_my_expenses" action="expense_model_name_action" sequence=""/>
+</data>
+</odoo>

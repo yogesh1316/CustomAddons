@@ -33,7 +33,11 @@ class mrp_order_inhe(models.Model):
 class purchase_order_inhe(models.Model):
     _inherit='purchase.order'
     
+<<<<<<< HEAD
+    customer=fields.Char(string="Customer",compute='compute_po_customer',store=True)
+=======
     customer=fields.Char(string="Customer",compute='compute_po_customer')
+>>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
 
     @api.depends('origin')
     def compute_po_customer(self):
@@ -76,11 +80,21 @@ class Picking(models.Model):
     boe_date=fields.Date(string="BOE Date")
     mode=fields.Selection([('cargo','Cargo'),('courier','Courier')],'mode')
     test=fields.Char(compute='compute_test',store=True)
+<<<<<<< HEAD
+    # vendor=fields.Char(string="Vendor",compute='compute_vendor')
+    grn_name=fields.Char(string="GRN No")
+    sale_customer=fields.Char(string="Customer",compute='assign_customer')
+    invoice_status=fields.Char(default='N')
+    invoice_no=fields.Char()
+    invoice_date=fields.Date()
+
+=======
     vendor=fields.Char(string="Vendor",compute='compute_vendor')
     grn_name=fields.Char(string="GRN No")
     sale_customer=fields.Char(string="Customer",compute='assign_customer')
 
     
+>>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     @api.depends('origin')
     def assign_customer(self):
         for move in self:
@@ -151,6 +165,9 @@ class Picking(models.Model):
     #             self.name=self.picking_type_id.sequence_id.prefix
 
 
+<<<<<<< HEAD
+   
+=======
     #     # If no lots when needed, raise error
     #     picking_type = self.picking_type_id
     #     precision_digits = self.env['decimal.precision'].precision_get('Product Unit of Measure')
@@ -212,6 +229,7 @@ class Picking(models.Model):
     #     self.action_done()
     #     return
 
+>>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
 
 class StockMove(models.Model):
     _inherit='stock.move'
@@ -220,10 +238,17 @@ class StockMove(models.Model):
     challan_quantity=fields.Float(string="Challan Quantity",store=True)
     po_quantity=fields.Float(string="PO Quantity",compute='assign_value_to_po_qty',store=True)
     receive_quantity=fields.Float(string="Receive Quantity")
+<<<<<<< HEAD
+    inspected_quantity=fields.Float(string="Inspected Quantity")
+    accepted_quantity=fields.Float(string="Accepted Quantity")
+    dispatch_clerance=fields.Float(string="Dispatch Clearance",compute='assign_value_to_dispatched_clerance_qty',store=True)
+    packing_quantity=fields.Float(string="Packing Quantity")
+=======
     inspected_quantity=fields.Float(string="Inspected Quantity",help="Inspected Quantity")
     accepted_quantity=fields.Float(string="Accepted Quantity",help="Accepted Quantity")
     dispatch_clerance=fields.Float(string="Dispatch Clearance",compute='assign_value_to_dispatched_clerance_qty',help="Dispatch Clearance")
     packing_quantity=fields.Float(string="Packing Quantity",help="Packing Quantity")
+>>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     sale_line_id=fields.Many2one('sale.order.line', 'Sale Line')
 
     # This Function Used For Assign Value  
@@ -256,7 +281,10 @@ class StockMove(models.Model):
             if move.picking_type_id.name == 'Receipts':
                 move.quantity_done = move.receive_quantity
 
+<<<<<<< HEAD
+=======
     
+>>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     # This Function Used For Done To Assign Reveive Qty
     @api.onchange('quantity_done')
     def assign_number_to_reserv_quantity(self):
@@ -304,7 +332,11 @@ class StockMove(models.Model):
                 move.accepted_quantity = move.quantity_done
 
     
+<<<<<<< HEAD
+    # Validation On Inspected Quantity For PO
+=======
     # Validation On Accepted Quantity For PO
+>>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     @api.onchange('accepted_quantity')
     def validation_for_acceped_qty(self):
         for move in self:
@@ -314,6 +346,16 @@ class StockMove(models.Model):
 
       
     # This Function Used For Assign Value To Dispatch Clerance Quantity
+<<<<<<< HEAD
+    @api.depends('reserved_availability')
+    def assign_value_to_dispatched_clerance_qty(self):
+        for move in self:
+            if move.picking_type_id.name == 'Delivery Orders' or move.picking_type_id.name == 'Pick':
+                if move.reserved_availability:
+                    move.dispatch_clerance=move.reserved_availability
+
+    
+=======
     @api.depends('product_uom_qty')
     def assign_value_to_dispatched_clerance_qty(self):
         for move in self:
@@ -322,11 +364,16 @@ class StockMove(models.Model):
                     move.dispatch_clerance=move.product_uom_qty
 
 
+>>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     # This Function Is For Set Auto Set Value To Dispatched Clearance
     @api.onchange('quantity_done')
     def assign_value_to_dispatch_qty(self):
         for move in self:
+<<<<<<< HEAD
+            if move.picking_type_id.name == 'Pick':
+=======
             if move.picking_type_id.name == 'Pick' and move.quantity_done :
+>>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
                 move.dispatch_clerance = move.quantity_done
 
     
@@ -372,9 +419,23 @@ class StockMove(models.Model):
                     raise UserError(_("Please Enter Valid Packing Quantity"))
 
 
+<<<<<<< HEAD
+    # @api.multi
+    # def write(self,vals):
+    #     for move in self:
+    #         if move.picking_type_id.name == 'Delivery Orders':
+    #             if vals["packing_quantity"] > vals["reserved_availability"]:
+    #                 raise UserError(_("Please Enter Valid Packing Quantity"))
 
         
 
+
+    
+=======
+
+        
+
+>>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     
 
 
