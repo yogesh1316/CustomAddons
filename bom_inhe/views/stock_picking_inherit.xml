@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <!-- model.name inherit tree view -->
+        <!-- model name inherit tree view -->
         <record id="purchase_order_inherit_tree_view_id" model="ir.ui.view">
             <field name="name">model.name.inherit.view.tree</field>
             <field name="model">purchase.order</field>
@@ -13,7 +13,7 @@
         </record>
         
         
-        <!-- model.name inherit form view -->
+        <!-- model name inherit form view -->
         <record id="stk_pick_inherit_form" model="ir.ui.view">
             <field name="name">model.form</field>
             <field name="model">stock.picking</field>
