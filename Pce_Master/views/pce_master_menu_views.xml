@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 	
+<<<<<<< HEAD
+	 <template id="my_assets_id1234567" name="website assets for my module" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+        <link rel="stylesheet" href="/Pce_Master/static/src/css/custom_css.css"/>
+        </xpath>
+    </template> 
+=======
 	<template id="my_assets_id1" name="website assets for my module" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
         <link rel="stylesheet" href="/Pce_Master/static/src/css/custom_css.css"/>
         </xpath>
     </template>
+>>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
 <!--  ================================Text Master Start==================================================================== -->
 	<record id="text_master_info_forms" model="ir.ui.view">
 		<field name="name">Text Master</field>
@@ -137,7 +145,11 @@
 		<field name="arch" type="xml">
 			<tree string="Effect Master" delete="1" >
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
+<<<<<<< HEAD
+				<!--<field name="id" string="Sr.No."  class="o_id_code_master_info_new"/>-->
+=======
 				<field name="id" string="Sr.No."  class="o_id_code_master_info_new"/>
+>>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
 				<field name="effect_code_no" string="Effect Code"/>
 				<field name="effect_description" string="Effect_Desc"/>
 				<!-- Created-By:Pradip | Created-Date:28-1-19 |Info. Active Flag is Hide or Show-->					
@@ -224,7 +236,11 @@
 		<field name="arch" type="xml">
 			<tree string="Id Code Master" delete="1" >
 				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
+<<<<<<< HEAD
+				<!--<field name='id' string="Sr.No."  class="o_id_code_master_info_new" />	-->		
+=======
 				<field name='id' string="Sr.No."  class="o_id_code_master_info_new" />			
+>>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
 				<field name="id_code_no" string="ID_No"/>
 				<field name="id_code_description" string="Id_Desc" />
 				<!--<field name="unique_id_code_description"/>-->
@@ -673,4 +689,8 @@
 	<menuitem id="mrp_type_master_main_submenu" action="mrp_type_master_info_action" name="MRP Type Master" parent="Pce_Master.master_menu"/>
 	<menuitem id="source_master_main_submenu" action="source_master_info_action" name="Source Master" parent="Pce_Master.master_menu"/> 	
 	<menuitem id="hsn_master_main_submenu" action="hsn_master_info_action" name="HSN Master" parent="Pce_Master.master_menu"/>
+<<<<<<< HEAD
 	</odoo>
+=======
+	</odoo>
+>>>>>>> eb17fd60fcf6bf4c66e4010e3b8d093aa7c127a1
