@@ -54,7 +54,7 @@ class MrpProduction(models.Model):
     def _compute_subcontractvendor(self):        
         con=[]
         res_partner_obj = self.env['res.partner']
-        ids=res_partner_obj.search([('property_stock_supplier.id','=',18)])      #22
+        ids=res_partner_obj.search([('property_stock_supplier.id','=',18)])      #22 Subcontract location 
         for i in ids:
             con.append(i.id)       
         return [('id','in',con)]
@@ -80,6 +80,7 @@ class Location(models.Model):
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
+    
     mrp_id = fields.Many2one('mrp.production', string="Manufacturing Order")
 
     # Add Field to know which Operation is done on PO report for subcontract
@@ -87,6 +88,36 @@ class PurchaseOrder(models.Model):
 
     delivery_count = fields.Integer(compute="_compute_dc", string='Delivery Challan', copy=False, default=0, store=True)
     delivery_ids = fields.Many2many('stock.picking', compute="_compute_dc", string='Bills', copy=False, store=True)
+    
+    # Update : set all Open purchase order 
+    @api.onchange('po_categ_id')
+    def OpenPOnumber(self):
+        con=[]
+        domain={}
+        po_obj = self.env['purchase.order']
+        po_cat = self.env['category.purchase']
+        pc_data=po_cat.search([('po_category', '=', 'OP')])  
+        po_ids=po_obj.search([('po_categ_id','=',pc_data.id)])  
+        for i in po_ids:
+            con.append(i.id)             
+        domain['openpo_id']=[('id','in',con)]
+        return {'domain':domain}
+
+
+    openpo_id = fields.Many2one('purchase.order',string='Open PO Number',change_default=True,help='Only Confirm state PO are available')
+
+    # update : Set price from Open purchase order 
+    @api.onchange('openpo_id')
+    def updateunitprice(self):
+        id=0
+        for i in self.openpo_id.order_line:
+            for l in self.order_line:
+                if i.product_id==l.product_id:
+                    l.price_unit = i.price_unit
+                    id+=1                
+
+                if id==0:
+                    l.price_unit = 0
 
     @api.multi
     def _compute_dc(self):
@@ -104,14 +135,14 @@ class PurchaseOrder(models.Model):
         '''
         action = self.env.ref('subcontract.action_delivery_order_subcontract')
         result = action.read()[0]
-        #override the context to get rid of the default filtering
+        # override the context to get rid of the default filtering
         result['context'] = {'state': 'draft', 'default_po_number': self.id,'default_partner_id': self.partner_id.id}
         return result
 
 class Picking(models.Model):
     _inherit = 'stock.picking'
 
-    subcontract = fields.Boolean(string="Subcontract")        
+    subcontract = fields.Boolean(string="Subcontract", help="If subcontract Delivery Challan is there check it")        
     flag = fields.Boolean(string="Flag", default=False)
 
     # Add this function to set location on subcontract selection
@@ -119,10 +150,10 @@ class Picking(models.Model):
     def onchange_picking_type(self):     
        
             if self.subcontract:
-                if self.partner_id:
-                    print('in',self.subcontract)
+                if self.partner_id:                    
                     self.location_id =  self.po_number.mrp_id.location_src_id.id or 15      # WH/Stock location
                     self.location_dest_id = self.partner_id.property_stock_supplier.id      # Subcontract location
+                    self.picking_type_id = self.env['stock.picking.type'].search([('code','=','outgoing')]).id 
                 else:
                     raise UserError(_('Select partner'))
             else:
@@ -145,7 +176,7 @@ class Picking(models.Model):
                     self.location_id = location_id                                                      # WH/Output location
                     self.location_dest_id = location_dest_id                                            # Customer location
         
-    # Add computed field for selecting as per screen
+    # Add computed field for selecting as-per screen
     @api.multi
     def _compute_DCnumber(self):
         con=[]
@@ -171,7 +202,6 @@ class Picking(models.Model):
     # Add field to show PO number on DC creation
     po_number = fields.Many2one('purchase.order',string='PO Number',domain=_compute_POnumber,help='Only Confirm state PO are available')
     
-
     # This function return operation for subcontract on DC report
     @api.multi
     def set_operation(self,mo): 
@@ -189,8 +219,38 @@ class Picking(models.Model):
             op_name = ", ".join(str(s) for s in op_ary)
             print('op_name',op_name)                
             return op_name
+    
+    @api.model
+    def create(self, vals):
+        # Update : Sequence no is change for GRN if subcontract is there start from 'SG' 28/03/2019
+        # check if PO is subcontract on origin
+        # TDE FIXME: clean that brol
+        name =''
+        pdata = self.env['purchase.order']
+        if self.po_number:                
+            podata = pdata.search([('name','=',self.po_number.name.strip())])   
+        name = vals['origin']
+        
+        if not podata.mrp_id:
+            defaults = self.default_get(['name', 'picking_type_id'])
+            if vals.get('name', '/') == '/' and defaults.get('name', '/') == '/' and vals.get('picking_type_id', defaults.get('picking_type_id')):
+                vals['name'] = self.env['stock.picking.type'].browse(vals.get('picking_type_id', defaults.get('picking_type_id'))).sequence_id.next_by_id()
+        else:            
+            vals['name'] = self.env['ir.sequence'].next_by_code('grn.sub.seq') or '/'
 
+        # TDE FIXME: what ?
+        # As the on_change in one2many list is WIP, we will overwrite the locations on the stock moves here
+        # As it is a create the format will be a list of (0, 0, dict)
+        if vals.get('move_lines') and vals.get('location_id') and vals.get('location_dest_id'):
+            for move in vals['move_lines']:
+                if len(move) == 3:
+                    move[2]['location_id'] = vals['location_id']
+                    move[2]['location_dest_id'] = vals['location_dest_id']
+        res = super(Picking, self).create(vals)
+        res._autoconfirm_picking()
+        return res
 
+    
     @api.multi
     def button_validate(self):
         self.mrp_validation()        
@@ -237,6 +297,13 @@ class Picking(models.Model):
             self.DC_close()    
         return True
 
+    # Update : Restrict, quantity_done not more then initial_qty
+    @api.onchange('move_lines.product_id')
+    def qty_done_restrict(self):
+        self.move_lines.product_uom_qty
+        self.move_lines.quantity_done
+        if self.move_lines.product_uom_qty < self.move_lines.quantity_done:
+            raise UserError(_('Can not enter more then initial quantity'))
 
     # This function is close the DC as per the Product and Product Qty on subcontract category 
     @api.multi
@@ -259,12 +326,12 @@ class Picking(models.Model):
                         if not woline.next_work_order_id:    
                             woline.production_id.write({'produced_qty': 0})
 
-                        woline.write({'state': 'done','qty_produced': data.product_qty,'qty_producing': 0,'date_start': fields.Datetime.now(),'date_finished': fields.Datetime.now()})
+                        woline.write({'state': 'done','qty_produced': data[0].product_qty,'qty_producing': 0,'date_start': fields.Datetime.now(),'date_finished': fields.Datetime.now()})
                         
                         if not woline.next_work_order_id:                                
                             wo_data ={'production_id':woline.production_id.id,
                                     'product_id': woline.product_id.id,
-                                    'qty_produced':data.product_qty, #if line.product_id.description_sale else 'NA',
+                                    'qty_produced':data[0].product_qty, #if line.product_id.description_sale else 'NA',
                                     'workorder_id': woline.id,
                                     }
                             
@@ -280,11 +347,11 @@ class Picking(models.Model):
                                     if not woline.next_work_order_id:    
                                         woline.production_id.write({'produced_qty': 0})
 
-                                    woline.write({'state': 'done','qty_produced': data.product_qty,'qty_producing': 0,'date_start': fields.Datetime.now(),'date_finished': fields.Datetime.now()})
+                                    woline.write({'state': 'done','qty_produced': data[0].product_qty,'qty_producing': 0,'date_start': fields.Datetime.now(),'date_finished': fields.Datetime.now()})
                                     if not woline.next_work_order_id:                
                                         wo_data ={'production_id':woline.production_id.id,
                                                 'product_id': woline.product_id.id,
-                                                'qty_produced':data.product_qty, #if line.product_id.description_sale else 'NA',
+                                                'qty_produced':data[0].product_qty, #if line.product_id.description_sale else 'NA',
                                                 'workorder_id': woline.id,
                                                 }
                             
@@ -315,11 +382,11 @@ class Picking(models.Model):
                             woline.production_id.write({'produced_qty': 0})
                             self.dc_number.button_validate()
                             
-                        woline.write({'state': 'done','qty_produced': data.product_qty,'qty_producing': 0,'date_start': fields.Datetime.now(),'date_finished': fields.Datetime.now()})
+                        woline.write({'state': 'done','qty_produced': data[0].product_qty,'qty_producing': 0,'date_start': fields.Datetime.now(),'date_finished': fields.Datetime.now()})
                         if not woline.next_work_order_id:                
                             wo_data ={'production_id':woline.production_id.id,
                                     'product_id': woline.product_id.id,
-                                    'qty_produced':data.product_qty, #if line.product_id.description_sale else 'NA',
+                                    'qty_produced':data[0].product_qty, #if line.product_id.description_sale else 'NA',
                                     'workorder_id': woline.id,
                                     }
                             
@@ -333,11 +400,11 @@ class Picking(models.Model):
     @api.multi
     def get_bom_materials(self):
         list_prod = []        
+        count=0
         if not self.po_number:
             raise UserError(_('PO number select'))
         if self.po_number:  
-            self.location_id =  self.po_number.mrp_id.location_src_id.id 
-             
+            self.location_id =  self.po_number.mrp_id.location_src_id.id             
             self.origin =  self.po_number.name
             create_vals = {}
             if self.po_number.mrp_id.subcontract_parentchildprod =='1':
@@ -364,6 +431,7 @@ class Picking(models.Model):
                         'picking_id': self.id,
                     }
                     list_prod.append(create_vals)
+
         list_prod.sort(key=itemgetter('product_id'))
         move_temp = []
         for key, items in itertools.groupby(list_prod, key=itemgetter('product_id', 'name', 'product_uom', 'location_id', 'location_dest_id')):
@@ -380,6 +448,9 @@ class Picking(models.Model):
             move_id = self.env['stock.move'].create(new_line)
             move_id.update({'picking_id': self.id})
         self.flag = True
+        #count = self.search_count([('po_number','=',self.po_number.id)])
+        # self.po_number.delivery_count = count
+        #self.po_number.write({'delivery_count': count}) 
         return True
 
 

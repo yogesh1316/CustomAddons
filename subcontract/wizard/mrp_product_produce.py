@@ -51,27 +51,86 @@ class MrpProductProduce(models.TransientModel):
 
     @api.multi
     def do_produce(self):        
-        self.create_po()     
+        self.create_po()  
+        self.create_OpenPO()   
         msg = _('For Subcontract Quantity Produced: ') + str(self.product_qty)
         self.production_id.message_post(body=msg)
-        for ml in self.production_id.move_raw_ids:               
-            total_qty = 0
-            sq = self.env['stock.quant'].search([('product_id', '=', ml.product_id.id), ('location_id', '=', ml.location_dest_id.id)])
+        # for ml in self.production_id.move_raw_ids:               
+        #     total_qty = 0
+            # sq = self.env['stock.quant'].search([('product_id', '=', ml.product_id.id), ('location_id', '=', ml.location_dest_id.id)])
             
-            if sq.id == False:
-                raise UserError(_('There is no stock available for the product ( ' + (ml.product_id.default_code or '') + ' ' + (ml.product_id.name) + ' ) in the stock location. Kindly add the required stock.'))
-            else:
-                for bom_line in self.production_id.bom_id.bom_line_ids:
-                    if ml.product_id == bom_line.product_id:
-                        total_qty = bom_line.product_qty * self.product_qty                                               
-                        for i in sq:            
-                            if total_qty > i.quantity:
-                                raise UserError(_('You cannot validate this stock operation because the stock level of the product ( ' + (ml.product_id.default_code or '') + ' ' + (ml.product_id.name) + ' ) would become negative on the stock location and negative stock is not allowed for this product.'))
+            # if sq.id == False:
+            #     raise UserError(_('There is no stock available for the product ( ' + (ml.product_id.default_code or '') + ' ' + (ml.product_id.name) + ' ) in the stock location. Kindly add the required stock.'))
+            # else:
+            # for bom_line in self.production_id.bom_id.bom_line_ids:
+            #     if ml.product_id == bom_line.product_id:
+            #         total_qty = bom_line.product_qty * self.product_qty                                               
+                    # for i in sq:            
+                    #     if total_qty > i.quantity:
+                    #         raise UserError(_('You cannot validate this stock operation because the stock level of the product ( ' + (ml.product_id.default_code or '') + ' ' + (ml.product_id.name) + ' ) would become negative on the stock location and negative stock is not allowed for this product.'))
         
         return {'type': 'ir.actions.act_window_close'}
 
+    # Update : Check if Open PO is there subcontract vendor wise, return true else false 27/03/2019
+    @api.multi
+    def Check_OpenPO(self):
+        po_obj = self.env['purchase.order']
+        po_cat = self.env['category.purchase']
+        pc_data=po_cat.search([('po_category', '=', 'OP')])  
+        if pc_data:
+            data=po_obj.search([('partner_id', '=', self.production_id.vendor.id),('po_categ_id','=',pc_data.id)])  
+
+        if data:
+            return True
+        else:
+            return False
+
+    # Update : Create Open PO for subcontract vendor and check if exist not create 27/03/2019
+    @api.multi
+    def create_OpenPO(self):
+        name=''
+        vals_item = {}
+        vals_line_item = {}        
+        po_obj = self.env['purchase.order']
+        pol_obj = self.env['purchase.order.line']
+        po_cat = self.env['category.purchase']
+        pc_data=po_cat.search([('po_category', '=', 'OP')])  
+        if self.Check_OpenPO() == False :                
+            if self.production_id.subcontract_prod:
+                name = ' '
+                vals_item = {
+                    'partner_id': self.production_id.vendor.id,
+                    'state': 'draft',                                                
+                    'name': name,
+                    'po_categ_id': pc_data.id
+                }
+                po_id = po_obj.create(vals_item)            
+                vals_line_item = {
+                    'product_id': self.production_id.move_finished_ids.product_id.id,
+                    'name': self.production_id.move_finished_ids.product_id.name,
+                    'date_planned': self.production_id.date_planned_start,
+                    'product_qty': 0,
+                    'product_uom':1,
+                    'price_unit': 0.0,
+                    'taxes_id': [(6, 0, self.production_id.move_finished_ids.product_id.supplier_taxes_id.ids)],
+                    'order_id': po_id.id,
+                }
+                pol_obj.create(vals_line_item)
+                for line in self.production_id.move_raw_ids.filtered(lambda x: x.r_flag in('N','R')):                        
+                    vals_line_item = {
+                        'product_id': line.product_id.id,
+                        'name': line.product_id.name,
+                        'date_planned': self.production_id.date_planned_start,
+                        'product_qty':0,
+                        'product_uom':1,
+                        'price_unit': 0.0,
+                        'taxes_id': [(6, 0, line.product_id.supplier_taxes_id.ids)],
+                        'order_id': po_id.id,
+                    }
+                    pol_obj.create(vals_line_item)
+
     # Create by : Ganesh , Create Date : 22/01/2019
-    # To create a purchase order while clicking on do_produce button:
+    # To create a Schedule purchase order while clicking on do_produce button:
     @api.multi
     def create_po(self):
         name=''
@@ -80,18 +139,23 @@ class MrpProductProduce(models.TransientModel):
         sp_obj = self.env['stock.picking']
         po_obj = self.env['purchase.order']
         pol_obj = self.env['purchase.order.line']
-        if self.production_id.subcontract_prod and not self.production_id.purchase_ids:
+        po_cat = self.env['category.purchase']
+        pc_data=po_cat.search([('po_category', '=', 'SS')])  
+        if self.production_id.subcontract_prod :
 
+            # Logic chaneg sequence no generate on confirm PO so pass blank name 27/03/19    
             # Update : Subcontract PO sequence no change as per ERP, Schedule('SS') 15/03/2019
-            name = self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','SS') or '/'
+            # name = self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','SS') or '/'
 
+            name = ' '
             vals_item = {
                 'partner_id': self.production_id.vendor.id,
                 'state': 'draft',
                 'mrp_id': self.production_id.id,
                 'origin': self.production_id.name,
-                'subcontract_operation':sp_obj.set_operation(self.production_id),
-                'name': name
+                'subcontract_operation': sp_obj.set_operation(self.production_id),
+                'name': name,
+                'po_categ_id': pc_data.id
             }
             po_id = po_obj.create(vals_item)
             if self.production_id.subcontract_parentchildprod in ('1','2'):

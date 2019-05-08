@@ -10,9 +10,10 @@
                     <button name="button_plan" attrs="{'invisible': ['|',('statusflag', 'in', ('D','I')),('unreserve_visible', '=', False)]}" type="object" string="Release" class="oe_highlight"/>
                     <!-- <button name="open_produce_product" attrs="{'invisible': ['|',('subcontract_prod','=','Ture')]}" string="Produce" type="object" class="oe_highlight"/> -->
                     <!-- <button name="open_produce_product" attrs="{'invisible': ['|', '|', '|', '|', ('is_locked', '=', False), ('check_to_done', '=', True), ('availability', '!=', 'waiting'), ('state', 'not in', ('confirmed','progress'))]}" string="Produce" type="object"/> -->
-                    <button name="print_document" attrs="{'invisible': [('statusflag', 'not in', ('R','D','I'))]}" string="Print" type="object" class="oe_highlight"/>
+                    <button name="print_document" attrs="{'invisible': ['|',('statusflag', 'not in', ('R','D','I')),('state','=','cancel')]}" string="Print" type="object" class="oe_highlight"/>
                     <button name="issue_item_qty" attrs="{'invisible': ['|','|',('statusflag', 'not in', ('D','I')), ('state', 'in', ('cancel')), ('check_to_done', '=', True)]}" string="Issue" type="object" class="oe_highlight"/>
                     <button name="replace_item" attrs="{'invisible': ['|','|','|',('statusflag', 'not in', ('I')), ('state', 'in', ('cancel')), ('check_to_done', '=', True)]}" string="Replace" type="object" class="oe_highlight"/>                    
+                    <button name="mtn" attrs="{'invisible': [('state','!=','cancel')]}" string="MTN" type="object" class="oe_highlight"/>
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value">
                             <field name="statusflag" nolabel="1"/>
@@ -26,6 +27,17 @@
                 </xpath>
                 <xpath expr="//field[@name='date_planned_finished']" position="replace">
                     <field name="date_planned_finished" />
+                </xpath>
+                <xpath expr="//field[@name='picking_type_id']" position="replace">
+                    <field name="picking_type_id" domain="[('code', '=', 'mrp_operation')]" readonly="1"  force_save="1"/>
+                </xpath>
+                <xpath expr="//field[@name='location_src_id']" position="replace">
+                    <field name="location_src_id" domain="[('usage','=','internal')]" readonly="1"  force_save="1"/>
+                </xpath>
+                <xpath expr="//form//sheet//notebook//page[3]//group//group//field[@name='location_dest_id']" position="replace">
+                    <field name="location_dest_id" domain="[('usage','=','internal')]" readonly="1"  force_save="1"/>
+                </xpath>
+                <xpath expr="//form//sheet//notebook//page[2]" position="replace" invisible="1">
                 </xpath>
                 <xpath expr="//div[@name='button_box']" position="replace">
                     <div class="oe_button_box" name="button_box">
@@ -54,7 +66,6 @@
         </field>
     </record>
     <!-- Inherit tree -->
-
     <record id="mrp_production_tree_view_inhe" model="ir.ui.view">
         <field name="name">mrp.production.tree</field>
         <field name="model">mrp.production</field>

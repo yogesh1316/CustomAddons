@@ -4,8 +4,6 @@ from odoo.exceptions import UserError
 from odoo.tools import float_compare
 import datetime
 
-
-
 class cancel_manufacture_order(models.Model):
     """ Manufacturing Orders """
     _inherit = 'mrp.production'
@@ -71,8 +69,8 @@ class cancel_manufacture_order(models.Model):
             for item in self.move_raw_ids:
                  vals_line_item = {
                  'name': item.product_id.name,
-                 'product_id': item.product_uom_qty,
-                 'ordered_qty':item.product_uom_qty,
+                 'product_id': item.product_id.id,
+                 'ordered_qty':item.issue_qty,
                  'product_uom_qty':item.product_uom_qty,
                  'location_id':qdata.id,
                  'location_dest_id':sdata.id,
