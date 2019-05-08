@@ -39,7 +39,6 @@ class MrpProduction(models.Model):
     complete_qty = fields.Float('Completed quantity',default=0.0, readonly=True)
     balance_qty = fields.Float('Balance quantity',default=0.0, readonly=True)
 
-
     @api.constrains('complete_qty')
     def balance_qty_set(self):
         self.balance_qty = self.product_qty-self.complete_qty

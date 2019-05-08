@@ -54,7 +54,7 @@ class MrpProduction(models.Model):
     def _compute_subcontractvendor(self):        
         con=[]
         res_partner_obj = self.env['res.partner']
-        ids=res_partner_obj.search([('property_stock_supplier.id','=',18)])      #22
+        ids=res_partner_obj.search([('property_stock_supplier.id','=',18)])      #22 Subcontract location 
         for i in ids:
             con.append(i.id)       
         return [('id','in',con)]
@@ -135,7 +135,7 @@ class PurchaseOrder(models.Model):
         '''
         action = self.env.ref('subcontract.action_delivery_order_subcontract')
         result = action.read()[0]
-        #override the context to get rid of the default filtering
+        # override the context to get rid of the default filtering
         result['context'] = {'state': 'draft', 'default_po_number': self.id,'default_partner_id': self.partner_id.id}
         return result
 
@@ -144,7 +144,6 @@ class Picking(models.Model):
 
     subcontract = fields.Boolean(string="Subcontract", help="If subcontract Delivery Challan is there check it")        
     flag = fields.Boolean(string="Flag", default=False)
-
 
     # Add this function to set location on subcontract selection
     @api.onchange('subcontract')
@@ -177,7 +176,7 @@ class Picking(models.Model):
                     self.location_id = location_id                                                      # WH/Output location
                     self.location_dest_id = location_dest_id                                            # Customer location
         
-    # Add computed field for selecting as per screen
+    # Add computed field for selecting as-per screen
     @api.multi
     def _compute_DCnumber(self):
         con=[]

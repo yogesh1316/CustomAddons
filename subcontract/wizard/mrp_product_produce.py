@@ -143,7 +143,7 @@ class MrpProductProduce(models.TransientModel):
         pc_data=po_cat.search([('po_category', '=', 'SS')])  
         if self.production_id.subcontract_prod :
 
-            # Chaneg logic sequence no generate on confirm PO so pass blank name 27/03/19    
+            # Logic chaneg sequence no generate on confirm PO so pass blank name 27/03/19    
             # Update : Subcontract PO sequence no change as per ERP, Schedule('SS') 15/03/2019
             # name = self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','SS') or '/'
 

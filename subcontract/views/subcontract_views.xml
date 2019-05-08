@@ -64,7 +64,6 @@
 						<field name="delivery_ids" invisible="1"/>
 					</button>
 				</button>
-
 			</field>
 		</record>
 

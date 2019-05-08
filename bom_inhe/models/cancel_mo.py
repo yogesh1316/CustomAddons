@@ -4,8 +4,6 @@ from odoo.exceptions import UserError
 from odoo.tools import float_compare
 import datetime
 
-
-
 class cancel_manufacture_order(models.Model):
     """ Manufacturing Orders """
     _inherit = 'mrp.production'
