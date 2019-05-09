@@ -10,33 +10,30 @@
             <field name="model">mrp.routing.workcenter</field>
             <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
             <field name="arch" type="xml">
+
+                <!--Created By-Pradip|Created Date-3-Apr-2019
+                operation name select from operation.master 
+                and it set to operation name column(mrp.routing.workcenter)
+                -->
                 <xpath expr='//field[@name="name"]' position="replace">
-                    <field name="name" string=""  />
+                    <field name="name" string=""  
+                   readonly="0" store="1" force_save="1"/>
                 </xpath>
 
                 <xpath expr='//field[@name="name"]' position="before">
                     <field name="operation_descr_id"/>
                 </xpath>
 
+                <!-- Updated-By-Pradip |Updated-Date-20-3-2019 | Info.Save and New Button Disable -->
+                <!-- <xpath expr="//form" position="inside">
+                    <style>
+                        .btn-primary:nth-child(2){
+                            display:none !important;
+                        }
+                    </style>
+                </xpath> -->
             </field>
         </record>
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         
     </data>
 </odoo>

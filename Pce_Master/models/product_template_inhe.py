@@ -14,12 +14,12 @@ class product_template_inhe(models.Model):
     effect_code_description=fields.Many2one('effect_master.info',string='Effect Code Descrip.',required=True)      
     id_code_description=fields.Many2one('id_code_master.info',string="Id Code Descrip.",required=True)
     manufacturer=fields.Many2one('make_master.info',string='Manufacturer',required=True)
-    mrp_type=fields.Many2one('mrp_type_master.info',string='MRP Type',required=True,track_visibility='onchange',help='MRP Type')#,compute='mrp_type_fun'
+    mrp_type=fields.Many2one('mrp_type_master.info',string='MRP Type',track_visibility='onchange',help='MRP Type')#,compute='mrp_type_fun'
     source_code_master=fields.Many2one('source_master.info',string='Source Code',required=True)
     mf_part_no=fields.Char(string='Mf. Part No.',track_visibility='onchange',help='Mf. Part No.')
     filename=fields.Char()
-    batch_qty=fields.Float(string='Batch Qty.',required=True ,default=0.0,track_visibility='onchange',help='Batch Qty.')
-    reorder_level=fields.Float(string='Reorder Level',required=True,default=0.0,track_visibility='onchange',help='Reorder Level')
+    batch_qty=fields.Float(string='Batch Qty.',default=0.0,track_visibility='onchange',help='Batch Qty.')
+    reorder_level=fields.Float(string='Reorder Level',default=0.0,track_visibility='onchange',help='Reorder Level')
 #     lead_time=fields.Integer(string='Lead Time (Days)')
     buyer_code=fields.Many2one('res.users',string='Buyer Code',required=True)
     bin_location=fields.Char(string='Bin Location')
@@ -27,13 +27,40 @@ class product_template_inhe(models.Model):
     channel_flag=fields.Selection([('red','Red'),('green','Green')],'Channel Flag',track_visibility='onchange',help='Channel Flag')
     sr_no_application=fields.Selection([('yes','Yes'),('no','No')],'SrNo.Application')
     unique_product=fields.Char(string="Unique Product Name",compute='unique_product__name_fun',store=True)
-    item_type=fields.Many2one('item.type.master',string='Item Type',required=True,track_visibility='onchange',help='Item Type')
+    item_type=fields.Many2one('item.type.master',string='Item Type',track_visibility='onchange',help='Item Type')
     
-    bom_process_id=fields.Integer(string="Process Id")
+    bom_process_id=fields.Integer(string="BOM Process Id")
     
     produce_delay = fields.Float(
         'Manufacturing Lead Time', default=0.0,track_visibility='onchange',
         help="Average delay in days to produce this product. In the case of multi-level BOM, the manufacturing lead times of the components will be added.")
+
+    @api.model
+    def set_routes_id_for_mto_mts(self):
+        return self.env['stock.location.route'].search([('name','in',['Make To Order + Make To Stock'])]).ids
+
+    route_ids = fields.Many2many(
+        'stock.location.route', 'stock_route_product', 'product_id', 'route_id', 'Routes',
+        domain=[('product_selectable', '=', True)],
+        default=set_routes_id_for_mto_mts,
+
+        help="Depending on the modules installed, this will allow you to define the route of the product: whether it will be bought, manufactured, MTO/MTS,...")
+   
+   
+    # @api.onchange('route_ids','type')
+    # def route_ids_onchange_mto_mts(self):
+    #     # if self.type=='product':
+    #         for i in self:
+    #             if i.type=='product':
+    #                 print("===================i.route_ids",i.route_ids.name)
+    #                 # if not i.route_ids.name=='Make To Order + Make To Stock':
+    #                 #     raise ValidationError("Please Select Routes Make To Order + Make To Stock")
+       
+
+
+
+
+
 
     # Created By | Created Date |Info. 
     # Pradip    |17-1-19 |If select text master item then this text master item update product name
@@ -53,10 +80,11 @@ class product_template_inhe(models.Model):
         buyer_name=self.env['res.users']
         usr_name="Administrator"
         a=buyer_name.search([("name","=",usr_name)])
+        print("=============================",a.id)
         for i in self:
             if i.source_code_master.source_description=='IN-HOUSE MFG.':
                 
-                i.buyer_code=a
+                i.buyer_code=a.id
                 i.channel_flag='green'
                 i.bulk_issue_flag='no'
             else:

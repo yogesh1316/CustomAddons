@@ -9,7 +9,7 @@
             <field name="name">operation.master.form</field>
             <field name="model">operation.master</field>
             <field name="arch" type="xml">
-                <form string="Operation Master">
+                <form string="Operation Master" >
                     <sheet>
                         <div class="oe_button_box" name="button_box">
                             <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
@@ -63,11 +63,16 @@
             <field name="model">operation.master</field>
             <field name="arch" type="xml">
                 <search string="Search Operation Master">
+                    <!-- <field name="operation_description" filter_domain="[('operation_description','ilike',self)]"/>
+                    <field name="id" domain="[('id','=','id')]"/> -->
+
+
+
                     <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Operation Master Records" />
-                    <filter name="inactive" string="Inactive" domain="[('active','=',False)]" help="Show Deactivate Operation Master Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Operation Master Records" />
                                        
                     <group string="Group By">
-                        <filter string="Active" domain="[]" context="{'group_by':'active'}" help="Display Group By Active Operation Master Records" />
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Operation Master Records" />
                         <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Operation Master Records" />
                     </group>
                 </search>

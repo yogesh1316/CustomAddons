@@ -10,7 +10,7 @@ class Operation_parameter_master(models.Model):
     _name='operation.parameter.master'
     _inherit = ['mail.thread', 'mail.activity.mixin', 'portal.mixin']
 
-    #_rec_name='operation_description'
+    _rec_name='oper_descr_id'
     _description='Operation Parameter Master'
 
     oper_descr_id=fields.Many2one('operation.master',required=True,string='Operation Description',help="Operation Description")
@@ -32,7 +32,7 @@ class Operation_parameter_master_line(models.Model):
     _description='Operation Parameter Master Line'
 
     oper_mst_id=fields.Many2one('operation.master')
-    parm_mst_id=fields.Many2one('parameter.master',required=True)
+    parm_mst_id=fields.Many2one('parameter.master',required=False)
     tolerance=fields.Char(string="Tolerance")
     re_mark=fields.Text('Rmrk')
 

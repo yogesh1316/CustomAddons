@@ -15,11 +15,18 @@ class text_master_information(models.Model):
     #updated-By|Updated-Date|Info.
     #Pradip    |12-03-19    |all fields added into chatter box
     
-    active_flag=fields.Selection([('Yes','Yes'),('No','No')],default='Yes' ,track_visibility='onchange',help='Activate/Deactivate.')
+    #active_flag=fields.Selection([('Yes','Yes'),('No','No')],default='Yes' ,track_visibility='onchange',help='Activate/Deactivate.')
     text_code=fields.Char(string='Text Code' ,track_visibility='onchange',help='Text Code.')
     text_description = fields.Char('Text Description',required=True,track_visibility='onchange',help='Text Description.')
     text_concat = fields.Char("Text Concat",compute='text_concate_fun',store=True)
     
+    #Created By| Created Date|Info.
+    #Pradip    | 21-3-2019  |Active /Deactivate Button
+    active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Deactivate Text Master Records")
+
+
+
+
     #Unique Text
     @api.depends('text_description')
     def text_concate_fun(self):
@@ -82,7 +89,15 @@ class effect_master_info(models.Model):
     unique_effect_description=fields.Char('Unique Effect Description',compute='effect_concate_compute' ,store=True)
     # Created By | Created Date |Info.
     # Pradip    |28-1-19 | Active Flag,If Active Flag is Yes then Shows the Product else, Hide
-    active_flag=fields.Selection([('Yes','Yes'),('No','No')],default='Yes',track_visibility='onchange',help='Activate/Deactivate')
+    # active_flag=fields.Selection([('Yes','Yes'),('No','No')],default='Yes',track_visibility='onchange',help='Activate/Deactivate')
+
+    #Created By| Created Date|Info.
+    #Pradip    | 21-3-2019  |Active /Deactivate Flag
+    active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Deactivate Effect Master Records")
+
+
+
+
 
     # Created By | Created Date | Info.
     # Pradip    |16-1-19 |Effect Description Convert into Uppercase
@@ -148,8 +163,12 @@ class id_code_master_info(models.Model):
     unique_id_code_description=fields.Char("Unique Id Description",compute='id_decription_concat_fun' ,store=True)
     # Created By | Created Date |Info.
     # Pradip    |28-1-19 | Active Flag,If Active Flag is Yes then Shows the Product else, Hide
-    active_flag=fields.Selection([('Yes','Yes'),('No','No')],default='Yes',track_visibility='onchange',help='Activate/Deactivate')
-  
+    # active_flag=fields.Selection([('Yes','Yes'),('No','No')],default='Yes',track_visibility='onchange',help='Activate/Deactivate')
+    
+    #Created By| Created Date|Info.
+    #Pradip    | 21-3-2019  |Active /Deactivate Flag
+    active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Deactivate Id Code Master Records")
+
     
     #Unique ID Code
     @api.depends('id_code_description')
@@ -207,8 +226,16 @@ class make_master_info(models.Model):
     unique_make_description=fields.Char('Unique Make Description',compute='make_master_concat_fun',store=True)
 # Created By | Created Date |Info.
 # Pradip    |28-1-19 | Active Flag,If Active Flag is Yes then Shows the Product else, Hide
-    active_flag=fields.Selection([('yes','Yes'),('no','No')],default='yes',track_visibility='onchange',help='Activate/Deactivate')
+    # active_flag=fields.Selection([('yes','Yes'),('no','No')],default='yes',track_visibility='onchange',help='Activate/Deactivate')
     
+    #Created By| Created Date|Info.
+    #Pradip    | 21-3-2019  |Active /Deactivate Flag
+    active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Deactivate Make Master Records")
+
+
+
+
+
     #Unique Make 
     @api.depends('make_description')
     def make_master_concat_fun(self):
@@ -262,9 +289,13 @@ class mrp_type_master_info(models.Model):
     mrp_type_code=fields.Char('MRP Type Code',required=True,track_visibility='onchange',help='MRP Type Code')
     mrp_description=fields.Char('MRP Type Description',required=True,track_visibility='onchange',help='MRP Type Description')
     unique_mrp_description=fields.Char('Unique MRP Type Description',compute='mrp_type_description_fun',store=True)
-    active_flag=fields.Selection([('Yes','Yes'),('No','No')],default='Yes',track_visibility='onchange',help='Activate/Deactivate')
+    # active_flag=fields.Selection([('Yes','Yes'),('No','No')],default='Yes',track_visibility='onchange',help='Activate/Deactivate')
    
-    
+    #Created By| Created Date|Info.
+    #Pradip    | 21-3-2019  |Active /Deactivate Flag
+    active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Deactivate MRP Type Records")
+
+
     # Unique MRP Type
     @api.depends('mrp_description')
     def mrp_type_description_fun(self):
@@ -324,8 +355,13 @@ class source_master_info(models.Model):
     source_code=fields.Char('Source Code',required=True,track_visibility='onchange',help='Source Code')
     source_description=fields.Char('Source Description',required=True,track_visibility='onchange',help='Source Description')
     unique_source_description=fields.Char('Unique Source Description',compute='source_description_fun',store=True)
-    active_flag=fields.Selection([('Yes','Yes'),('No','No')],default='Yes',track_visibility='onchange',help='Activate/Deactivate')
+    # active_flag=fields.Selection([('Yes','Yes'),('No','No')],default='Yes',track_visibility='onchange',help='Activate/Deactivate')
    
+    #Created By| Created Date|Info.
+    #Pradip    | 21-3-2019  |Active /Deactivate Flag
+    active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Inactive Source Master Records")
+
+
     # Unique Source 
     @api.depends('source_description')
     def source_description_fun(self):

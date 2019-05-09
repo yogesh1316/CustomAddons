@@ -7,16 +7,27 @@
         <field name="arch" type="xml">
             <form string="Delivery Term Master" delete="1" duplicate="0">
             	<sheet>
+
+
+                    <!--Created-By | Created-Date|Info.
+                        Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+
+                    <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                    </div>
+
                 <group string="Delivery Term">
                     <group name="Delivery Term Master">
                     	<field name="deliv_term_code" readonly="1"/>
 						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->                    	
                         <field name='delivery_term' style="text-transform: uppercase;" /> 
                         <!-- <field name='unique_delivery_term' />-->   
-                        <field name='active_flag' string="Is Active" widget='radio'/>  
+                        <!-- <field name='active_flag' string="Is Active" widget='radio'/>   -->
 
                         
-                        	 <field name="sample_active"  widget="boolean_button" />
+                        	 <!-- <field name="sample_active"  widget="boolean_button" /> -->
                         	 <!--options="{&quot;terminology&quot;: &quot;archive&quot;}"/>-->
                     
                         	 	</group>
@@ -39,20 +50,46 @@
             <tree string="Delivery Term Master" delete="0">
             	<field name="deliv_term_code" readonly="1"/>
                 <field name='delivery_term' />   
-                <field name='active_flag' string="Is Active" widget='radio'/>  
+                <!-- <field name='active_flag' string="Is Active" widget='radio'/>   -->
 
-                <field name="sample_active"/> 
+                <!-- <field name="sample_active"/>  -->
 
+                <!--Created-By | Created-Date|Info.
+                    Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+                <field name="active" widget="boolean_toggle"/>
 
 	            </tree>
         </field>
     </record>
 
+    <!--Created-By | Created-Date|Info.
+        Pradip     |21-3-2019    |Filters Active/Inactive Records and Group By Active/Inactive Records -->
+    
+    <record id="delivery_term_master_search" model="ir.ui.view">
+            <field name="name">delivery_term.master.search</field>
+            <field name="model">delivery_term.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Delivery Term Master">
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Delivery Term Master Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Delivery Term Master Records" />
+                    
+                    <group string="Group By">
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Delivery Term Master Records" />
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Delivery Term Master Records" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
  	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Delivery Term Master Action-->
+    <!--Updated-By | Updated-Date |Info.
+        Pradip     |21-03-19      | Inactive Delivery Term Master showing tree view(field name="context") --> 
     <record id="delivery_term_master_actions" model="ir.actions.act_window">
         <field name="name">Delivery Term Master</field>
         <field name="res_model">delivery_term.master</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'active_test': False}</field>
     </record>
 
 	<!-- <menuitem id="master_menu" name="Master" />   -->

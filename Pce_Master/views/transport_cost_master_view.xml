@@ -14,6 +14,16 @@
         <field name="arch" type="xml">
             <form string="Transport Cost Master" delete='1' duplicate='0' >
             	<sheet>
+
+                    <!--Created-By | Created-Date|Info.
+                        Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+
+                    <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                    </div>
+
             	<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
                 <group string="Transport Cost">
                     <group name="Transport Cost Master">
@@ -22,8 +32,8 @@
 						<!--Updated-Bt:Pradip Updated-Date:11-3-2019 Info.When Any text Enter then this text show uppercase-->                    	
                         <field name='transport_cost_desc' style="text-transform: uppercase;" /> 
                         <!--<field name='unique_transport_cost_desc' />-->
-                        <field name='active_flag' string="Is Active" widget='radio'
-                         />                
+                        <!-- <field name='active_flag' string="Is Active" widget='radio'
+                         />                 -->
                     </group>
                 </group>
                  </sheet>
@@ -47,16 +57,43 @@
             	<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
             	<field name="transport_cost_code" readonly="1"/>
                 <field name='transport_cost_desc' /> 
-                <field name='active_flag' string="Is Active" widget='radio'/>         
+                <!-- <field name='active_flag' string="Is Active" widget='radio'/>          -->
+                 <!--Created-By | Created-Date|Info.
+                    Pradip     |21-3-2019    |Active Flag is Hide or Show (Button) -->
+                <field name="active" widget="boolean_toggle"/>
+
             </tree>
         </field>
     </record>
 
+    <!--Created-By | Created-Date|Info.
+        Pradip     |21-3-2019    |Filters Active/Inactive Records and Group By Active/Inactive Records -->
+    
+    <record id="transport_cost_master_search" model="ir.ui.view">
+            <field name="name">transport_cost.master.search</field>
+            <field name="model">transport_cost.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Transport Cost Master">
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Transport Cost Master Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Transport Cost Master Records" />
+                    
+                    <group string="Group By">
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Transport Cost Master Records" />
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Transport Cost Master Records" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
  	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Transport Cost Master Action-->
+    <!--Updated-By | Updated-Date |Info.
+        Pradip     |21-03-19      | Inactive Transport Cost Master showing tree view(field name="context") --> 
     <record id="transport_cost_master_action" model="ir.actions.act_window">
         <field name="name">Transport Cost Master</field>
         <field name="res_model">transport_cost.master</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'active_test': False}</field>
     </record>
 
 	<!-- <menuitem id="master_menu" name="Master" />   -->

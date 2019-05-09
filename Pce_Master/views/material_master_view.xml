@@ -71,13 +71,15 @@
             <field name="arch" type="xml">
                 <search string="Search Material Master">
                     <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Material Master Records" />
-                    <filter name="inactive" string="Inactive" domain="[('active','=',False)]"  help="Show Deactivate Material Master Records"/>
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]"  help="Show Inactive Material Master Records"/>
                     <field name="material_description"/>
                     <!-- <field name="material_group_description" domain="[('active','=',False)]"/> -->
-                    
+<!-- <field name="material_group_description" filter_domain="[('material_group_description','ilike',self)]"/> -->
+
+
                     <group string="Group By">
-                        <filter string="Active" domain="[]" context="{'group_by':'active'}" help="Display Group By Active Material Master Records"/>
-                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Deactivate Material Master Records" />
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Material Master Records"/>
+                        <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Material Master Records" />
                     </group>
                 </search>
             </field>
