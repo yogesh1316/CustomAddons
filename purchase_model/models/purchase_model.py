@@ -6,6 +6,30 @@
 
 from odoo import models, fields, api,tools
 from odoo.exceptions import ValidationError,UserError
+from odoo.addons import decimal_precision as dp
+
+
+
+# Created By | Created Date |Info.
+# Pradip    |8-05-19 | Purchase_Order_Line inherit  
+
+class Purchase_Order_Line(models.Model):
+    _inherit = 'purchase.order.line'
+
+    compute_field1 = fields.Boolean(string="check group",compute='_get_user_group')
+
+# Created By | Created Date |Info.
+# Pradip    |8-05-19 | if user has manager group the price_unit field editable else non-editable
+
+    @api.depends('compute_field1')
+    def _get_user_group(self):
+        res_user_group = self.env['res.users'].search([('id', '=', self._uid)])
+        # print("==============96===========>>res_user_group",res_user_group)
+        for i in self:
+            if res_user_group.has_group('purchase.group_purchase_manager'):
+                i.compute_field1 = True
+            else:
+                i.compute_field1 = False
 
 
 class PurchaseOrder(models.Model):

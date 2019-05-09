@@ -17,7 +17,11 @@ class transport_cost_master(models.Model):
     transport_cost_desc=fields.Char(string='Transport Cost Desc.',required=True,track_visibility='onchange',help='Transport Cost Description')
     unique_transport_cost_desc=fields.Char(string='Unique Transport Cost Desc.',compute='unique_transport_cost_desc_fun',store=True)
     transport_cost_code=fields.Char('Transport Cost Code',readonly=True,track_visibility='onchange',help='Transport Cost Code')
-    active_flag=fields.Selection([('yes','Yes'),('no','No')],string='Is Active',default='yes',track_visibility='onchange',help='Activate/Deactivate')
+    # active_flag=fields.Selection([('yes','Yes'),('no','No')],string='Is Active',default='yes',track_visibility='onchange',help='Activate/Deactivate')
+
+    #Created By| Created Date|Info.
+    #Pradip    | 21-3-2019  |Active /Deactivate Flag
+    active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Deactivate Transport Cost Records")
 
     # Created By | Created Date |Info.
     # Pradip    |4-2-19 | Transport Cost Unique Description   

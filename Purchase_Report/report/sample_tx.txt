@@ -1,0 +1,124 @@
+             <table width="100%" style="margin-top: -20px;border-top: 0px solid black;">
+            	<tr>
+            		<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;">
+            			<span class="fonts_size">Please mention GSTIN of supplier (Your Firm) andCustomer (PCE) on Tax Invoice</span>
+			<br/><br/>
+		
+		<span class="fonts_size" style="font-weight: bold;">PAYMENT TERM</span><span class="fonts_size" style="padding-left: 5px;">:</span>
+    	<span t-field="o.payment_term_id" class="fonts_size" style="padding-left:20px;"/><br/>
+		<span class="fonts_size" style="font-weight: bold;">DELIVERY TERM</span><span class="fonts_size" style="padding-left: 5px;">:</span><br/>		 
+		<span class="fonts_size" style="font-weight: bold;">TRANSPORT</span><span class="fonts_size" style="padding-left: 31px;">:</span><br/><br/>
+		<span class="fonts_size" style="font-weight: bold;">Note :</span><span t-field="o.notes" style="padding-left: 5px;"></span>
+            		</td>
+            		<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;background-color: #ffffff;">
+            			<span class="fonts_size" style="font-weight: bold;">Sub Total</span><span class="fonts_size" style="padding-left: 20px;">:</span>
+			<span t-esc="o.set_amt(o.amount_untaxed)" style="float:right;margin-right:7px;" class="fonts_size" /><br/><br/><br/><br/>
+				<span  t-foreach="o.order_line.calculate_cgst_sgst()" t-as='k'>
+					<span class="fonts_size" t-esc='k[0]' /><span class="fonts_size" style="padding-left: 10px;">:</span> 
+					<!-- mam code final<span t-esc='k[1]' style="float:right;margin-right:7px;"  class="fonts_size" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/><br/>-->
+					
+<!--=update code PRY 24-12-2018==--><span class="fonts_size" t-esc="o.set_amt(k[1])" style="float:right;margin-right:7px;"/><br/>
+				 </span>
+				 	<span  t-foreach="o.order_line.caculate_igst()" t-as="igst">
+				 		 <span class="fonts_size" t-esc='igst[0]' />
+				 	 	<span class="fonts_size" style="padding-left: 21px;">:</span>
+				 	 	
+				 	 	<!--<span t-esc='(igst[1])' class="fonts_size" style="float:right;margin-right:7px;" 
+				 	       t-options='{"widget": "monetary", "display_currency": o.currency_id}'  /> mamm final code -->
+				 	 	
+<!--=update code PRY 24-12-2018==--><span class="fonts_size" t-esc="o.set_amt(igst[1])" style="float:right;margin-right:7px;"/>
+
+				 	 	<br/><!--t-options='{"widget": "monetary", "display_currency": o.currency_id}'-->
+				 	 </span>
+            		</td>
+            		
+            	</tr>
+            </table>
+       
+       
+       
+     
+     
+     
+     
+     ************
+       page-break-inside: avoid;   
+       
+       
+       
+       
+       
+        <table width="100%" style="border-top: 1px solid black;">
+            	<tr>
+            		<td width="50%" style="font-weight: bold;padding-left: 5px;padding-top:5px;padding-bottom:5px;">
+            			<span class="fonts_size">Please mention GSTIN of supplier (Your Firm) andCustomer (PCE) on Tax Invoice</span>
+			<br/><br/>
+		
+				
+				
+				<div>
+					
+					<table  style="border-top: 0px solid black;border-bottom: 0px solid black;border-left: 0px solid black;border-right: 0px solid black;">
+						<tr>
+						<td width="28%" style="border-right: 0px solid black;">
+							<span class="fonts_size" >PAYMENT TERM :</span><span class="fonts_size" /><br/>
+
+								
+														</td>
+						<td style="background-color: #ffffff;padding-right:-5px;border-right: 0px solid black;">
+							<span  t-field="o.payment_term_id" class="fonts_size"/><br/>
+						</td>
+						</tr>
+						<tr>
+						<td width="28%" style="border-right: 0px solid black;">
+							<span class="fonts_size" >DELIVERY TERM :</span><span class="fonts_size" /><br/>
+
+								
+														</td>
+						<td style="background-color: #ffffff;padding-right:-5px;border-right: 0px solid black;">
+							<span  t-field="o.deliver_term_id" class="fonts_size"/><br/>
+						</td>
+						</tr>
+						
+						<tr>
+						<td width="28%" style="border-right: 0px solid black;">
+							<span class="fonts_size" >TRANSPORT</span><strong class="fonts_size" 
+							style="padding-left: 30px;">:</strong><span class="fonts_size" /><br/>
+
+								
+														</td>
+						<td style="background-color: #ffffff;padding-right:-5px;border-right: 0px solid black;">
+							<span  t-field="o.transport_mode_id" class="fonts_size"/><br/>
+						</td>
+						</tr>
+					</table>
+					
+					
+					
+				</div>
+		
+			<br/><span class="fonts_size" style="font-weight : normal;">Note :</span><span t-field="o.notes" style="font-weight : normal;padding-left:5px;"></span>
+            		</td>
+            		<td width="50%" style="padding-left: 5px;padding-top:5px;padding-bottom:5px;background-color: #ffffff;">
+            			<span class="fonts_size" style="font-weight: bold;">Sub Total</span><span class="fonts_size" style="padding-left: 20px;">:</span>
+			<span t-esc="o.set_amt(o.amount_untaxed)" style="float:right;margin-right:7px;" class="fonts_size" /><br/><br/><br/><br/>
+				<span  t-foreach="o.order_line.calculate_cgst_sgst()" t-as='k'>
+					<span class="fonts_size" t-esc='k[0]' /><span class="fonts_size" style="padding-left: 10px;">:</span> 
+					
+<!--=update code PRY 24-12-2018==--><span class="fonts_size" t-esc="o.set_amt(k[1])" style="float:right;margin-right:7px;"/><br/>
+				 </span>
+				 	<span  t-foreach="o.order_line.caculate_igst()" t-as="igst">
+				 		 <span class="fonts_size" t-esc='igst[0]' />
+				 	 	<span class="fonts_size" style="padding-left: 21px;">:</span>
+				 	 	
+				 	 	
+				 	 	
+<!--=update code PRY 24-12-2018==--><span class="fonts_size" t-esc="o.set_amt(igst[1])" style="float:right;margin-right:7px;"/>
+
+				 	 	<br/>
+				 	 </span>
+            		</td>
+            		
+            	</tr>
+            </table>
+         

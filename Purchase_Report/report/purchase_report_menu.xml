@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!--create_by | create_date | update_by | update_date
+        Pradip      11/12/2018     Pradip     13/12/2018   
+        Info.: Purchase Report -->
+    <!--Updated-By:Pradip |Updated-Date:22-3-19 |Info. set id for report-->
+    <data>
+        <report
+        	id="purchase_report_menu_id"
+            string="Print PO"
+  			model="purchase.order"        
+            report_type="qweb-pdf"
+            name="Purchase_Report.purchase_order_report_main_purchase_id"
+            file="Purchase_Report.purchase_order_report_main_purchase_id"
+            attachment_use="True"
+            print_report_name="('Purchase_Report - %s' % (object.name))"/>
+ 		
+            	
+        <record id="paperformat_purchase_report_of_PO" model="report.paperformat">
+            <field name="name">PO Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">85</field>
+            <field name="margin_bottom">27.5</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">73</field>
+            <field name="dpi">90</field>
+    	</record>
+
+        <!--Created-By | Created-Date|Info.
+            Pradip     |22-3-2019    |Paperformat Id Set, By default related Report -->
+        <record id="Purchase_Report.purchase_report_menu_id" model="ir.actions.report">
+            <field name="paperformat_id" ref="Purchase_Report.paperformat_purchase_report_of_PO" />
+        </record>      		    	 
+           	
+    </data>
+</odoo>
