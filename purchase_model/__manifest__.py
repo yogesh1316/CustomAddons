@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-   
 {
-    'name': "Purchase_Custom_model",
+    'name': "Purchase_Custom_Model",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -10,7 +10,7 @@
         Long description of module's purpose
     """,
 
-    'author': "Saiaipl PVT LTD",
+    'author': "SAIAIPL PVT LTD",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
@@ -27,7 +27,8 @@
         # 'security/ir.model.access.csv',
         'views/purchase_model_views.xml',
         'views/transport_mode_master_view.xml',
-        # 'views/templates.xml',
+        'views/category_table_view.xml',
+        'views/indent_type_master.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
