@@ -20,8 +20,12 @@ class reason_master(models.Model):
     reason_desc=fields.Char('Reason Description',required=True,track_visibility='onchange',help="Please Enter Unique Description")
     unique_reason_desc=fields.Char('Unique Reason Description' ,compute='reason_description_fun',store=True)
     reason_code=fields.Char(string='Reason Code',track_visibility='onchange',help='Reason Code')
-    active_flag=fields.Selection([('yes','Yes'),('no','No')],default='yes',track_visibility='onchange',help='Activate/Deactivate')
+    # active_flag=fields.Selection([('yes','Yes'),('no','No')],default='yes',track_visibility='onchange',help='Activate/Deactivate')
     
+    #Created By| Created Date|Info.
+    #Pradip    | 21-3-2019  |Active /Deactivate Flag
+    active=fields.Boolean(default=True,track_visibility='onchange',help="Active / Deactivate Reason Master Records")
+
 
     
     # Update : Unique Reason Description

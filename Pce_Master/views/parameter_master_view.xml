@@ -16,7 +16,7 @@
 
                         <group>
                             <field name="parameter_description" style="text-transform: uppercase;"/>
-                            <field name="unique_parameter_description"/>
+                            <!-- <field name="unique_parameter_description"/> -->
 
                         </group>
                     </sheet>
@@ -60,15 +60,29 @@
             <field name="model">parameter.master</field>
             <field name="arch" type="xml">
                 <search string="Search Parameter Master">
+                    <!-- created by-pry- 5-4-19 -->
+                    
+                     <!--<field name="id"
+                    string="Prmtr_No"
+                    filter_domain="[('id', 'ilike', raw_value)]"/>
+                    
+                    <field name="parameter_description"
+                    string='Parameter Description'
+                    filter_domain="[('oper_descr_id', 'ilike', raw_value)]"/> -->
+
+                     
+                    <!-- <field name="parameter_description"/>
+                    <field name="id"/>
+                     -->
 
 
 
                     <filter name="active" string="Active" domain="[('active','=',True)]" help="Show Active Parameter Master Records" />
-                    <filter name="inactive" string="Inactive" domain="[('active','=',False)]" help="Show Deactivate Parameter Master Records" />
+                    <filter name="active" string="Inactive" domain="[('active','=',False)]" help="Show Inactive Parameter Master Records" />
                    
                     
                     <group string="Group By">
-                        <filter string="Active" domain="[]" context="{'group_by':'active'}" help="Display Group By Active Parameter Master Records" />
+                        <filter string="Active" domain="[('active','=',True)]" context="{'group_by':'active'}" help="Display Group By Active Parameter Master Records" />
                         <filter string="Inactive" domain="[('active','=',False)]" context="{'group_by':'active'}" help="Display Group By Inactive Parameter Master Records" />
                     </group>
                 </search>
