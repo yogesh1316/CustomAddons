@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!--create_by  | create_date  | update_by  | update_date
+    Pradip      11/12/2018     Pradip     13/12/2018   
+    Info.: GRN Report-->
+	<!-- Including Custom Css File-->
+	<template id="assets_pdf_css" name="Custom Report CSS" inherit_id="web.report_assets_common">
+		<xpath expr="." position="inside">
+			<link href="/Sample_Tax_Report/static/src/css/custom.css" rel="stylesheet"/>
+		</xpath>
+	</template>
+
+	<template id="web.tax_invoice_report_main_id">
+		<div class="header o_boxed_header">
+
+			<center>
+				<strong style="font-size: 20px;font-family:Arial;">TAX INVOICE CUM CHALLAN</strong>
+			</center>
+			<table width="100%" style="border: 1px solid black;border-collapse: collapse;font-size: 14px;">
+				<td width="50%" style="padding-left: 5px;padding-bottom:5px;padding-top:5px;border-right:none;font-size: 14px;">
+					<strong>
+						<span style="font-weight: bold;color:black;text-transform: uppercase;padding-left: 5px;padding-top:5px;font-size: 14px;" t-field="o.company_id.name"/>
+					</strong>
+					<br/>
+
+					<span class="fonts_size" t-field="o.company_id.street" style="padding-left: 5px;font-size: 14px;"/>
+					<span t-field="o.company_id.street2" style="padding-left: 5px;font-size: 14px;" class="fonts_size"/>
+					<br/>
+					<span t-field="o.company_id.city" class="fonts_size" style="padding-left: 5px;text-transform: uppercase;font-size: 14px;"/>
+                -
+					<span t-field="o.company_id.zip" style="padding-left: 5px;font-size: 14px;" class="fonts_size"/>
+
+					<span style="padding-left: 5px;font-size: 14px;" class="fonts_size">Phone:</span>
+					<span t-field="o.company_id.phone" style="padding-left: 5px;font-size: 14px;" class="fonts_size"/>
+					<br/>
+
+					<span style="padding-left: 5px;font-size: 14px;" class="fonts_size">Tel:</span>
+					<br/>
+
+					<span class="fonts_size" style="padding-left: 5px;font-size: 14px;">GSTIN:</span>
+					<span t-field="o.company_id.vat" style="padding-left: 5px;font-size: 14px;" class="fonts_size"/>
+					<br/>
+
+					<span class="fonts_size" style="padding-left: 5px;font-size: 14px;">STATE CODE:</span>
+					<span t-field="o.company_id.state_id.id" style="padding-left: 5px;font-size: 14px;" class="fonts_size"/>
+				</td>
+				<td style="width:50%;border-left:none">
+					<img t-if="o.company_id.logo" style="padding-left: 5px;font-size: 14px;" class="logo_img" t-att-src="'data:img/jpg;base64,%s' % to_text(o.company_id.logo)"/>
+				</td>
+			</table>
+			<table width="100%">
+				<thead style="border: 1px solid black;border-collapse: collapse;font-size: 14px;">
+					<tr>
+						<td style="border: 1px solid black;border-collapse: collapse;width=30%;font-size: 14px;">
+							<span style="font-weight: bold;padding-left:5px;padding-top:5px;padding-bottom:5px;padding-bottom:5px;font-size: 14px;" class="fonts_size">BILL TO :</span>
+						</td>
+
+						<td style="border: 1px solid black;border-collapse: collapse;width=33%;">
+							<span style="font-weight: bold;padding-left:5px;padding-bottom:5px;padding-top:5px;padding-bottom:5px;font-size: 14px;" class="fonts_size">SHIP TO :</span>
+						</td>
+
+						<td colspan="2" style="text-align: right;border: 1px solid black;border-collapse: collapse;width=33%;font-size: 14px;">
+							<span t-field="o.invoice_type" style="font-weight: bold;padding-right:5px;padding-bottom:5px;padding-top:5px;padding-bottom:5px;font-size: 14px;" class="fonts_size">EXTRA Copy</span>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="border: 1px solid black;width:30%;border: none;font-size: 14px;">
+							<strong>
+								<span style="font-weight: bold;color:black;text-transform: uppercase;padding-left: 5px;padding-top:5px;font-size: 14px;" t-field="o.partner_id.name"/>
+							</strong>
+							<br/>
+							<span class="fonts_size" t-field="o.partner_shipping_id.street" style="padding-left: 5px;font-size: 14px;"/>
+							<br/>
+							<span t-field="o.partner_id.street2" class="fonts_size" style="padding-left: 5px;font-size: 14px;"/>
+							<br/>
+							<span t-field="o.partner_id.city" class="fonts_size" style="padding-left: 5px;text-transform: uppercase;font-size: 14px;"/>
+                -
+							<span t-field="o.partner_id.zip" style="font-size: 14px;" class="fonts_size"/>
+							<br/>
+
+							<span style="padding-left: 5px;font-size: 14px;" class="fonts_size">Country:</span>
+							<span t-field="o.partner_id.country_id.name" style="font-size: 14px;" class="fonts_size"/>
+							<br/>
+
+							<span style="padding-left: 5px;font-size: 14px;" class="fonts_size">State:</span>
+							<span t-field="o.partner_id.state_id.name" style="font-size: 14px;" class="fonts_size"/>
+							<br/>
+
+							<span class="fonts_size" style="padding-left: 5px;font-size: 14px;">GSTIN:</span>
+							<!--<span t-field="o.partner_id.vat" style="font-size: 14px;" class="fonts_size"/>-->
+							<br/>
+
+							<span class="fonts_size" style="padding-left: 5px;">STATE CODE:</span>
+							<span t-field="o.partner_id.state_id" style="font-size: 14px;" class="fonts_size"/>
+							<br/>
+						</td>
+
+
+						<td style="border: 1px solid black;width:35%;font-size: 14px;">
+							<strong>
+								<span style="font-weight: bold;color:black;text-transform: uppercase;padding-left: 5px;padding-top:5px;" t-field="o.partner_id.name"/>
+							</strong>
+							<br/>
+							<span class="fonts_size" t-field="o.partner_shipping_id.street" style="padding-left: 5px;font-size: 15px;"/>
+							<br/>
+							<span t-field="o.partner_id.street2" class="fonts_size" style="padding-left: 5px;font-size: 14px;"/>
+							<br/>
+							<span t-field="o.partner_id.city" class="fonts_size" style="padding-left: 5px;text-transform: uppercase;font-size: 14px;"/>
+                -
+							<span style="font-size: 14px;" t-field="o.partner_id.zip" class="fonts_size"/>
+							<br/>
+
+							<span style="padding-left: 5px;font-size: 14px;" class="fonts_size">Country:</span>
+							<span style="font-size: 14px;" t-field="o.partner_id.country_id" class="fonts_size"/>
+							<br/>
+
+							<span style="padding-left: 5px;font-size: 14px;" class="fonts_size">State:</span>
+							<span style="font-size: 14px;" t-field="o.partner_id.state_id" class="fonts_size"/>
+							<br/>
+
+							<span class="fonts_size" style="padding-left: 5px;font-size: 14px;">GSTIN:</span>
+							<!--<span style="font-size: 15px;" t-field="o.partner_shipping_id.vat" class="fonts_size"/>-->
+							<br/>
+
+							<span class="fonts_size" style="padding-left: 5px;font-size: 14px;">STATE CODE:</span>
+							<span style="font-size: 14px;" t-field="o.partner_id.state_id" class="fonts_size"/>
+							<br/>
+						</td>
+
+						<td style="border-bottom: 1px solid black;padding-left: 5px;padding-top:5px;width:20%;font-size: 14px;border-right:none;">
+							<span class="fonts_size" style="font-weight:bold;font-size: 14px;">Invoice No.:</span>
+							<span class="fonts_size" style="padding-left :32px;font-size: 14px;" t-field="o.number"/>
+							<br/>
+							<span class="fonts_size" style="font-size: 14px;">D.N. No.-</span>
+							<span class="fonts_size" style="padding-left :53px;font-size: 14px;" t-field="o.number"/>
+							<br/>
+							<span class="fonts_size" style="font-size: 14px;">Order No.-</span>
+							<span class="fonts_size" style="padding-left :45px;font-size: 14px;" t-field="o.number"/>
+							<br/>
+							<span class="fonts_size" style="font-size: 14px;">Transporter.-</span>
+							<span class="fonts_size" style="padding-left :33px;font-size: 14px;" t-field="o.transportername.transport_mode_desc"/>
+							<br/>
+							<span class="fonts_size" style="font-size: 14px;">T.R. No.-</span>
+							<span class="fonts_size" style="padding-left :56px;font-size: 14px;" t-field="o.transporterid" />
+							<br/>
+							<span class="fonts_size" style="font-size: 14px;">Vehicle. No.-</span>
+							<span class="fonts_size" style="padding-left :33px;font-size: 14px;" t-field="o.vehicleno" />
+							<br/>
+							<span class="fonts_size" style="font-size: 14px;">No.of Packages-</span>
+							<span class="fonts_size" style="padding-left :10px;font-size: 14px;" t-field="o.no_of_package"/>
+							<br/>
+
+						</td>
+
+						<td style="border-left:none;width:20%;">
+							<span class="fonts_size" style="font-weight:bold;border-left: 0px solid;font-size: 14px;">Date-</span>
+							<span class="fonts_size" style="padding-left :35px;font-size: 14px;" t-field="o.date_invoice"/>
+							<br/>
+							<span class="fonts_size" style="font-weight:bold;border-left: 0px solid;font-size: 14px;">Date-</span>
+							<span class="fonts_size" style="padding-left :35px;font-size: 14px;" t-field="o.date_invoice"/>
+							<br/>
+							<span class="fonts_size" style="font-weight:bold;border-left: 0px solid;font-size: 14px;">PO Date -</span>
+							<span class="fonts_size" style="padding-left :5px;font-size: 14px;" t-field="o.date_invoice"/>
+							<br/>
+							<span class="fonts_size" style="font-size: 14px;">Date -</span>
+							<br/>
+							<span class="fonts_size" style="font-size: 14px;">Mode -</span>
+							<span class="fonts_size" style="padding-left :26px;font-size: 14px;" t-field="o.transmode"/>
+							<br/>
+						</td>
+
+
+
+						<!--<span t-esc="o.adddress()"/>-->
+					</tr>
+				</tbody>
+			</table>
+
+
+
+
+		</div>
+
+
+
+
+		<div class="article o_report_layout_boxed">
+			<t t-raw="0" />
+
+		</div>
+		<div class="footer " align="right">
+
+			<table width="100%" style="border: 1px solid black;border-collapse: collapse;padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;font-size: 15px;">
+				<td width="70%" style= "padding-left: 5px;padding-bottom:5px;padding-top:5px;border: 1px solid black;">
+					<strong>
+						<span style="font-size: 20px;">Declaration :</span>
+					</strong>
+					<span style="font-size: 15px;">We Declare that this invoice shows the actual price of the goods described and that all particulars true and correct.</span>
+					<br/>
+					<strong>
+						<span>Terms and Conditions :</span>
+					</strong>
+					<span style="font-size: 14px;">As per PCE STAC.</span>
+				</td>
+
+				<td width="30%" style="text-align: center;padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;font-size: 20px;">
+					<strong>
+						<span class="fonts_size" style="font-size: 14px;">For </span>
+						<span style="font-size: 15px;" t-field="o.company_id.name" class="fonts_size"/>
+					</strong>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<span style="font-size: 20px;">Authorised Signatory</span>
+				</td>
+			</table>
+
+			<span class="fonts_size" style="font-size:15px;text-align: center;"> Page </span>
+			<span class="page" style="font-size:15px;padding-left: 1px;"/>
+			<span style="padding-left: 8px;font-size: 15px;" class="fonts_size"> of </span>
+			<span class="topage" style="font-size:15px;" />
+		</div>
+
+	</template>
+
+</data>

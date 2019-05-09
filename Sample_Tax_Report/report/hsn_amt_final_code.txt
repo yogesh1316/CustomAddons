@@ -1,0 +1,16 @@
+
+final code,hsn_agianst amt_total
+
+<td style="text-align: center;">
+					<t t-set="total_amount" t-value="0"/>
+				<t t-foreach="o.invoice_line_ids" t-as="l">
+					
+					<t t-if="iter==l.product_id.l10n_in_hsn_code">
+					<t t-set="total_amount" t-value="l.price_subtotal+total_amount"/>
+										
+					</t>
+				
+				</t>
+				<span t-esc="o.set_amt(total_amount)"/>
+									
+				</td>

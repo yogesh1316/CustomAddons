@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+  <!-- model.name inherit form view -->
+  <record id="mrp_inherit_view_id" model="ir.ui.view">
+    <field name="name">model.name.inherit.view.form</field>
+    <field name="model">mrp.production</field>
+    <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+    <field name="arch" type="xml">
+      <!-- Add -your xpath here -->
+      <xpath expr="//field[@name='routing_id']" position="after">
+        <!-- Add your fields here -->
+        <field name="partner_id" attrs="{'invisible': [('origin','=',False)]}"/>
+      </xpath>
+    </field>
+  </record>
+    <record id="mrp_production_action" model="ir.actions.act_window">
+      <field name="name">Work Orders</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">mrp.production</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+      <field name="view_id" eval="False"/>
+      <field name="search_view_id" ref="mrp.view_mrp_production_filter"/>
+      <field name="context">{'search_default_todo': True}</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+                Click here to create a Manufacturing Order.
+        </p>
+        <p>
+                Based on a Bill of Material, a Manufacturing Order will consume raw materials
+                and produce finished products.
+        </p>
+        <p>
+                Manufacturing Orders can be generated automatically based on customer
+                requirements or reordering rules.
+        </p>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="mrp_workorder_todo">
+      <field name="name">Operations</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">mrp.workorder</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">kanban,tree,form,calendar,pivot,graph</field>
+      <field name="search_view_id" ref="mrp.view_mrp_production_workcenter_form_view_filter"/>
+      <field name="context">{'search_default_ready': True, 'search_default_progress': True}</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+            Work Orders are operations to be processed at a Work Center to realize a
+            Manufacturing Order. Work Orders are trigerred by Manufacturing Orders,
+            they are based on the Routing defined on these ones.
+        </p>
+      </field>
+    </record>
+    <menuitem id="mrp.menu_mrp_production_action" name="Work Orders" action="mrp_production_action" parent="mrp.menu_mrp_manufacturing" sequence="1"/>
+
+    <menuitem id="mrp.menu_mrp_workorder_todo" name="Operation" action="mrp_workorder_todo" parent="mrp.menu_mrp_manufacturing" groups="mrp.group_mrp_routings"/>
+  </data>
+</odoo>

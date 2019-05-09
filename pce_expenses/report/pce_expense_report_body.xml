@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="pce_expense_report_menu_order_id_dp">
+            <tbody t-call="web.html_container">
+                <tr t-foreach="docs" t-as="o">
+                     <tr t-call="web.pce_expense_report_menu_order_id_dp"> 
+                        <div class="page">
+                        
+                          <table style="border: 1px solid;" width="100%">
+         					  <tbody style= "border-bottom: 1px solid;">    
+								<tr>
+									<td style="padding-left: 5px;padding-top:20px;padding-bottom:20px;border:1px solid;background-color: #ffffff;" colspan="3">
+										<span t-field="o.company_id.name" class="fonts_size" style="padding-left: 340px;font-size:24px;font-weight: bold;text-transform: uppercase; text-align:center;"/><br/>
+                                     </td>
+	 								 							
+								</tr>   			  	
+         					  	
+								      
+								<tr>		
+									<td  style="border:1px solid;background-color: #ffffff;width:30%;">
+                                    <br/>
+										<span class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;">DATE</span><br/><br/><br/>
+										<span class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;">NAME</span><br/><br/><br/>
+										<span class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;">A/c NO</span><br/><br/><br/>								
+										<span class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;">AMOUNT</span><br/><br/><br/>	
+										<span class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;">PAYMENT MODE</span><br/><br/><br/>
+                                        <span class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;">CUSTOMER NAME</span><br/><br/><br/>										
+										<span class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;">Remark</span><br/><br/>										
+                                    </td>
+									<td  style="border:1px solid;background-color: #ffffff;width:70%;">
+                                        <br/>
+										<span t-field="o.expense_line_ids.date" class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;"/><span class="text-right" style="font-weight: bold;padding-left:300px;font-size:18px;">TOUR DATE   :</span><span t-field="o.expense_line_ids.tour_date" class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;"/><br/><br/><br/>
+										<span t-field="o.employee_id" class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;"/><br/><br/><br/>
+										<span t-field="o.employee_id.bank_account_id" class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;"/><br/><br/><br/>
+										<span t-field="o.expense_line_ids.total_amount" class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;"/><br/><br/><br/>								
+										<span t-field="o.expense_line_ids.mode_of_payment" class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;"/><br/><br/><br/>	
+										<span t-field="o.expense_line_ids.cust_id" class="fonts_size" style="font-weight: bold;padding-left: 5px;font-size:18px;"/><br/><br/><br/>
+                                        <span t-field="o.expense_line_ids.description" class="fonts_size" 
+                                            style="font-weight: bold;padding-left: 5px;word-break:break-all;width:50px;font-size:18px;"/><br/><br/>
+
+                                    </td>
+                                    
+                                </tr>
+                                
+
+                                <!-- <td style="padding-top:35px;padding-bottom:10px;font-weight: bold;background-color: #ffffff;" colspan="3">
+                                    <span t-field="o.employee_id" class="fonts_size" style="padding-left: 50px;"/><span t-field="o.employee_id" class="fonts_size" style="padding-left:180px;"/><span t-field="o.employee_id.parent_id" class="fonts_size" style="padding-left: 250px;"/><br/>
+                                    <span class="fonts_size" style="padding-left: 50px;">RECEIVER</span><span class="fonts_size" style="padding-left: 200px;">INITIATED BY</span><span class="fonts_size" style="padding-left: 200px;">APPROVED BY</span>
+
+                                </td> -->
+                                    
+                                
+                                <!-- </tr>  -->\
+                        <tr>
+                                 <table width="100%">
+                            <tr> 
+                                    <td width="33%" style="font-size:14px;font-weight: bold; border:none;padding-top:70px;padding-bottom:30px;">
+                                    <span t-field="o.employee_id" class="fonts_size" style="padding-left:100px;font-size:18px"/><br/>
+                                    <span class="fonts_size" style="padding-left:100px;font-size:18px" >RECEIVER</span>
+                                    </td>
+
+                                    <td width="33%" style="font-weight: bold;font-size:14px; border:none;padding-top:70px;padding-bottom:30px;">
+                                    <span t-field="o.employee_id" class="fonts_size" style="padding-left:100px;font-size:18px"/><br/>
+                                    <span  class="fonts_size" style="padding-left:100px;font-size:18px" >INITIATED BY</span>
+                                    </td>
+                                    
+                                    <td width="33%" style="font-weight: bold;font-size:14px; border:none;padding-top:70px;padding-bottom:30px;background-color: #ffffff;">
+                                    <span t-field="o.employee_id.parent_id" class="fonts_size" style="padding-left:100px;font-size:18px"/><br/>
+                                    <span class="fonts_size" style="padding-left:100px;font-size:18px" >APPROVED BY</span>
+                                    </td>
+                            </tr>
+                            </table>
+
+                        </tr>
+                                </tbody>
+							</table>
+
+                            <!-- <table width="100%">
+                            <tr> 
+                                    <td width="33%" style="border-right: 0px solid black;">
+                                    <span t-field="o.employee_id" class="fonts_size" style="padding-left:100px;padding-top:35px;"/>
+                                    <span style="padding-left:100px;padding-bottom:10px;" >RECEIVER</span>
+                                    </td>
+
+                                    <td width="33%" style="border-right: 0px solid black;">
+                                    <span t-field="o.employee_id" class="fonts_size" style="padding-left:100px;padding-top:35px;"/>
+                                    <span style="padding-left:100px;padding-bottom:10px;" >INITIATED BY</span>
+                                    </td>
+                                    
+                                    <td width="33%" style="border-right: 0px solid black;">
+                                    <span t-field="o.employee_id.parent_id" class="fonts_size" style="padding-left:100px;padding-top:35px;"/>
+                                    <span style="padding-left:100px;padding-bottom:10px;" >APPROVED BY</span>
+                                    </td>
+                            </tr>
+                            </table> -->
+                             <!-- -->      
+							
+                         </div>
+                     </tr>
+                </tr>
+            </tbody>
+        </template>
+        <template id="report_delivery_picking_main_menu">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="pce_expenses.pce_expense_report_menu_order_id_dp" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

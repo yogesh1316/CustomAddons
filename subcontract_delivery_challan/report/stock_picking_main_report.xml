@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<template id="stock_picking_report_main_id">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="web.stock_picking_report_main_id">
+						<div class="page">
+							<center>
+								<strong style="font-size: 20px;font-family:Arial;">Delivery Challan</strong>
+							</center>
+							<span style="font-weight: bold;font-size:14px">
+								<strong>For movements of inputs/capitals goods or partially processed goods under Goods and Service Tax,from one factory to another factory for further processing/operation and return)</strong>
+							</span>
+							<br/>
+							<br/>
+							<table style="border: none;width:100%;">
+								<tr>
+									<td style="border: none;width:70%;font-size:14px">
+										<span>Name and Address of the Supplier:-</span>
+										<span>--------------------</span>
+										<br/>
+										<br/>
+										<span>--------------------</span>
+										<br/>
+										<br/>
+										<span>--------------------</span>
+										<br/>
+										<br/>
+										<span>--------------------</span>
+										<br/>
+										<br/>
+										<span>GSTIN:</span>
+										<span>--------------------</span>
+									</td>
+									<td style="border:none;width:30%;background-color: #ffffff;font-size:14px">
+										<span class="text-left" style="padding-left: 5px;font-size:14px">Serial No:-</span>
+										<span style="padding-left: 15px;">--------------------</span>
+										<br/>
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px">Date:-</span>
+										<span style="padding-left: 39px;">--------------------</span>
+										<br/>
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px">State:-</span>
+										<span style="padding-left: 38px;">--------------------</span>
+										<br/>
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px">State Code:-</span>
+										<span style="padding-left: 5px;">--------------------</span>
+									</td>
+								</tr>
+							</table>
+							<hr/>
+							<table style="border:none;width:100%">
+								<td style="border:none;width:50%">
+									<span class="text-left" style="padding-left: 5px;font-size:14px">
+										<strong>Receipient Details:</strong>
+									</span>
+									<br/>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">Address:-</span>
+									<span style="padding-left: 25px;font-size:14px">--------------------</span>
+									<br/>
+									<br/>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">GSTIN:-</span>
+									<span style="padding-left: 34px;font-size:14px">--------------------</span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">State:-</span>
+									<span style="padding-left: 42px;font-size:14px">--------------------</span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">State Code:-</span>
+									<span style="padding-left: 10px;font-size:14px">--------------------</span>
+								</td>
+								<td style="border:none;width:50%;background-color: #ffffff;font-size:14px">
+									<span class="text-left" style="padding-left: 5px;font-size:14px">
+										<strong>Delivery Details:</strong>
+										<br/>
+										<br/>
+									</span>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">Address:-</span>
+									<span style="padding-left: 27px;font-size:14px">--------------------</span>
+									<br/>
+									<br/>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">GSTIN:-</span>
+									<span style="padding-left: 35px;font-size:14px">--------------------</span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">State :-</span>
+									<span style="padding-left: 39px;font-size:14px">--------------------</span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">State Code:-</span>
+									<span style="padding-left: 10px;font-size:14px">--------------------</span>
+								</td>
+							</table>
+							<br/>
+							<table style="width:100%">
+								<td style="border:none;width:50%">
+									<span class="text-left" style="padding-left: 10px;font-size:14px"> 1). Description of Goods:-</span>
+									<br/>
+									<br/>
+									<span class="text-left" style="padding-left: 10px;font-size:14px"> 2). HSB Code:-</span>
+									<span></span>
+									<br/>
+									<span class="text-left" style="padding-left: 10px;font-size:14px"> 3). Quantity (No.Weight/Meter/Litre):-</span>
+									<br/>
+									<span class="text-left" style="padding-left: 10px;font-size:14px"> 4). Value:-</span>
+									<br/>
+									<span class="text-left" style="padding-left: 10px;font-size:14px"> 5). Tax Rate:-</span>
+									<br/>
+									<span class="text-left" style="padding-left: 10px;font-size:14px"> 6). Tax Ammount:-</span>
+									<br/>
+									<span class="text-left" style="padding-left: 10px;font-size:14px"> 7). Date and Time:-</span>
+									<br/>
+									<span class="text-left" style="padding-left: 10px;font-size:14px"> 8). Nature of manufacture/processing to be done:-</span>
+									<br/>
+									<span class="text-left" style="padding-left: 10px;font-size:14px"> 9). Factory/Place of processing/manufacturing:-</span>
+									<br/>
+									<span class="text-left" style="padding-left: 1px;font-size:14px">10). Expected duration of processing:-</span>
+
+									<br/>
+									<br/>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">Place:-</span>
+									<span></span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">Date:-</span>
+									<span></span>
+									<br/>
+
+								</td>
+								<td style="border:none;width:50%;background-color: #ffffff;font-size:14px">
+									<span class="text-left" style="padding-left: 5px;font-size:14px"> ---------------------</span>
+									<br/>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">  ---------------------</span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px"> ---------------------</span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">  ---------------------</span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">  ---------------------</span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">  ---------------------</span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">  ---------------------</span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">  ---------------------</span>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">  ---------------------</span>
+
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px"> ---------------------</span>
+
+									<br/>
+									<br/>
+									<br/>
+									<br/>
+									<span class="text-left" style="padding-left: 5px;font-size:14px">
+										<strong>Signature of Manufacture/Authorised Signatory</strong>
+									</span>
+								</td>
+							</table>
+							<br/>
+
+							<table width="100%">
+
+								
+									<tr rowspan="2">
+										<td style="border-bottom:none;padding-left: 25px;background-color: #ffffff;font-size:14px" colspan="2">
+											<span class="text-left">To be completed by the processor/job-worker at the time of dispatches,back to the manufacturer.</span>
+										</td>
+									</tr>
+									<tr >
+									<td style="font-size:12px;border:none;width:40%">
+
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px"> 1). Entry No. and date of receipt of goods as</span><br/>
+										<span class="text-left" style="padding-left: 25px;font-size:14px">entered in the account of processing factory.</span><br/>
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px"> 2). Nature of Processing/Manufacturing carried out.</span>
+										<br/><br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px"> 3). Quantity (No.Weight/Meter/Litre)  </span><br/>
+										<span class="text-left" style="padding-left: 25px;font-size:14px">dispatched as entered in the Account after</span><br/>
+										<span class="text-left" style="padding-left: 25px;font-size:14px">Processing/job-working</span><br/>
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px"> 4). Date of dispatch.</span><br/>
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px"> 5). Particulares of goods dispatched from the </span><br/>
+										<span class="text-left" style="padding-left: 25px;font-size:14px">premis of the processor/job-worker.</span>
+										<br/>
+										<br/>
+										<br/>
+										<br/>
+										<br/><br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px"> 6). Quantity of waste generated and particulars of</span><br/>
+										<span class="text-left" style="padding-left: 25px;font-size:14px">it's disposal.</span>
+										<br/>
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px">Place:-</span>
+										<span></span>
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px">Date:-</span><br/><br/>
+										<span></span>
+									</td>
+									<td style="border:none;width:60%;background-color: #ffffff;font-size:14px">
+										<br/>
+										<br/>
+						
+										<span class="text-left" style="padding-left: 5px;font-size:14px"> ---------------------</span>
+										<br/><br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px">  ---------------------</span>
+										<br/><br/><br/><br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px"> ---------------------</span>
+										<br/><br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px">  ---------------------</span>
+										<br/><br/><br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px">a) Quantity</span>
+										<span style="padding-left: 71px;">--------------------</span>
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px">b) Value</span>
+										<span style="padding-left: 85px;">--------------------</span>
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px">c) Tax Paid/Payable</span>
+										<span style="padding-left: 24px;">--------------------</span>
+										<br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px">d) Invoice No. and date</span>
+										<span style="padding-left:8px;">--------------------</span>
+										<br/><br/>
+										<span class="text-left" style="padding-left: 5px;font-size:14px"> ---------------------</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+
+		<template id="report_stock_picking_main_menu">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="subcontract_delivery_challan.stock_picking_report_main_id" t-lang="o.partner_id.lang"/>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

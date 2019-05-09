@@ -1,0 +1,261 @@
+                    	        	<!-- ================================= -->
+                   <!-- <t t-set="tag_cgst_id" t-value="env.ref('l10n_in.cgst_tag_tax').id"/>
+                    <t t-set="tag_sgst_id" t-value="env.ref('l10n_in.sgst_tag_tax').id"/>
+                    <t t-set="tag_igst_id" t-value="env.ref('l10n_in.igst_tag_tax').id"/>
+                    <t t-set="tag_cess_id" t-value="env.ref('l10n_in.cess_tag_tax').id"/>
+                    <t t-set="tax_map" t-value="o.tax_line_ids.mapped('tax_id.tag_ids.id')"/>
+                    <t t-set="tax_per" t-value="o.tax_line_ids.mapped('tax_id.amount')"/>
+                    <t t-set="is_igst" t-value="tag_igst_id in tax_map"/>
+                    <t t-set="is_cgst" t-value="tag_cgst_id in tax_map"/>
+                    <t t-set="is_cess" t-value="tag_cess_id in tax_map"/>
+                    <t t-set="product_hsn_amt" t-value="0"/>
+                    <t t-set="taxname" t-value="0"/>
+                    <t t-set="tax_rate" t-value="0"/>
+                    <t t-set="tax_datas" t-value="o._invoice_line_tax_values()"/>
+                    <t t-set="stotal_amt" t-value="0"/>
+                    <t t-set="ctotal_amt" t-value="0"/>
+                    <t t-set="itotal_amt" t-value="0"/>
+                    <t t-set="total_tax" t-value="0"/>
+                    <t t-set="total_tax_amount" t-value="0"/>
+		    <t t-set="stotal_amt1" t-value="0"/>
+		    <t t-set="ctotal_amt1" t-value="0"/>
+		    <t t-set="itotal_amt1" t-value="0"/>
+		    <t t-set="sci_total" t-value="0"/>
+	            <t t-set="sci_total_with_out_tax" t-value="0"/>
+		    <t t-set="sci" t-value="0"/>
+
+                   <table class="table table-condensed" name="invoice_line_table" style="margin-top: -20px;">
+<thead>
+    <tr >
+<td class="fonts_size" style="text-transform: capitalize;text-align: center;font-size: 12px;border: 1px solid black;font-weight:bold;">HSN / SAC </td>
+<td class="fonts_size" style="text-transform: capitalize;text-align: center;font-size: 12px;border: 1px solid black;font-weight:bold;">Taxable Value</td>
+<td  class="fonts_size" style="text-transform: capitalize;text-align: center;font-size: 12px;border: 1px solid black;font-weight:bold;" colspan="2">Central Tax</td>
+<td class="fonts_size" style="text-transform: capitalize;text-align: center;font-size: 12px;border: 1px solid black;font-weight:bold;" colspan="2">State Tax</td>
+<td class="fonts_size" style="text-transform: capitalize;text-align: center;font-size: 12px;border: 1px solid black;font-weight:bold;" colspan="2">Integrated Tax</td>
+    </tr>
+</thead>
+<tr>
+    <td style="text-transform: capitalize;border: 1px solid black;" colspan="2"/>
+    <td class="fonts_size" style="text-transform: capitalize;text-align: center;font-size: 12px;border: 1px solid black;font-weight:bold;">Rate</td>
+    <td class="fonts_size" style="text-transform: capitalize;text-align: center;font-size: 12px;border: 1px solid black;font-weight:bold;">Amount</td>
+    <td class="fonts_size" style="text-transform: capitalize;text-align: center;font-size: 12px;border: 1px solid black;font-weight:bold;">Rate</td>
+    <td class="fonts_size" style="text-transform: capitalize;text-align: center;font-size: 12px;border: 1px solid black;font-weight:bold;">Amount</td>
+    <td class="fonts_size" style="text-transform: capitalize;text-align: center;font-size: 12px;border: 1px solid black;font-weight:bold;">Rate</td>
+    <td class="fonts_size"  style="text-transform: capitalize;text-align: center;font-size: 12px;border: 1px solid black;font-weight:bold;background-color: #ffffff;">Amount</td>
+</tr>
+
+                        <tbody class="invoice_tbody">
+                            <t t-set="product_hsn" t-value="[]"/>
+                            <t t-set="tax_rate" t-value="[]"/>
+                            <t t-foreach="o.invoice_line_ids" t-as="l">
+                                <t t-set="product_hsn" t-value="product_hsn+[l.product_id.l10n_in_hsn_code]"/>
+                               
+
+                               	
+                               	
+                            <t t-set="tax_rate" t-value="tax_rate+[l.invoice_line_tax_ids]"/>
+                            </t>
+                            <tr t-foreach="set(product_hsn)" t-as="iter">
+                                <td class="text-right">
+                                    <span class="fonts_size"  t-esc="iter"/>
+                                </td>
+
+                                <t t-foreach="o.invoice_line_ids" t-as="l">
+				<t t-if="iter==l.product_id.l10n_in_hsn_code">
+				<t t-foreach="tax_datas[l.id]" t-as="tax_data">
+				<t t-if="tag_cgst_id in tax_data['tag_ids']">
+				<t t-set="ctotal_amt1" t-value="ctotal_amt1+tax_data['amount']"/>
+				<t t-set="taxname" t-value="tax_data['name']"/>
+				</t>
+				</t>
+				<t t-foreach="tax_per" t-as="val">
+				<t t-set="tax_rate" t-value="val"/>
+				</t>
+				</t>
+				</t>
+				<t t-foreach="o.invoice_line_ids" t-as="l">
+				<t t-if="iter==l.product_id.l10n_in_hsn_code">
+				<t t-foreach="tax_datas[l.id]" t-as="tax_data">
+				<t t-if="tag_sgst_id in tax_data['tag_ids']">
+				<t t-set="stotal_amt1" t-value="stotal_amt1+tax_data['amount']"/>
+				<t t-set="taxname" t-value="tax_data['name']"/>
+				</t>
+				</t>
+				<t t-foreach="tax_per" t-as="val">
+				<t t-set="tax_rate" t-value="val"/>
+				</t>
+				</t>
+				</t>
+				<t t-foreach="o.invoice_line_ids" t-as="l">
+				<t t-if="iter==l.product_id.l10n_in_hsn_code">
+				<t t-foreach="tax_datas[l.id]" t-as="tax_data">
+				<t t-if="tag_igst_id in tax_data['tag_ids']">
+				<t t-set="itotal_amt1" t-value="itotal_amt1+tax_data['amount']"/>
+				<t t-set="taxname" t-value="tax_data['name']"/>
+				</t>
+				</t>
+				<t t-foreach="tax_per" t-as="val">
+				<t t-set="tax_rate" t-value="tax_rate+val"/>
+				</t>
+				</t>
+				</t>
+
+				<td style="text-align: center;">
+
+					<t t-set="sci_total" t-value="ctotal_amt1+stotal_amt1+itotal_amt1"/>
+
+					<t t-foreach="tax_per" t-as="val">
+					<t t-set="sci_total_with_out_tax" t-value="sci_total_with_out_tax+val"/>
+
+
+					 
+					</t>
+					<t t-set="sci" t-value="(sci_total*100)/sci_total_with_out_tax"/>
+					<span t-esc="'%.2f'%(sci)"/>
+
+				</td>
+				<t t-set="stotal_amt1" t-value="0"/>
+				<t t-set="ctotal_amt1" t-value="0"/>
+				<t t-set="itotal_amt1" t-value="0"/>
+				<t t-set="sci_total_with_out_tax" t-value="0"/>
+				<t t-set="sci" t-value="0"/>
+
+                                
+                                <t t-foreach="o.invoice_line_ids" t-as="l">
+                                    <t t-if="iter==l.product_id.l10n_in_hsn_code">
+                                        <t t-foreach="tax_datas[l.id]" t-as="tax_data">
+                                            <t t-if="tag_cgst_id in tax_data['tag_ids']">
+                                                <t t-set="ctotal_amt" t-value="ctotal_amt+tax_data['amount']"/>
+                                                <t t-set="product_hsn_amt" t-value="product_hsn_amt+tax_data['amount']"/>
+                                                <t t-set="taxname" t-value="tax_data['name']"/>
+                                            </t>
+
+                                        </t>
+                                        <t t-foreach="tax_per" t-as="val">
+                                            <t t-set="tax_rate" t-value="val"/>
+                                        </t>
+                                    </t>
+                                </t>
+                                <td style="text-align: center;">
+                                    <t t-if="taxname==0">
+                                        <span/>
+                                    </t>
+                                    <t t-if="taxname!=0">
+                                        <field class="fonts_size"  t-esc="o.get_num(taxname)" />
+                                    </t>
+                                    <t t-set='taxname' t-value='0' />
+                                </td>
+                                <td style="text-align: center;">
+                                    <t t-if="product_hsn_amt==0">
+                                        <span/>
+                                    </t>
+                                    <t t-if="product_hsn_amt!=0">
+                                        <span t-esc="product_hsn_amt"/>
+                                    </t>
+                                    <t t-set="total_tax" t-value="total_tax+product_hsn_amt"/>
+                                    <t t-set="product_hsn_amt" t-value="0"/>
+
+                                </td>
+                                <t t-foreach="o.invoice_line_ids" t-as="l">
+                                    <t t-if="iter==l.product_id.l10n_in_hsn_code">
+                                        <t t-foreach="tax_datas[l.id]" t-as="tax_data">
+                                            <t t-if="tag_sgst_id in tax_data['tag_ids']">
+                                                <t t-set="stotal_amt" t-value="stotal_amt+tax_data['amount']"/>
+
+                                                <t t-set="product_hsn_amt" t-value="product_hsn_amt+tax_data['amount']"/>
+                                                <t t-set="taxname" t-value="tax_data['name']" class="fonts_size" />
+                                            </t>
+                                        </t>
+                                        <t t-foreach="tax_per" t-as="val">
+                                            <t t-set="tax_rate" t-value="val"/>
+                                        </t>
+                                    </t>
+                                </t>
+                                <td style="text-align: center;">
+                                    <t t-if="taxname==0">
+                                        <span/>
+                                    </t>
+                                    <t t-if="taxname!=0">
+                                        <field t-esc="o.get_num(taxname)" />
+                                    </t>
+                                    <t t-set='taxname' t-value='0' />
+                                </td>
+                                <td style="text-align: center;">
+
+                                    <t t-if="product_hsn_amt==0">
+                                        <span/>
+                                    </t>
+                                    <t t-if="product_hsn_amt!=0">
+                                        <span t-esc="product_hsn_amt"/>
+                                    </t>
+                                    <t t-set="total_tax" t-value="total_tax+product_hsn_amt"/>
+                                    <t t-set="product_hsn_amt" t-value="0"/>
+
+                                </td>
+
+                                <t t-foreach="o.invoice_line_ids" t-as="l">
+                                    <t t-if="iter==l.product_id.l10n_in_hsn_code">
+                                        <t t-foreach="tax_datas[l.id]" t-as="tax_data">
+                                            <t t-if="tag_igst_id in tax_data['tag_ids']">
+                                                <t t-set="itotal_amt" t-value="itotal_amt+tax_data['amount']"/>
+                                                <t t-set="product_hsn_amt" t-value="product_hsn_amt+tax_data['amount']"/>
+                                                <t t-set="taxname" t-value="tax_data['name']"/>
+                                            </t>
+                                        </t>
+                                        <t t-foreach="tax_per" t-as="val">
+                                            <t t-set="tax_rate" t-value="tax_rate+val"/>
+                                        </t>
+                                    </t>
+                                </t>
+                                <td style="text-align: center;">
+                                    <t t-if="taxname==0">
+                                        <span/>
+                                    </t>
+                                    <t t-if="taxname!=0">
+                                        <field t-esc="o.get_num_igst(taxname)" />
+                                    </t>
+                                    <t t-set='taxname' t-value='0' />
+                                </td>
+                                <td style="text-align: center;background-color: #ffffff;">
+                                    <t t-if="product_hsn_amt==0">
+                                        <span/>
+                                    </t>
+                                    <t t-if="product_hsn_amt!=0">
+                                        <span class="fonts_size"  t-esc="product_hsn_amt"  />
+                                    </t>
+                                    <t t-set="total_tax" t-value="total_tax+product_hsn_amt"/>
+                                    <t t-set="product_hsn_amt" t-value="0" />
+
+
+                                </td>
+                              
+                            </tr>
+                            <tr>
+                                <td class="text-right" style="border: 1px solid;" colspan="1">
+                                    <span>Total</span>
+                                </td>
+                                <td style="text-align: center;border: 1px solid;">
+                                	<span class="fonts_size"  t-esc="o.set_amt(o.amount_untaxed)" />
+                                </td>
+                                <td style="text-align: center;border: 1px solid;">
+                                	
+                                </td>
+                                <td style="text-align: center;border: 1px solid;">
+                                    <span class="fonts_size"  t-esc="o.set_amt(ctotal_amt)"/>
+                                </td>
+                                <td style="text-align: center;border: 1px solid;">
+                                </td>
+                                <td style="text-align: center;border: 1px solid;">
+                                    <span class="fonts_size"  t-esc="o.set_amt(stotal_amt)" />
+                                </td>
+                                <td style="text-align: center;border: 1px solid;">
+
+                                </td>
+                                <td style="text-align: center;border: 1px solid;background-color: #ffffff;">
+                                    <span class="fonts_size"  t-esc="o.set_amt(itotal_amt)" />
+                                </td>
+                               
+                            </tr>
+
+                        </tbody>
+                    </table>-->

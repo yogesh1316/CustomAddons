@@ -1,0 +1,21 @@
+{
+    'name': 'Sample Tax Invoice Report',
+    'version': '1.0',
+    'summary': 'Sample Tax Invoice Report',
+    'category': '',
+    'author': 'SAIAIPL',
+    'maintainer': 'Pradip R. Yenpure',
+    'website': 'www.saiaipl.com',
+    'license': '',
+    'contributors': ['',],
+    'depends': ['purchase','web','base','sale','product','stock'],
+    'data': ['report/invoice_tax_main_report.xml',
+             'report/invoice_tax_report_menu.xml',
+             'report/template_demo.xml',
+             
+            'views/account_invoice_inhe.xml',
+             ],
+    'installable': True,
+    'auto_install':False,
+    'application': False,
+}
