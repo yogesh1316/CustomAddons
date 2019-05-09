@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="mrp_bom_forms" model="ir.ui.view">
+      <field name="name">mrp.bom</field>
+      <field name="model">mrp.bom</field>
+      <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//form//sheet//div" position="after">
+          <field name="name_revise"/>
+        </xpath>
+        <xpath expr="//field[@name='type']" position="after">
+          <field name="revise_checkbox"/>
+        </xpath>
+         <xpath expr="//field[@name='revise_checkbox']" position="after">  <!-- created by: Ajinkya || 18/01/2019 -->
+                    <field name="quotation_mrp_bom_id"/>
+                </xpath>
+        <xpath expr="//form//sheet//notebook//page" position="after">
+          <page string="Revise BOM Order">
+            <field name="mrp_line">
+              <tree string="" create="false" edit="false" delete="false">
+                <field name="name_revise"/>
+                <field name="product_tmpl_id"/>
+                <field name="code"/>
+                <field name="product_qty"/>
+                <field name="product_uom_id"/>
+                <field name="routing_id"/>
+              </tree>
+            </field>
+          </page>
+        </xpath>
+      </field>
+    </record>
+                  <!-- MRP BOM Revise Form -->
+    <record id="sale_order_revise_forms" model="ir.ui.view">
+      <field name="name">mrp_bom_revise.view.form</field>
+      <field name="model">mrp.bom.revise</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <script>
+            $(document).ready(function()
+            {
+            $(".modal-footer").hide();
+            });
+          </script>
+          <group>
+            <group>
+              <field name="product_tmpl_id" readonly="True"/>
+              <field name="product_qty" readonly="True"/>
+              <field name="routing_id" readonly="True"/>
+            </group>
+            <group>
+              <field name="code" readonly="True"/>
+              <field name="type" widget="radio"/>
+            </group> 
+          </group>
+          <notebook>
+            <page string="MRP BOM Line Revise">
+              <field name="mrp_bom_line_id" create="0" edit="0" readonly="1">
+                <tree string="MRP BOM Line Revise" create="0" edit="0" delete="0">             
+                  <field name="product_id"/> 
+                  <field name="product_qty"/>
+                  <field name="product_uom_id"/>
+                </tree>
+              </field>
+            </page>
+            <page string="Miscellaneous">
+              <group>
+                <group>
+                  <field name="sequence" readonly="True"/>
+                </group>
+                <group>
+                  <field name="ready_to_produce" string="Manufacturing Readiness" readonly="True" />
+                  <field name="picking_type_id" string="Operation" readonly="True"/>
+                </group>
+              </group>
+            </page>
+          </notebook>
+        </form>
+      </field>
+    </record>  
+  </data>
+</odoo>
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="mrp_inherit.action_window">
+      <field name="name">mrp_inherit window</field>
+      <field name="res_model">mrp_inherit.mrp_inherit</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="mrp_inherit.action_server">
+      <field name="name">mrp_inherit server</field>
+      <field name="model_id" ref="model_mrp_inherit_mrp_inherit"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="mrp_inherit" id="mrp_inherit.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="mrp_inherit.menu_1" parent="mrp_inherit.menu_root"/>
+    <menuitem name="Menu 2" id="mrp_inherit.menu_2" parent="mrp_inherit.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="mrp_inherit.menu_1_list" parent="mrp_inherit.menu_1"
+              action="mrp_inherit.action_window"/>
+    <menuitem name="Server to list" id="mrp_inherit" parent="mrp_inherit.menu_2"
+              action="mrp_inherit.action_server"/>
+    -->

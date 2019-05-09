@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="machin_model_form" model="ir.ui.view">
+    <field name="name">Machin Master</field>
+    <field name="model">machin.master</field>
+    <field name="arch" type="xml">
+      <form string="Machine Master">
+        <group string="Machine Master Details">
+          <group>
+            <field name='machin_number'/>
+            <field name='machin_name'/>
+            <field name='location'/>
+            <field name='description'/>
+          </group>
+          <group>
+            <field name='work_center'/>
+            <field name='work_center_description'/>
+            <field name='shift_factor'/>
+          </group>
+          <group>
+            <field name='utilization_factor'/>
+            <field name='capacity_factor'/>
+          </group>
+          <group>
+            <field name='fixed_overhead'/>
+            <field name='variable_overhead'/>
+          </group>
+        </group>
+      </form>
+    </field>
+  </record>
+  <record id="machin_info_tree" model="ir.ui.view">
+    <field name="name">Machin Master Info</field>
+    <field name="model">machin.master</field>
+    <field name="arch" type="xml">
+      <tree string="machine Info">
+        <field name='machin_number'/>
+        <field name='work_center'/>
+        <field name='machin_name'/>
+
+        <field name='work_center_description'/>
+        <field name='location'/>
+        <field name='shift_factor'/>
+        <field name='description'/>
+
+        <field name='utilization_factor'/>
+        <field name='fixed_overhead'/>
+        <field name='capacity_factor'/>
+        <field name='variable_overhead'/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="machin_info_action" model="ir.actions.act_window">
+    <field name="name">Machine Master</field>
+    <field name="res_model">machin.master</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <menuitem action="machin_info_action" id="mnu_machin_master" name="Machine Master" parent="Pce_Master.master_menu" />
+
+
+</odoo>

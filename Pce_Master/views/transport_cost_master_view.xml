@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	
+	
+	
+		<template id="my_assets_id21" name="website assets for my module" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+        <link rel="stylesheet" href="/Pce_Master/static/src/css/custom_css.css"/>
+        </xpath>
+    </template>
+	
+    
+     	<!--<record id="transport_cost_master_searc_view" model="ir.ui.view">
+        <field name="name">transport_cost.master</field>
+        <field name="model">transport_cost.master</field>
+        <field name="arch" type="xml">
+            <search>
+				<field name='active_flag' string="Is Active" widget='radio'/>                
+            </search>
+        </field>
+    	</record>-->
+    
+    
+    
+	
+	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Transport Cost Master Form View--> 
+    <record id="transport_cost_master_form_view" model="ir.ui.view" >
+        <field name="name">Transport Cost Master</field>
+        <field name="model">transport_cost.master</field>
+        <field name="arch" type="xml">
+            <form string="Transport Cost Master" delete='0' duplicate='0' >
+            	
+            	
+            	<!--<sheet >--> 
+            		
+            	<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete/Duplicate Buttons From Actions-->
+                <group string="Transport Cost">
+                    <group name="Transport Cost Master">
+                    	<!--<field name="id" readonly="1"/>-->
+                    	<field name="transport_cost_code" />
+                        <field name='transport_cost_desc' /> 
+                        <!--<field name='unique_transport_cost_desc' />-->
+                        <field name='active_flag' string="Is Active" widget='radio'
+                         />                
+                    </group>
+                </group>
+                
+                
+                <!--</sheet>-->
+                
+            </form>
+        </field>
+    </record>
+    
+    <!-- Created-By:Pradip Created-Date:4-2-19 Info. Transport Cost Master Tree View-->
+    <record id="transport_cost_master_tree_view" model="ir.ui.view">
+        <field name="name">Transport Cost Master</field>
+        <field name="model">transport_cost.master</field>
+        <field name="arch" type="xml">
+            <tree string="Transport Cost Master" delete="0">
+            	<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Actions-->
+            	<field name="transport_cost_code" readonly="1"/>
+                <field name='transport_cost_desc' /> 
+                <field name='active_flag' string="Is Active" widget='radio'/>         
+            </tree>
+        </field>
+    </record>
+
+ 	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Transport Cost Master Action-->
+    <record id="transport_cost_master_action" model="ir.actions.act_window">
+        <field name="name">Transport Cost Master</field>
+        <field name="res_model">transport_cost.master</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+	<!-- <menuitem id="master_menu" name="Master" />   -->
+	<!-- Created-By:Pradip Created-Date:4-2-19 Info. Transport Cost Master Left Menu-->	
+ 	<menuitem action="transport_cost_master_action" id="transport_cost_master_id" name="Transport Cost Master" parent="Pce_Master.master_menu"/> 
+</odoo>

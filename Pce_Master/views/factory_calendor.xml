@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="factory_model_form" model="ir.ui.view">
+        <field name="name">Factory Calendar</field>
+        <field name="model">factory.calendor</field>
+        <field name="arch" type="xml">
+            <form string="Factory Calendar">
+                <group string="Factory Calendar Details">
+                    <group name="Factory_Calendor">
+                        <field name='year'/>
+                    </group>
+                    <group>
+                        <field name='shift'/>
+                    </group>
+                    <group>
+                        <button name="get_year_fact" string="Generate" type="object" class="btn-primary" />
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="factory_model_tree" model="ir.ui.view">
+        <field name="name">Factory Calendar</field>
+        <field name="model">factory.calendor</field>
+        <field name="arch" type="xml">
+            <tree string="factory Info">
+                <field name='year' string="Year" width="135%" />
+                <field name='shift' string="Shift" />
+                <field name='weak_no' string="Week No." />
+                <field name='flag' string="Holiday/Weekend" />
+                <field name='seq_no' string="Sequence No." />
+                <field name='ydate' string="Factory Date" />
+            </tree>
+        </field>
+    </record>
+    <record id="factory_info_action" model="ir.actions.act_window">
+        <field name="name">Factory Calendar</field>
+        <field name="res_model">factory.calendor</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem action="factory_info_action" id="mnu_factory_calendor" name="Factory Master" parent="Pce_Master.master_menu" />
+</odoo>

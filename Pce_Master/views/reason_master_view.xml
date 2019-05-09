@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="reason_model_form" model="ir.ui.view" >
+        <field name="name">reason.master</field>
+        <field name="model">reason.master</field>
+        <field name="arch" type="xml">
+            <form string="Reason Master" delete="0" duplicate="0">
+                <group string="Reason Details">
+                    <group name="Reason_Master">
+                    	<field name="reason_code" readonly="1"/>
+                        <field name='reason_desc' />   
+                       <!--<field name="unique_reason_desc"/>-->
+						<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->                       
+                        <field name='active_flag' string="Is Active" widget='radio'/>                
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    
+    <record id="reason_info_tree" model="ir.ui.view">
+        <field name="name">Reason Master Info</field>
+        <field name="model">reason.master</field>
+        <field name="arch" type="xml">
+            <tree string="Reason Info" delete="0">
+            	<field name="reason_code" />
+                <field name='reason_desc'/>
+ 				<!--<field name="unique_reason_desc"/>-->  
+ 				<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->
+				<field name='active_flag' string="Is Active" widget='radio'/> 
+	            </tree>
+        </field>
+    </record>
+
+    <record id="reason_info_action" model="ir.actions.act_window">
+        <field name="name">Reason Master</field>
+        <field name="res_model">reason.master</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+	<!-- <menuitem id="master_menu" name="Master" />   -->
+ 	<menuitem action="reason_info_action" id="menu_reason_master" name="Reason Master" parent="Pce_Master.master_menu"/> 
+</odoo>

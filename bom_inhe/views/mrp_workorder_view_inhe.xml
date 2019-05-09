@@ -1,0 +1,65 @@
+<odoo>
+    <!--=============mrp.workoreder tree inherited start===================================-->
+    <record model="ir.ui.view" id="mrp_workorder_tree_inhe">
+        <field name="name">mrp.production.operation.tree</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workcenter_tree_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="/tree" position="replace">
+                <tree string="Operation" delete="0" create="0" decoration-success="date_planned_start&gt;=current_date and state == 'ready'" decoration-muted="state in ('done','cancel')" decoration-danger="date_planned_start&lt;current_date and state in ('ready')">
+                    <field name="name" string="Operation"/>
+                    <field name="date_planned_start" string="Date start"/>
+                    <field name="date_planned_finished" string="Date end"/>
+                    <field name="workcenter_id" widget="selection"/>
+                    <field name="production_id"/>
+                    <field name="product_id"/>
+                    <field name="qty_production"/>
+                    <field name="product_uom_id"/>
+                    <field name="state"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mrp_production_workorder_form_inhe">
+        <field name="name">mrp.production.work.order.form</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='record_production']" position="after">
+                <field name="next_work_order_id" invisible="1"/>
+                <button name="generate_pdir" type="object" string="Generate PDIR" class="btn-primary" attrs="{'invisible': ['|',('next_work_order_id', '!=',False),('state','!=','done')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="workorder_generate_pdir_form_view" model="ir.ui.view">
+        <field name="name">work.order.pdir.form</field>
+        <field name="model">mrp.workorder</field>
+        <field name="arch" type="xml">
+            <form string="PDIR upload">
+                <sheet>
+                    <header>
+                        <field name="state" widget="statusbar" invisible="1" statusbar_visible="confirmed,progress,done"/>
+                    </header>
+                    <group class="oe_inline">
+                        <field name="production_id" />
+                    </group>
+                    <notebook>
+                        <page string="PDIR report upload">
+                            <field name="workorder_ids">
+                                <tree string="Work Orders" delete="0" editable="bottom" create="0">
+                                    <field name="product_id"/>
+                                    <field name="qty_produced"/>
+                                    <field name="report" widget='binary' class="oe_avatar" filename="fname" style="min-width: 200px;" />
+                                    <field name="fname"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--=============mrp.workoreder tree inherited stop=====================================-->
+</odoo>

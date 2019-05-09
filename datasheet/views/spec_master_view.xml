@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+   <!-- model.name form view -->
+   <record id="spec_master_model_name_view_form" model="ir.ui.view">
+     <field name="name">spec_master_view_form</field>
+     <field name="model">spec.master</field>
+     <field name="arch" type="xml">
+       <form string="">
+         <sheet>
+           <group>
+             <!-- Add your fields here -->
+             <field name="level"/>
+             <field name="specification_text"/>
+             <field name="description"/>
+             
+           </group>
+         </sheet>
+       </form>
+     </field>
+   </record>
+
+   <!-- model.name tree view -->
+   <record id="spec_master_model_name_view_tree" model="ir.ui.view">
+     <field name="name">spec_master_view_tree</field>
+     <field name="model">spec.master</field>
+     <field name="arch" type="xml">
+       <tree>
+         <!-- Add your fields here -->
+             <field name="level"/>
+             <field name="specification_text"/>
+             <field name="description"/>
+         
+       </tree>
+     </field>
+   </record>
+   <!-- model.name action window -->
+   <record id="spec_master_action" model="ir.actions.act_window">
+     <field name="name">Specification Master</field>
+     <field name="res_model">spec.master</field>
+     <field name="view_mode">tree,form</field>
+     
+   </record>
+   <!-- This Menu Item must have a parent and an action -->
+   <menuitem id="spec_master_menu_act" name="spec master"/>
+   <!-- This Menu Item must have a parent and an action -->
+   <menuitem id="spec_menu_act" name="spec masters" parent="spec_master_menu_act" action="spec_master_action" />
+   <!-- This Menu Item must have a parent and an action -->
+  
+   </data>
+</odoo>
