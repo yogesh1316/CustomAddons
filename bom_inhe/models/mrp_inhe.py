@@ -17,7 +17,7 @@ class mrp_inhe(models.Model):
         for production in self:
             sale_obj=self.env['sale.order'].search([('name','=',production.origin)])
             if sale_obj:
-                production.partner_id=sale_obj.partner_id.name
+                production.partner_id=sale_obj.partner_id.id
 
 
 class mrp_order_inhe(models.Model):
@@ -33,11 +33,7 @@ class mrp_order_inhe(models.Model):
 class purchase_order_inhe(models.Model):
     _inherit='purchase.order'
     
-<<<<<<< HEAD
     customer=fields.Char(string="Customer",compute='compute_po_customer',store=True)
-=======
-    customer=fields.Char(string="Customer",compute='compute_po_customer')
->>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
 
     @api.depends('origin')
     def compute_po_customer(self):
@@ -80,7 +76,6 @@ class Picking(models.Model):
     boe_date=fields.Date(string="BOE Date")
     mode=fields.Selection([('cargo','Cargo'),('courier','Courier')],'mode')
     test=fields.Char(compute='compute_test',store=True)
-<<<<<<< HEAD
     # vendor=fields.Char(string="Vendor",compute='compute_vendor')
     grn_name=fields.Char(string="GRN No")
     sale_customer=fields.Char(string="Customer",compute='assign_customer')
@@ -88,13 +83,6 @@ class Picking(models.Model):
     invoice_no=fields.Char()
     invoice_date=fields.Date()
 
-=======
-    vendor=fields.Char(string="Vendor",compute='compute_vendor')
-    grn_name=fields.Char(string="GRN No")
-    sale_customer=fields.Char(string="Customer",compute='assign_customer')
-
-    
->>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     @api.depends('origin')
     def assign_customer(self):
         for move in self:
@@ -165,71 +153,7 @@ class Picking(models.Model):
     #             self.name=self.picking_type_id.sequence_id.prefix
 
 
-<<<<<<< HEAD
    
-=======
-    #     # If no lots when needed, raise error
-    #     picking_type = self.picking_type_id
-    #     precision_digits = self.env['decimal.precision'].precision_get('Product Unit of Measure')
-    #     no_quantities_done = all(float_is_zero(move_line.qty_done, precision_digits=precision_digits) for move_line in self.move_line_ids)
-    #     no_reserved_quantities = all(float_is_zero(move_line.product_qty, precision_rounding=move_line.product_uom_id.rounding) for move_line in self.move_line_ids)
-    #     if no_reserved_quantities and no_quantities_done:
-    #         raise UserError(_('You cannot validate a transfer if you have not processed any quantity. You should rather cancel the transfer.'))
-
-    #     if picking_type.use_create_lots or picking_type.use_existing_lots:
-    #         lines_to_check = self.move_line_ids
-    #         if not no_quantities_done:
-    #             lines_to_check = lines_to_check.filtered(
-    #                 lambda line: float_compare(line.qty_done, 0,
-    #                                            precision_rounding=line.product_uom_id.rounding)
-    #             )
-
-    #         for line in lines_to_check:
-    #             product = line.product_id
-    #             if product and product.tracking != 'none':
-    #                 if not line.lot_name and not line.lot_id:
-    #                     raise UserError(_('You need to supply a lot/serial number for %s.') % product.display_name)
-    #                 elif line.qty_done == 0:
-    #                     raise UserError(_('You cannot validate a transfer if you have not processed any quantity for %s.') % product.display_name)
-
-    #     if no_quantities_done:
-    #         view = self.env.ref('stock.view_immediate_transfer')
-    #         wiz = self.env['stock.immediate.transfer'].create({'pick_ids': [(4, self.id)]})
-    #         return {
-    #             'name': _('Immediate Transfer?'),
-    #             'type': 'ir.actions.act_window',
-    #             'view_type': 'form',
-    #             'view_mode': 'form',
-    #             'res_model': 'stock.immediate.transfer',
-    #             'views': [(view.id, 'form')],
-    #             'view_id': view.id,
-    #             'target': 'new',
-    #             'res_id': wiz.id,
-    #             'context': self.env.context,
-    #         }
-
-    #     if self._get_overprocessed_stock_moves() and not self._context.get('skip_overprocessed_check'):
-    #         view = self.env.ref('stock.view_overprocessed_transfer')
-    #         wiz = self.env['stock.overprocessed.transfer'].create({'picking_id': self.id})
-    #         return {
-    #             'type': 'ir.actions.act_window',
-    #             'view_type': 'form',
-    #             'view_mode': 'form',
-    #             'res_model': 'stock.overprocessed.transfer',
-    #             'views': [(view.id, 'form')],
-    #             'view_id': view.id,
-    #             'target': 'new',
-    #             'res_id': wiz.id,
-    #             'context': self.env.context,
-    #         }
-
-    #     # Check backorder should check for other barcodes
-    #     if self._check_backorder():
-    #         return self.action_generate_backorder_wizard()
-    #     self.action_done()
-    #     return
-
->>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
 
 class StockMove(models.Model):
     _inherit='stock.move'
@@ -238,17 +162,10 @@ class StockMove(models.Model):
     challan_quantity=fields.Float(string="Challan Quantity",store=True)
     po_quantity=fields.Float(string="PO Quantity",compute='assign_value_to_po_qty',store=True)
     receive_quantity=fields.Float(string="Receive Quantity")
-<<<<<<< HEAD
     inspected_quantity=fields.Float(string="Inspected Quantity")
     accepted_quantity=fields.Float(string="Accepted Quantity")
     dispatch_clerance=fields.Float(string="Dispatch Clearance",compute='assign_value_to_dispatched_clerance_qty',store=True)
     packing_quantity=fields.Float(string="Packing Quantity")
-=======
-    inspected_quantity=fields.Float(string="Inspected Quantity",help="Inspected Quantity")
-    accepted_quantity=fields.Float(string="Accepted Quantity",help="Accepted Quantity")
-    dispatch_clerance=fields.Float(string="Dispatch Clearance",compute='assign_value_to_dispatched_clerance_qty',help="Dispatch Clearance")
-    packing_quantity=fields.Float(string="Packing Quantity",help="Packing Quantity")
->>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     sale_line_id=fields.Many2one('sale.order.line', 'Sale Line')
 
     # This Function Used For Assign Value  
@@ -281,10 +198,6 @@ class StockMove(models.Model):
             if move.picking_type_id.name == 'Receipts':
                 move.quantity_done = move.receive_quantity
 
-<<<<<<< HEAD
-=======
-    
->>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     # This Function Used For Done To Assign Reveive Qty
     @api.onchange('quantity_done')
     def assign_number_to_reserv_quantity(self):
@@ -332,11 +245,7 @@ class StockMove(models.Model):
                 move.accepted_quantity = move.quantity_done
 
     
-<<<<<<< HEAD
     # Validation On Inspected Quantity For PO
-=======
-    # Validation On Accepted Quantity For PO
->>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     @api.onchange('accepted_quantity')
     def validation_for_acceped_qty(self):
         for move in self:
@@ -346,7 +255,6 @@ class StockMove(models.Model):
 
       
     # This Function Used For Assign Value To Dispatch Clerance Quantity
-<<<<<<< HEAD
     @api.depends('reserved_availability')
     def assign_value_to_dispatched_clerance_qty(self):
         for move in self:
@@ -355,25 +263,11 @@ class StockMove(models.Model):
                     move.dispatch_clerance=move.reserved_availability
 
     
-=======
-    @api.depends('product_uom_qty')
-    def assign_value_to_dispatched_clerance_qty(self):
-        for move in self:
-            if move.picking_type_id.name == 'Pick':
-                if move.product_uom_qty:
-                    move.dispatch_clerance=move.product_uom_qty
-
-
->>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     # This Function Is For Set Auto Set Value To Dispatched Clearance
     @api.onchange('quantity_done')
     def assign_value_to_dispatch_qty(self):
         for move in self:
-<<<<<<< HEAD
             if move.picking_type_id.name == 'Pick':
-=======
-            if move.picking_type_id.name == 'Pick' and move.quantity_done :
->>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
                 move.dispatch_clerance = move.quantity_done
 
     
@@ -419,7 +313,6 @@ class StockMove(models.Model):
                     raise UserError(_("Please Enter Valid Packing Quantity"))
 
 
-<<<<<<< HEAD
     # @api.multi
     # def write(self,vals):
     #     for move in self:
@@ -431,11 +324,6 @@ class StockMove(models.Model):
 
 
     
-=======
-
-        
-
->>>>>>> 0aa71b60d4b89d5df5dbb807951f1d803ac86587
     
 
 
