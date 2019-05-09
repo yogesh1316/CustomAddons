@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import UserError
 from odoo.tools import float_compare
-
+import datetime
 from itertools import groupby
 from operator import itemgetter
 from odoo.tools.float_utils import float_compare, float_round, float_is_zero
@@ -19,6 +19,7 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
     _description = 'Manufacturing Order '
 
+            
     # Field inherit for change the name and required rule
     date_planned_start = fields.Datetime(
         'Planned Start', copy=False, 
@@ -28,7 +29,7 @@ class MrpProduction(models.Model):
         'Planned End', copy=False,
         index=True, 
         states={'confirmed': [('readonly', False)]})
-    
+   
 
     cum_setup_time = fields.Float(string='Cumulative setup time', help="Setup time required for Operation")
     cum_ope_time = fields.Float(string='Cumulative operation time', help="Time required to perform Operation")
@@ -37,7 +38,6 @@ class MrpProduction(models.Model):
     produced_qty = fields.Float('Can be feedback',default=0.0, readonly=True)
     complete_qty = fields.Float('Completed quantity',default=0.0, readonly=True)
     balance_qty = fields.Float('Balance quantity',default=0.0, readonly=True)
-
 
     @api.constrains('complete_qty')
     def balance_qty_set(self):
@@ -56,9 +56,8 @@ class MrpProduction(models.Model):
         
         mrp_bom_obj = self.env['mrp.bom']
         production = ''
-        mrpdata = mrp_bom_obj.search([('product_id','=',values['product_id'])])
-        routing = mrpdata.routing_id.id
-        
+        mrpdata = mrp_bom_obj.search([('id','=',values['bom_id'])])
+        routing = mrpdata.routing_id.id        
         if routing:
             self._cr.execute("select cum_setup_time,cum_ope_time,cum_tran_time from mrp_routing_workcenter where routing_id =%s order by id desc limit 1",(routing,))
             cum_time= self.env.cr.fetchall() 
@@ -89,33 +88,22 @@ class MrpProduction(models.Model):
                 raise UserError(_('Select Planned Start date for create MRP order'))
             production = super(MrpProduction, self).create(values)
             #production._generate_moves()
-        return production
+        return production   
 
-    # @api.multi
-    # def _generate_moves(self):
-    #     for production in self:
-    #         production._generate_finished_moves()
-    #         factor = production.product_uom_id._compute_quantity(production.product_qty, production.bom_id.product_uom_id) / production.bom_id.product_qty
-    #         boms, lines = production.bom_id.explode(production.product_id, factor, picking_type=production.bom_id.picking_type_id)
-            
-    #         production._generate_raw_moves(lines)
-    #         # Check for all draft moves whether they are mto or not
-    #         production._adjust_procure_method()
-    #         production.move_raw_ids._action_confirm()
-    #     return True
-    
-   
-
+    # Update : End date calculate on Quantity update 
+    @api.constrains('product_qty')
+    def _change_end_date_cal(self):
+        self.date_planned_start_cal()
+        
     # Calculate Planned end date on start date with lead or cumulative time
-    @api.onchange('date_planned_start')    
+    @api.onchange('date_planned_start','product_qty')    
     def date_planned_start_cal(self):        
         self.date_planned_finished=''        
         cum_time=''                    
         if self.date_planned_start:                          
             if self.product_id:
                 day=self._day_cal()    
-                planneddate = self._planneddatecal(self.date_planned_start,day,'S')
-                
+                planneddate = self._planneddatecal(self.date_planned_start,day,'S')                
                 self.date_planned_finished = planneddate
             
     # Calculate Planned start date on end date with lead or cumulative time
@@ -159,9 +147,7 @@ class MrpProduction(models.Model):
                     
                     day = math.ceil((mins/60)/8)  
                 else:
-                    raise UserError(_('set cumulative time for Routing'))              
-                               
-        
+                    raise UserError(_('set cumulative time for Routing'))         
         return day 
     
     # Calculate date on sequnce no and day with S - Start or E - End date Flag
@@ -190,7 +176,6 @@ class MrpProduction(models.Model):
     def button_plan(self):
         """ Create work orders. And probably do stuff, like things. """
 
-        
         stock_move_obj=self.env['stock.move']
         orders_to_plan = self.filtered(lambda order: order.routing_id and order.state == 'confirmed')
         if self.product_id.item_type.id >= 4:            
@@ -222,11 +207,166 @@ class MrpProduction(models.Model):
         self.write({'statusflag':'D'})
         return self.env.ref('bom_inhe.action_report_production_order_doc_print').report_action(self)
 
+    # Update : Replace item with old item and pass old item for quality control
+    @api.multi
+    def action_replace(self):
+        for line in self.move_raw_ids.filtered(lambda x: x.r_flag in('N','R')):
+            vals={}
+            if line.replace_product_id.id>0:
+                
+                if self.routing_id:
+                    routing = self.routing_id
+                else:
+                    routing = self.bom_id.routing_id
+
+                if routing and routing.location_id:
+                    source_location = routing.location_id
+                else:
+                    source_location = self.location_src_id
+                
+                vals = {
+                    'sequence': line.sequence,
+                    'name': self.name,
+                    'date': self.date_planned_start,
+                    'date_expected': self.date_planned_start,
+                    'bom_line_id': line.bom_line_id.id,
+                    'product_id': line.replace_product_id.id,
+                    'product_uom_qty': line.replace_qty, 
+                    'issue_qty': line.replace_qty,                     
+                    'product_uom': line.replace_product_id.uom_id.id,
+                    'location_id': source_location.id,
+                    'location_dest_id': self.location_dest_id.id,
+                    'raw_material_production_id': self.id,
+                    'company_id': self.company_id.id,
+                    'operation_id': line.operation_id.id ,
+                    'price_unit': line.product_id.standard_price,
+                    'procure_method': 'make_to_stock',
+                    'origin': self.name,
+                    'warehouse_id': source_location.get_warehouse().id,
+                    'group_id': self.procurement_group_id.id,
+                    'propagate': self.propagate,
+                    'unit_factor': line.replace_qty,
+                    'state':'confirmed',
+                    'r_flag':'R'
+                }
+                self.env['stock.move'].create(vals)
+                line.write({'r_flag':'O'})
+
+        self.tran_replaceitem_quality()
+
+    #  Update : Take dynamic Internal location for quality control
+    @api.model
+    def _default_picking_type(self):
+        type_obj = self.env['stock.picking.type']
+        company_id = self.env.context.get('company_id') or self.env.user.company_id.id
+        types = type_obj.search([('code', '=', 'internal'), ('warehouse_id.company_id', '=', company_id)])
+        if not types:
+            types = type_obj.search([('code', '=', 'internal'), ('warehouse_id', '=', False)])
+        return types[:1]
+
+    # Update : Pass old item for quality control
+    @api.multi
+    def tran_replaceitem_quality(self):
+        input_item = {}
+        input_line_item = {}
+        qua_item = {}
+        qua_line_item = {}
+        stock_move_obj = self.env['stock.move']
+        stock_pick_obj = self.env['stock.picking']
+        stock_loc_obj = self.env['stock.location']
+        proc_group_obj = self.env['procurement.group']
+        po_obj = self.env['purchase.order']
+        idata=stock_loc_obj.search([('name','=','Input')])
+        qdata=stock_loc_obj.search([('name','=','Quality Control')])
+        sdata=stock_loc_obj.search([('name','=','Stock')])
+        p_data=proc_group_obj.search([('name','=',self.name)])
+
+        
+        # Input move
+        if idata :
+            input_item = {
+                 'origin': self.name,
+                 'move_type': 'direct',
+                 'state': 'assigned',
+                 'scheduled_date': datetime.datetime.now(),
+                 'date': datetime.datetime.now(),
+                 'location_id': idata.id,
+                 'location_dest_id': qdata.id,
+                 'picking_type_id': self._default_picking_type().id,
+                 'state': 'assigned',
+                 'group_id': p_data.id                                
+             }
+
+            i_id = stock_pick_obj.create(input_item)
+            
+            for item in self.move_raw_ids.filtered(lambda x: x.r_flag in('O')):
+                input_line_item = {
+                 'name': item.product_id.name,
+                 'origin': self.name,
+                 'product_id': item.product_id.id,
+                 'ordered_qty': item.replace_qty,
+                 'product_uom_qty': item.replace_qty,
+                 'location_id': idata.id,
+                 'location_dest_id': qdata.id,
+                 'picking_id': i_id.id,
+                 'state': 'confirmed',
+                 'procure_method':'make_to_stock',
+                 'reference': i_id.name,                 
+                 'push_rule_id': 1,
+                 'product_uom': 1,
+                 'group_id': p_data.id ,
+                 'picking_type_id': self._default_picking_type().id,
+                 'warehouse_id': item.warehouse_id.id
+                 }
+                i=stock_move_obj.create(input_line_item)                         
+        
+        # Quality move
+        if qdata :
+            qua_item = {
+                 'origin': self.name,
+                 'move_type': 'direct',
+                 'state': 'assigned',
+                 'scheduled_date': datetime.datetime.now(),
+                 'date': datetime.datetime.now(),
+                 'location_id': qdata.id,
+                 'location_dest_id': sdata.id,
+                 'picking_type_id': self._default_picking_type().id,
+                 'state': 'assigned',
+                 'group_id': p_data.id              
+             }
+
+            q_id = stock_pick_obj.create(qua_item)
+           
+            for item in self.move_raw_ids.filtered(lambda x: x.r_flag in('O')):
+                qua_line_item = {
+                 'name': item.product_id.name,
+                 'origin': self.name,
+                 'product_id': item.product_id.id,
+                 'ordered_qty': item.replace_qty,
+                 'product_uom_qty': item.replace_qty,
+                 'location_id': qdata.id,
+                 'location_dest_id': sdata.id,
+                 'picking_id': q_id.id,
+                 'state': 'confirmed',
+                 'procure_method': 'make_to_stock',
+                 'reference': q_id.name,                
+                 'push_rule_id': 2,  
+                 'group_id': p_data.id,
+                 'product_uom': 1,
+                 'picking_type_id': self._default_picking_type().id,
+                 'warehouse_id': item.warehouse_id.id
+                 }
+                q=stock_move_obj.create(qua_line_item)
+                item.write({'r_flag':'Q'})
+                
+        else:
+             raise UserError(_('Quality control/Stock Location is not present'))
+
     # This function is use to update statusflag after Issue Quantity save
     @api.multi
-    def action_issue(self):
-        
-        stock_move_obj=self.env['stock.move']        
+    def action_issue(self):        
+        stock_move_obj=self.env['stock.move'] 
+       
         if self.product_id.item_type.id >= 4:            
             issuecount = stock_move_obj.search_count([('issue_qty','>',0),('raw_material_production_id','=',self.id)])
             
@@ -248,8 +388,7 @@ class MrpProduction(models.Model):
 
     # This Function use to create wizard for Issuing Quantity for Child Item
     @api.multi
-    def issue_item_qty(self):
-        
+    def issue_item_qty(self):        
         return {
             'name': _('Issue'),
             'type': 'ir.actions.act_window',
@@ -261,8 +400,23 @@ class MrpProduction(models.Model):
             'target': 'new',           
             'context': {'raw_material_production_id': self.id,  
                         'product_ids': (self.move_raw_ids.filtered(lambda x: x.state not in ('done', 'cancel')) | self.move_finished_ids.filtered(lambda x: x.state == 'done')).mapped('product_id').ids,
-                        },
-            
+                        },            
+        }
+
+    @api.multi
+    def replace_item(self):        
+        return {
+            'name': _('Replace'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mrp.production',     
+            'res_id': self.id,
+            'view_id': self.env.ref('bom_inhe.mrp_production_replace_item_view').id,
+            'target': 'new',           
+            'context': {'raw_material_production_id': self.id,  
+                        'default_product_ids': (self.move_raw_ids.filtered(lambda x: x.state in ('done', 'cancel')) ).mapped('product_id').ids,
+                        },            
         }
 
 
@@ -329,23 +483,28 @@ class MrpProduction(models.Model):
                     if self.product_id.tracking != 'none':
                         qty_to_add = float_round(self.product_qty * move.unit_factor, precision_rounding=rounding)
                         move._generate_consumed_move_line(qty_to_add, self.final_lot_id)
-                    else:
-                        
+                    else:                        
                         remqty = move.product_uom_qty - move.reserved_availability
                         if remqty == 0:
-                            remqty = self.product_qty - (self.produced_qty+self.complete_qty)
+                            
+                            if move.r_flag == 'R':
+                                remqty=self.product_qty
+                            else:
+                                remqty = self.product_qty - (self.produced_qty+self.complete_qty)                                
                             move.quantity_done = float_round(remqty * move.unit_factor, precision_rounding=rounding)
                         else:
                             productqty = 0    
                             for qty in self.move_raw_ids.filtered(lambda x: x.state not in ('done','cancel')):       
                                 productqty =   qty.reserved_availability / qty.unit_factor 
-                                if math.floor(productqty) != 0:
-                                    temp.append(math.floor(productqty))   
-                            minqty = min(temp)
-                            if minqty == 0:
-                                raise UserError(_('In sufficient stock for child item') )                                
-                            else:                         
-                                move.quantity_done = float_round(minqty * move.unit_factor, precision_rounding=rounding)
+                                if productqty:
+                                    if math.floor(productqty) != 0:
+                                        temp.append(math.floor(productqty))   
+                            if temp:
+                                minqty = min(temp)
+                                if minqty == 0:
+                                    raise UserError(_('In sufficient stock for child item') )                                
+                                else:                         
+                                    move.quantity_done = float_round(minqty * move.unit_factor, precision_rounding=rounding)
 
             if minqty:
                 if self.produced_qty < 0:
@@ -353,38 +512,15 @@ class MrpProduction(models.Model):
                 self.produced_qty += minqty                
             else:
                 self.produced_qty+=remqty
-                
-            self.write({'produced_qty': self.produced_qty})  
+            
+            if move.r_flag=='N':
+                self.write({'produced_qty': self.produced_qty})              
 
             moves_to_do._action_done()            
             moves_to_do = order.move_raw_ids.filtered(lambda x: x.state == 'done') - moves_not_to_do
             order._cal_price(moves_to_do)    
             moves_to_finish = order.move_finished_ids.filtered(lambda x: x.state not in ('done','cancel'))            
-            
-            # moves_to_finish._action_done()            
-            order.action_assign()
-            #consume_move_lines = moves_to_do.mapped('active_move_line_ids')
-           
-            # for moveline in moves_to_finish.mapped('active_move_line_ids'):
-            # stock_move_line_obj = self.env['stock.move.line']
-            # for ids in moves_to_finish:
-           
-            #     stockmonveline_id=stock_move_line_obj.search([('move_id','=',ids.id)])
-           
-            #     if stockmonveline_id:                        
-            #         moveline = stockmonveline_id[0]  
-           
-            #         if moveline.product_id == order.product_id and moveline.move_id.has_tracking != 'none':
-            #             if any([not ml.lot_produced_id for ml in consume_move_lines]):
-            #                 raise UserError(_('You can not consume without telling for which lot you consumed it'))
-            #             # Link all movelines in the consumed with same lot_produced_id false or the correct lot_produced_id
-            #             filtered_lines = consume_move_lines.filtered(lambda x: x.lot_produced_id == moveline.lot_id)
-            #             moveline.write({'consume_line_ids': [(6, 0, [x for x in filtered_lines.ids])]})
-           
-            #         else:
-            #             # Link with everything
-           
-            #             moveline.write({'consume_line_ids': [(6, 0, [x for x in consume_move_lines.ids])]})            
+            order.action_assign()                       
                    
         return True
 
@@ -413,6 +549,18 @@ class StockMove(models.Model):
 
     issue_qty = fields.Float('Issue Quantity',digits=dp.get_precision('Product Unit of Measure'),
                 required=True, track_visibility='onchange',default=0,)
+
+    # Adding field replace product, replace qty and reason for replace product 04/03/2019 
+    replace_product_id = fields.Many2one(
+        'product.product', 'Replace Product',
+        domain=[('type', 'in', ['product', 'consu'])],        
+        states={'confirmed': [('readonly', False)]})
+    
+    replace_qty = fields.Float('Replace Quantity',digits=dp.get_precision('Product Unit of Measure'),track_visibility='onchange',default=0,)
+
+    replace_reason=fields.Char('Reason for replace')
+
+    r_flag = fields.Char('Replace flag N=New, O=Old, R=Replace and Q=Quality flag is update',default='N')
 
 
     # Validate Issue Qty can not enter more then Reserved Qty
@@ -522,7 +670,9 @@ class StockMove(models.Model):
                             available_move_lines[(move_line.location_id, move_line.lot_id, move_line.result_package_id, move_line.owner_id)] -= move_line.product_qty
                     for (location_id, lot_id, package_id, owner_id), quantity in available_move_lines.items():
                         need = move.product_qty - sum(move.move_line_ids.mapped('product_qty'))
-                        taken_quantity = move._update_reserved_quantity(need, quantity, location_id, lot_id, package_id, owner_id)
+                        taken_quantity = move._update_reserved_quantity(need, quantity, location_id, lot_id, package_id, owner_id)                        
+                        # Update : If Product is make_to_order then taken_quantity directly come from PO so we update that taken_quantity in issue_qty 19/03/19
+                        move.write({'issue_qty': taken_quantity})
                         if float_is_zero(taken_quantity, precision_rounding=move.product_id.uom_id.rounding):
                             continue
                         if need - taken_quantity == 0.0:

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!--create_by | create_date | update_by | update_date
+        Ajinkya      25/03/2019     Ajinkya     28/03/2019   
+        Info.: Import Purchase Report -->
+    <data>
+        <report
+        	id="import_purchase_report_menu_id"
+            string="Print Import Purchase"
+  			model="purchase.order"        
+            report_type="qweb-pdf"
+            name="import_purchase_report.import_purchase_report_menu_order_id"
+            file="import_purchase_report.import_purchase_report_menu_order_id"
+            attachment_use="True"
+            print_report_name="('import_purchase_report - %s' % (object.name))"/>
+ 		
+            	
+        <record id="paperformat_import_purchase_report" model="report.paperformat">
+            <field name="name">PO Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">80</field>
+            <field name="margin_bottom">27.5</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">73</field>
+            <field name="dpi">92</field>
+    	</record>
+        
+        <!--Created-By | Created-Date|Info.
+            Ajinkya    |25-3-2019    |Paperformat Id Set, By default related Report -->
+        <record id="import_purchase_report.import_purchase_report_menu_id" model="ir.actions.report">
+            <field name="paperformat_id" ref="import_purchase_report.paperformat_import_purchase_report" />
+        </record>      		    	 
+           	
+    </data>
+  
+</odoo>

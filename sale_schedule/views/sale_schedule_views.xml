@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- sale.order inherit form view -->
+		<record id="sale_order_view_for_schedule" model="ir.ui.view">
+			<field name="name">sale.order.inherit.view.form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<!-- Add your xpath here -->
+				<xpath expr="//field[@name='partner_id']" position="after">
+					<field name="sale_order_released" invisible="1"/>
+				</xpath>
+				<xpath expr="//field[@name='order_line']/tree//field[@name='price_total']" position="after">
+					<button name="view_sale_order_schedule" type='object' string="Schedule" icon="fa-list"/>
+				</xpath>
+				<xpath expr="//button[@name='action_confirm'][1]" position="replace">
+					<button name="action_confirm" id="action_confirm"
+                        string="Confirm Sale" class="btn-primary" type="object"
+                        attrs="{'invisible': [('sale_order_released', '=', 'True')]}"/>
+				</xpath>
+				<xpath expr="//button[@name='action_confirm'][2]" position="replace">
+					<button name="action_confirm" id="action_confirm"
+                        string="Confirm Sale" class="btn-primary" type="object"
+                        attrs="{'invisible': [('sale_order_released', '=', 'True')]}"/>
+				</xpath>
+			</field>
+		</record>
+
+		<!-- sale.order.line form view -->
+		<record id="sale_order_line_view_form" model="ir.ui.view">
+			<field name="name">sale.order.line.view.form</field>
+			<field name="model">sale.order.line</field>
+			<field name="arch" type="xml">
+				<form string="Scedule Details">
+					<field name="order_id" string="Sales Order" readonly="1"/>
+					<field name="state" string="State" readonly="1"/>
+					<div class="o_row">
+						<label for="qty_delivered"/>
+						<span>
+							<field name="qty_delivered" readonly="1" nolabel="1"/>
+						</span>
+						<span>
+							<field name="product_uom" readonly="1" nolabel="1"/>
+						</span>
+					</div>
+					<div class="o_row">
+						<label for="qty_invoiced"/>
+
+						<span>
+							<field name="qty_invoiced" readonly="1" nolabel="1"/>
+						</span>
+						<span>
+							<field name="product_uom" readonly="1" nolabel="1"/>
+						</span>
+					</div>
+					<div class="o_row">
+
+						<label for="qty_to_invoice"/>
+						<span>
+							<field name="qty_to_invoice" readonly="1" nolabel="1"/>
+						</span>
+						<span>
+							<field name="product_uom" readonly="1" nolabel="1"/>
+						</span>
+					</div>
+					<group>
+						<group>
+							<field name="product_id" readonly="1"/>
+							<label for="product_uom_qty"/>
+							<div class="o_row">
+								<span>
+									<field name="product_uom_qty" readonly="1" nolabel="1"/>
+								</span>
+								<span>
+									<field name="product_uom" readonly="1" nolabel="1"/>
+								</span>
+							</div>
+							<label for="released_qty"/>
+							<div class="o_row">
+								<span>
+									<field name="released_qty" readonly="1" nolabel="1"/>
+								</span>
+								<span>
+									<field name="product_uom" readonly="1" nolabel="1"/>
+								</span>
+							</div>
+
+						</group>
+					</group>
+					<field name="schedule_lines" context="{'tree_view_ref': 'sale_schedule.view_sale_order_schedule_tree','default_product_qty':product_uom_qty,'default_order_line_id':id,'default_product_uom_id': product_uom,'default_product_id': product_id}"/>
+					<footer class="oe_edit_only">
+						<button string="Save" special="save" class="oe_highlight"/>
+						<button string="Discard" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		<!-- invisible="not context.get('show_reserved_quantity')" -->
+		<record id="view_sale_order_schedule_tree" model="ir.ui.view">
+			<field name="name">sale.order.schedule.tree</field>
+			<field name="model">sale.order.schedule</field>
+			<field name="priority">1000</field>
+			<field name="arch" type="xml">
+				<tree editable="bottom">
+					<field name="order_line_id"/>
+					<field name="product_id"/>
+					<field name="product_qty"/>
+					<field name="product_uom_id" options="{'no_open': True, 'no_create': True}" string="Unit of Measure"/>
+					<field name="qty_release"/>
+					<field name="release_date"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+	</data>
+</odoo>

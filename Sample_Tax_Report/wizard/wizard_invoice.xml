@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record id="invoice_type_id" model="ir.ui.view">
+            <field name="name">invoice view</field>
+            <field name="model">invoice.type</field>
+            <field name="arch" type="xml">
+                <form string="">
+                  <h3>Select your Type</h3>
+
+                    <footer>
+                        <button name="Original_For_Receipient" string="Original_For_Receipient" type="object" class="oe_highlight"/>
+                        <button name="Duplicate_For_Transporter" string="Duplicate_For_Transporter" type="object" class="oe_highlight"/>
+                        <button name="Triplicate_For_Assessee" string="Triplicate_For_Assessee" type="object" class="oe_highlight"/>
+                        <button name="Extra_Copy" string="Extra_Copy" type="object" class="oe_highlight"/>
+                        <button string="All" class="All"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="act_invoice_wizard_inhe" model="ir.actions.act_window">
+            <field name="name">invoive</field>
+            <field name="type">act_window</field>
+            <field name="res_model">invoice.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
+    

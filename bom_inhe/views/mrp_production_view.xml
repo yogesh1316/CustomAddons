@@ -10,8 +10,10 @@
                     <button name="button_plan" attrs="{'invisible': ['|',('statusflag', 'in', ('D','I')),('unreserve_visible', '=', False)]}" type="object" string="Release" class="oe_highlight"/>
                     <!-- <button name="open_produce_product" attrs="{'invisible': ['|',('subcontract_prod','=','Ture')]}" string="Produce" type="object" class="oe_highlight"/> -->
                     <!-- <button name="open_produce_product" attrs="{'invisible': ['|', '|', '|', '|', ('is_locked', '=', False), ('check_to_done', '=', True), ('availability', '!=', 'waiting'), ('state', 'not in', ('confirmed','progress'))]}" string="Produce" type="object"/> -->
-                    <button name="print_document" attrs="{'invisible': [('statusflag', 'not in', ('R','D','I'))]}" string="Print" type="object" class="oe_highlight"/>
-                    <button name="issue_item_qty" attrs="{'invisible': ['|',('statusflag', 'not in', ('D','I')), ('state', 'in', ('cancel'))]}" string="Issue" type="object" class="oe_highlight"/>
+                    <button name="print_document" attrs="{'invisible': ['|',('statusflag', 'not in', ('R','D','I')),('state','=','cancel')]}" string="Print" type="object" class="oe_highlight"/>
+                    <button name="issue_item_qty" attrs="{'invisible': ['|','|',('statusflag', 'not in', ('D','I')), ('state', 'in', ('cancel')), ('check_to_done', '=', True)]}" string="Issue" type="object" class="oe_highlight"/>
+                    <button name="replace_item" attrs="{'invisible': ['|','|','|',('statusflag', 'not in', ('I')), ('state', 'in', ('cancel')), ('check_to_done', '=', True)]}" string="Replace" type="object" class="oe_highlight"/>                    
+                    <button name="mtn" attrs="{'invisible': [('state','!=','cancel')]}" string="MTN" type="object" class="oe_highlight"/>
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value">
                             <field name="statusflag" nolabel="1"/>
@@ -25,6 +27,17 @@
                 </xpath>
                 <xpath expr="//field[@name='date_planned_finished']" position="replace">
                     <field name="date_planned_finished" />
+                </xpath>
+                <xpath expr="//field[@name='picking_type_id']" position="replace">
+                    <field name="picking_type_id" domain="[('code', '=', 'mrp_operation')]" readonly="1"  force_save="1"/>
+                </xpath>
+                <xpath expr="//field[@name='location_src_id']" position="replace">
+                    <field name="location_src_id" domain="[('usage','=','internal')]" readonly="1"  force_save="1"/>
+                </xpath>
+                <xpath expr="//form//sheet//notebook//page[3]//group//group//field[@name='location_dest_id']" position="replace">
+                    <field name="location_dest_id" domain="[('usage','=','internal')]" readonly="1"  force_save="1"/>
+                </xpath>
+                <xpath expr="//form//sheet//notebook//page[2]" position="replace" invisible="1">
                 </xpath>
                 <xpath expr="//div[@name='button_box']" position="replace">
                     <div class="oe_button_box" name="button_box">
@@ -53,7 +66,6 @@
         </field>
     </record>
     <!-- Inherit tree -->
-
     <record id="mrp_production_tree_view_inhe" model="ir.ui.view">
         <field name="name">mrp.production.tree</field>
         <field name="model">mrp.production</field>
@@ -64,6 +76,7 @@
                     <field name="message_needaction" invisible="1"/>
                     <field name="name"/>
                     <field name="origin" />
+                    <field name="partner_id"/>
                     <field name="date_planned_start"/>
                     <field name="product_id"/>
                     <field name="product_qty" sum="Total Qty" string="Quantity"/>
@@ -84,6 +97,7 @@
             <form string="Manufacturing Orders">
                 <header>
                     <field name="state" widget="statusbar" invisible="1" statusbar_visible="confirmed,progress,done"/>
+                    
                 </header>
                 <sheet>
                     <notebook>
@@ -98,7 +112,7 @@
                                     <field name="needs_lots" readonly="1" invisible="1" groups="stock.group_production_lot"/>
                                     <field name="is_done" invisible="1"/>
                                     <field name="sequence" invisible="1"/>
-                                    <field name="location_id" invisible="1"/>
+                                    <field name="location_id" invisible="1"/>                                    
                                     <field name="state" invisible="1" force_save="1" />
                                     <field name="product_uom_qty" readonly="1" string="To Consume"/>
                                     <field name="reserved_availability" readonly="1" string="Reserved"/>
@@ -109,11 +123,46 @@
                         </page>
                     </notebook>
                     <footer>
-                        <button name="action_issue" string="Issue" type="object" class="btn-primary"/>
+                        <button name="action_issue" string="Issue"  type="object" class="btn-primary"/>
                         <button string="Cancel" class="btn-default" special="cancel" />
                     </footer>
                 </sheet>
             </form>
         </field>
     </record>
+    <record id="mrp_production_replace_item_view" model="ir.ui.view">
+        <field name="name">mrp.production.issue.form</field>
+        <field name="model">mrp.production</field>
+        <field name="arch" type="xml">
+            <form string="Manufacturing Orders">
+                <header>
+                    <field name="state" widget="statusbar" invisible="1" statusbar_visible="confirmed,progress,done"/>
+                </header>
+                <sheet>
+                    <notebook>
+                        <page string="Replace Materials">
+                            <field name="move_raw_ids" context="{'default_state': 'done','default_raw_material_production_id': id}">
+                                <tree delete="0" editable="bottom" create="false" default_order="is_done,sequence">
+                                    <field name="product_id" string="Original Product" required="1"/>
+                                    <field name="product_uom" invisible="1"/>
+                                    <field name="is_done" invisible="1"/>
+                                    <field name="sequence" invisible="1"/>                                   
+                                    <field name="state" invisible="1" force_save="1" />                                    
+                                    <field name="replace_product_id" groups="product.group_uom" />
+                                    <field name="issue_qty" attrs="{'readonly': [('state', '=', 'done')]}" string="Issue Quantity"/>
+                                    <field name="replace_qty" string="Replace Quantity"/>
+                                    <field name="replace_reason" string="Reason for change"/>                                                                                                            
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="action_replace" string="Replace" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
 </odoo>

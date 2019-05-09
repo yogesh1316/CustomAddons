@@ -1,0 +1,114 @@
+/* Adjusting the margin,padding to make it look good. You can remove or change it according to your needs */
+/*.header{
+    margin-left: -15px;
+    margin-right: -15px;
+    border-top: 1px solid #000;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-right: 20px;
+}*/
+
+
+.header{
+    margin-left: -15px;
+    margin-right: -15px;
+   /* border-top: 1px solid #000;   top border (page)*/
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: -10px;
+   /* height:100mm;*/
+
+/*padding-bottom: 10px;
+       border-bottom: 1px solid #000;*/
+}
+/* Adjusting the margin,padding to make it look good. You can remove or change it according to your needs */
+.footer{
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+   /* border-bottom: 1px solid #000;*/
+
+    /* To Fix Footer overlapping page_border div */
+   /* border-left: 1px solid #000;
+    border-right: 1px solid #000;*/
+}
+
+/* Adjusting the margin,padding to make it look good. You can remove or change it according to your needs */
+/*.page{
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 20px;
+    padding-right: 20px;
+}*/
+
+.page{
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+/*padding-top: 31px;
+       border-top: 1px solid #000;
+padding-bottom: 0px;
+*/
+}
+
+
+
+/* Magic happens here */
+.page_border{
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    position: fixed;
+    z-index: 9999;
+/* If you don't get full page border, play around with the height */
+    height: 0px;
+    left: 0px;
+    top:0;
+    width:100%
+}
+
+span.fonts_size,normal.fonts_size {
+  font-size: 12px;
+  font-family:Arial;
+}
+
+span.fonts_size_adjust,normal.fonts_size_adjust {
+  font-size: 12px;
+  font-family:Arial;
+ /* padding-left:50px;*/
+}
+
+.note_class {
+   border-top: 0px solid black;
+}
+
+.logo_img{
+	position: absolute;
+	right: 10px;
+	top:55px;
+	z-index: -1;
+	padding-right:10px;
+	width:50px;
+	height: 55px;
+}
+
+
+
+/*table {*/
+    /* background-color: #d9534f; */
+ /*   border: 1px solid #000;
+    font-size: 15px;
+    background-color: #ffffff;;
+
+}*/
+/* .o_report_layout_boxed table tbody tr td:last-child {
+    background-color: #ffffff;;
+} */
+
+/*.o_report_layout_boxed table tbody tr td:last-child {
+    background-color: #ffffff;
+}*/

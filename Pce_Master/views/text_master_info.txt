@@ -1,0 +1,41 @@
+<!--  ================================Text Master Start==================================================================== -->
+	<record id="text_master_info_forms" model="ir.ui.view">
+		<field name="name">Text Master</field>
+		<field name="model">text_master.info</field>
+		<field name="arch" type="xml">
+			<form string="Text Master" delete="0" duplicate="0">
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete,Duplicate Buttons From Actions-->
+				<sheet>
+					<group>
+						<field name="text_code" readonly="1"/>
+						<field name="text_description"/>
+						<!--<field name="text_concat"/>-->	
+						<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->
+						<field name='active_flag' string="Is Active" widget='radio'/> 					
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="text_master_info_tree_view" model="ir.ui.view">
+		<field name="name">Text Master</field>
+		<field name="model">text_master.info</field>
+		<field name="arch" type="xml">
+			<tree string="Text Master"  delete="0"> 
+				<!-- Updated-By:Pradip | Updated-Date:8-2-19 |Info. Hide Delete Buttons From Action-->
+				<!-- decoration-muted="active!=True" -->
+				<field name="text_code"/>						
+				<field name="text_description"/>
+				<!--<field name="text_concat"/>-->
+				<!-- Created-By:Pradip Created-Date:28-1-19 Info. Active Flag is Hide or Show-->				
+				<field name='active_flag' string="Is Active" widget='radio'/> 			
+			</tree>
+		</field>
+	</record>
+
+	<record id="text_master_info_actions" model="ir.actions.act_window">
+		<field name="name">Text Master</field>
+		<field name="res_model">text_master.info</field>
+		<field name="view_mode">tree,form</field>
+	</record>

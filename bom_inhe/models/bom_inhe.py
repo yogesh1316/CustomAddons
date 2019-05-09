@@ -18,7 +18,7 @@ class MrpBom(models.Model):
 
         for bom in self:
             if bom.bom_line_ids.filtered(lambda x: x.product_id.product_tmpl_id == bom.product_tmpl_id):
-                raise ValidationError(_('BoM line product %s should not be same as BoM product.') % bom.display_name)
+                raise ValidationError(_('Duplicate Bom line item %s exists') % bom.display_name)
         
         product_ids =[]  
         product_id = False  
@@ -27,5 +27,5 @@ class MrpBom(models.Model):
             if not (product_id in product_ids) : 
                 product_ids.append(product_id)
             else : 
-                raise ValidationError(_('BoM line product %s should not be same as BoM line product.') % bol.display_name)
+                raise ValidationError(_('Duplicate Bom line item %s exists') % bol.display_name)
                
