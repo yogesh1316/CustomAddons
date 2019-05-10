@@ -107,7 +107,7 @@ class MrpProduction(models.Model):
                 self.date_planned_finished = planneddate
             
     # Calculate Planned start date on end date with lead or cumulative time
-    @api.onchange('date_planned_finished')    
+    @api.onchange('date_planned_finished','product_qty')    
     def date_planned_finished_cal(self):       
         self.date_planned_start=''
         cum_time=''
