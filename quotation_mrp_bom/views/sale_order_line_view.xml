@@ -16,13 +16,27 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                 <xpath expr='//field[@name="order_line"]/tree/field[@name="product_id"]' position="replace">
+                <xpath expr='//field[@name="order_line"]/tree/field[@name="product_id"]' position="replace">
                     <field name="product_id"
                         context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
                         attrs="{'readonly': [('product_updatable', '=', False)]}"
                         force_save="1"
                         style="min-width: 380px;"/>
+
+                    <!-- Added by Ganesh May-2019 -->
+                    <field name="cust_item_code" style="min-width: 80px;"/>
                 </xpath> 
+                
+                <xpath expr='//field[@name="order_line"]//form//group//group//field[@name="product_id"]' position="after">      
+                    <!-- Added by Ganesh May-2019 -->             
+                    <field name="cust_item_code" style="min-width: 80px;"/>
+                </xpath>
+                <xpath expr='//field[@name="order_line"]//form//group//group//field[@name="tax_id"]' position="after">
+                    <!-- Added by Ganesh May-2019 -->                   
+                    <field name="drawing_req" style="min-width: 80px;"/>
+                    <field name="drawing_req_date" attrs="{'required': [('drawing_req','in',('1'))]}" style="min-width: 80px;"/>
+                    <field name="drawing_req_days" style="min-width: 80px;"/>
+                </xpath>
 
                 <xpath expr='//field[@name="order_line"]/tree/field[@name="name"]' position="replace">
                     <field name="name" style="min-width: 380px;"/>
@@ -37,11 +51,15 @@
                 </xpath>
 
                 <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="replace">
-                <field name="discount" groups="sale.group_discount_per_so_line" style="width: 50px;"/>
+                    <field name="discount" groups="sale.group_discount_per_so_line" style="width: 50px;"/>
                 </xpath>
 
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="replace">
-                <field name="price_unit" style="min-width: 86px;"/>
+                    <!-- Added by Ganesh May-2019 -->
+                    <field name="price_unit" style="min-width: 86px;"/>
+                    <field name="drawing_req" style="min-width: 80px;"/>
+                    <field name="drawing_req_date" style="min-width: 80px;"/>
+                    <field name="drawing_req_days" style="min-width: 80px;"/>
                 </xpath>          
             </field>
         </record>

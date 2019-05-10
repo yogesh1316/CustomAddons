@@ -225,21 +225,21 @@ class Picking(models.Model):
     
     @api.model
     def create(self, vals):
-        # Update : Sequence no is change for GRN if subcontract is there start from 'SG' 28/03/2019
-        # check if PO is subcontract on origin
-        # TDE FIXME: clean that brol
-        name =''
-        pdata = self.env['purchase.order']
-        if self.po_number:                
-            podata = pdata.search([('name','=',self.po_number.name.strip())])   
-        name = vals['origin']
+        # Update : subcontract GRN sequence generate on GRN validation, for that code comment 
         
-        if not podata.mrp_id:
-            defaults = self.default_get(['name', 'picking_type_id'])
-            if vals.get('name', '/') == '/' and defaults.get('name', '/') == '/' and vals.get('picking_type_id', defaults.get('picking_type_id')):
-                vals['name'] = self.env['stock.picking.type'].browse(vals.get('picking_type_id', defaults.get('picking_type_id'))).sequence_id.next_by_id()
-        else:            
-            vals['name'] = self.env['ir.sequence'].next_by_code('grn.sub.seq') or '/'
+        # TDE FIXME: clean that brol
+        # name =''
+        # pdata = self.env['purchase.order']
+        # if vals['origin']:                
+        #     podata = pdata.search([('name','=',vals['origin'])])   
+        # name = vals['origin']
+        
+        # if not podata.mrp_id:
+        #     defaults = self.default_get(['name', 'picking_type_id'])
+        #     if vals.get('name', '/') == '/' and defaults.get('name', '/') == '/' and vals.get('picking_type_id', defaults.get('picking_type_id')):
+        #         vals['name'] = self.env['stock.picking.type'].browse(vals.get('picking_type_id', defaults.get('picking_type_id'))).sequence_id.next_by_id()
+        # else:            
+        #     vals['name'] = self.env['ir.sequence'].next_by_code('grn.sub.seq') or '/'
 
         # TDE FIXME: what ?
         # As the on_change in one2many list is WIP, we will overwrite the locations on the stock moves here
