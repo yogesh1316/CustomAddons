@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+      <!-- 
+                Created By | Created Date |Info.
+                Pradip     |09-05-19      | Work Center Access, If Manager Group
+                                            field editable else readonly         -->
+                
+    <record id="mrp_workcenter_view_inherit" model="ir.ui.view">
+        <field name="name">mrp.workcenter.form</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="res_grp"
+                string="Work Center Access"
+                options="{'no_quick_create':True,'no_create_edit':True,'no_open':True}"
+                domain="[('category_id','=',20)]"
+                 groups="mrp.group_mrp_manager"/>
+            </xpath>
+
+        </field>
+    </record>
+
+      <!-- 
+                Created By | Created Date |Info.
+                Pradip     |08-05-19      | Work Center Access, If Manager Group 
+                                            field editable else readonly         -->
+                
+    <record id="mrp_workcenter_tree_view_inherit" model="ir.ui.view">
+        <field name="name">mrp.workcenter.tree</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_workcenter_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="res_grp"
+                string="Work Center Access"
+                domain="[('category_id','=',20)]"/>
+            </xpath>
+
+        </field>
+    </record>
+    
+    
+
+</odoo>

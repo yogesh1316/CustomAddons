@@ -39,6 +39,8 @@
         'views/mrp_routing_work_center_form_view.xml',
 
         'views/mrp_routing_work_center_form_view.xml',
+        'security/pce_master_security.xml',
+        'security/security_view.xml',
 
     ],
     # only loaded in demonstration mode
