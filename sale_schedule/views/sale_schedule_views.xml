@@ -24,6 +24,7 @@
                         string="Confirm Sale" class="btn-primary" type="object"
                         attrs="{'invisible': [('sale_order_released', '=', 'True')]}"/>
 				</xpath>
+				
 			</field>
 		</record>
 
