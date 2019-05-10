@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- 
+                Created By | Created Date |Info.
+                Pradip     |09-05-19      | Work Center Access, If Manager Group
+                                            field editable else readonly         -->
+    <record id="mrp_production_workcenter_form_view_work_order_inherit" model="ir.ui.view">
+        <field name="name">mrp.production.work.order.form</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_producing']" position="before">
+                <field name="id_check" invisible="1"/>
+                
+
+            </xpath>
+
+            <xpath expr="//field[@name='qty_producing']" position="replace">
+            
+                <field name="qty_producing" 
+                string="Current Qty" 
+                attrs="{'readonly': ['|', ('product_tracking', '=', 'serial'), 
+                ('state', 'in', ('done', 'cancel'))],
+                'readonly':[('id_check','=',True)]}"/>
+            </xpath>
+            
+
+        </field>
+    </record>        
+</odoo>

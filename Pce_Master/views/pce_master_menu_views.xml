@@ -638,6 +638,10 @@
                                 <field name="purchase_ok"/>
                                 <label for="purchase_ok"/>
                             </div>
+							 <div>
+                        <field name="can_be_expensed" invisible="1"/>
+                        <label for="can_be_expensed" invisible="1"/>
+                    </div>
                         </div>
                     </div>	   	</xpath>
 	   
