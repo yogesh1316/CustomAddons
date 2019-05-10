@@ -75,7 +75,7 @@ class MrpProductProduce(models.TransientModel):
     @api.multi
     def Check_OpenPO(self):
         po_obj = self.env['purchase.order']
-        po_cat = self.env['category.purchase']
+        po_cat = self.env['category.purchase.master']
         pc_data=po_cat.search([('po_category', '=', 'OP')])  
         if pc_data:
             data=po_obj.search([('partner_id', '=', self.production_id.vendor.id),('po_categ_id','=',pc_data.id)])  
@@ -93,7 +93,7 @@ class MrpProductProduce(models.TransientModel):
         vals_line_item = {}        
         po_obj = self.env['purchase.order']
         pol_obj = self.env['purchase.order.line']
-        po_cat = self.env['category.purchase']
+        po_cat = self.env['category.purchase.master']
         pc_data=po_cat.search([('po_category', '=', 'OP')])  
         if self.Check_OpenPO() == False :                
             if self.production_id.subcontract_prod:
@@ -139,7 +139,7 @@ class MrpProductProduce(models.TransientModel):
         sp_obj = self.env['stock.picking']
         po_obj = self.env['purchase.order']
         pol_obj = self.env['purchase.order.line']
-        po_cat = self.env['category.purchase']
+        po_cat = self.env['category.purchase.master']
         pc_data=po_cat.search([('po_category', '=', 'SS')])  
         if self.production_id.subcontract_prod :
 

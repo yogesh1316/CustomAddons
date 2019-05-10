@@ -98,7 +98,7 @@ class PurchaseOrder(models.Model):
         con=[]
         domain={}
         po_obj = self.env['purchase.order']
-        po_cat = self.env['category.purchase']
+        po_cat = self.env['category.purchase.master']
         pc_data=po_cat.search([('po_category', '=', 'OP')])  
         po_ids=po_obj.search([('po_categ_id','=',pc_data.id)])  
         for i in po_ids:
