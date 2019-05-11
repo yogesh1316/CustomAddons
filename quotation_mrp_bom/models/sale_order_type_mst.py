@@ -3,6 +3,10 @@
 from odoo import models, fields, api,tools
 from odoo.exceptions import ValidationError,UserError
 
+# create_by | create_date | update_by | update_date
+# Ganesh      May-2019   
+# Info : sale order type master
+
 class SaleorderCategoryMaster(models.Model):
     _name="saleorder.type.master"   
     _rec_name="so_type"

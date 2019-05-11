@@ -20,9 +20,11 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+                <!-- Added by Ganesh May-2019 -->
                 <xpath expr="//field[@name='pricelist_id']" position="before">
                     <field name="so_type_id" options="{'no_open': True, 'no_create': True}"/>
                 </xpath>
+                <!-- end -->
                 <xpath expr="//button[@name='action_view_invoice']" position="after">
                     <button class="oe_stat_button" type="action" name="%(sale_action_quotations_mrp_boms)d" icon="fa-pencil-square-o" context="{'default_order_line_id': active_id}">
                         <div class="o_stat_info">
@@ -34,6 +36,7 @@
                 <xpath expr="//form[@class='o_sale_order']//field[@name='partner_shipping_id']" position="after">
                     <!-- Added by Ganesh May-2019 -->
                     <field name="cust_note"/>
+                    <!-- end -->
                 </xpath>
                 
                 <xpath expr="//field[@name='order_line']/tree//field[@name='price_total']" position="after">
@@ -50,9 +53,12 @@
 					<field name="cust_inspection_req" widget="radio" options="{'horizontal': true}"/>
 					<field name="cust_inspection_site_req" widget="radio" options="{'horizontal': true}"/>					
 				</xpath>
-                 <xpath expr="//field[@name='effective_date']" position="after">
+                <!-- end -->
+                <!-- Added by Ganesh May-2019 -->
+                <xpath expr="//field[@name='effective_date']" position="after">
                     <field name="transport_id" options="{'no_open': True, 'no_create': True}"/>
                 </xpath>
+                <!-- end -->
             </field>
         </record>
     </data>
