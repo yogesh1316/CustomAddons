@@ -22,13 +22,14 @@
                         attrs="{'readonly': [('product_updatable', '=', False)]}"
                         force_save="1"
                         style="min-width: 380px;"/>
-
+                    <field name="bom_id" style="min-width: 150px;"/>
                     <!-- Added by Ganesh May-2019 -->
                     <field name="cust_item_code" style="min-width: 80px;"/>
                 </xpath> 
                 
                 <xpath expr='//field[@name="order_line"]//form//group//group//field[@name="product_id"]' position="after">      
                     <!-- Added by Ganesh May-2019 -->             
+                    <field name="bom_id" style="min-width: 80px;"/>
                     <field name="cust_item_code" style="min-width: 80px;"/>
                 </xpath>
                 <xpath expr='//field[@name="order_line"]//form//group//group//field[@name="tax_id"]' position="after">
