@@ -9,7 +9,6 @@ from odoo.exceptions import ValidationError,UserError
 from odoo.addons import decimal_precision as dp
 
 
-
 # Created By | Created Date |Info.
 # Pradip    |8-05-19 | Purchase_Order_Line inherit  
 
