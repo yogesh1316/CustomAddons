@@ -4,46 +4,28 @@
 # Yogeshwar Chaudahri
 # Info : This model contain the information about purchase amendment
 
-from odoo import models, fields, api,tools
+from odoo import models, fields, api,tools,_
 from odoo.exceptions import ValidationError,UserError
-from odoo.addons import decimal_precision as dp
+from datetime import datetime
+import datetime
 
-
-# Created By | Created Date |Info.
-# Pradip    |8-05-19 | Purchase_Order_Line inherit  
-
-class Purchase_Order_Line(models.Model):
-    _inherit = 'purchase.order.line'
-
-    compute_field1 = fields.Boolean(string="check group",compute='_get_user_group')
-
-# Created By | Created Date |Info.
-# Pradip    |8-05-19 | if user has manager group the price_unit field editable else non-editable
-
-    @api.depends('compute_field1')
-    def _get_user_group(self):
-        res_user_group = self.env['res.users'].search([('id', '=', self._uid)])
-        print("==============96===========>>res_user_group",res_user_group)
-        for i in self:
-            if res_user_group.has_group('purchase.group_purchase_manager'):
-                i.compute_field1 = True
-            else:
-                i.compute_field1 = False
 
 
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
-    tax_line_id = fields.Many2many('account.tax', domain=['|', ('active', '=', False), ('active', '=', True)])
-    revise = fields.Integer(string="Amendment Number", store=True ,track_visibility='onchange')
-    purchase_line = fields.One2many("purchase.order.amendment",'purchase_id')
-    transport_id = fields.Many2one("transport_mode.master")
-    default_check_box = fields.Boolean(string="Select Default Taxes For Order Line",store=True,readonly=False)
-    box_check = fields.Selection([('yes','Yes'),('no','No')],'box_check',default='no')
-    ven_ref_date = fields.Date(string="Vendor Reference Date",store=True)
-    internal_ref_no = fields.Char(string="Internal Reference Number")
-    internal_ref_date = fields.Date(string="Internal Reference Date")
-    po_categ_id = fields.Many2one("category.purchase",store=True, string="Category")
-    category_description = fields.Char(string="Description",compute="_category_purchase_description",store=True)
+    tax_line_id =fields.Many2many('account.tax', domain=['|', ('active', '=', False), ('active', '=', True)])
+    revise =fields.Integer(string="Amendment Number", store=True ,track_visibility='onchange')
+    purchase_line =fields.One2many("purchase.order.amendment",'purchase_id')
+    transport_id =fields.Many2one("transport_mode.master")
+    default_check_box =fields.Boolean(string="Select Default Taxes For Order Line",store=True,readonly=False)
+    box_check =fields.Selection([('yes','Yes'),('no','No')],'box_check',default='no')
+    ven_ref_date =fields.Date(string="Vendor Reference Date",store=True)
+    internal_ref_no =fields.Char(string="Internal Reference Number")
+    internal_ref_date =fields.Date(string="Internal Reference Date")
+    po_categ_id =fields.Many2one("category.purchase.master",string="Category",help="Select Purchase Category")
+    category_description =fields.Char(string="Description",compute="_category_purchase_description",store=True)
+    indent_type_id=fields.Many2one("indent.type.master",string="Indent Type",help="Select Indent Document Type")
+    
 
     #Set Default Taxes For Order Line
     @api.onchange('tax_line_id')
@@ -51,9 +33,9 @@ class PurchaseOrder(models.Model):
         for order in self:
             for line in order.order_line:
                 line.taxes_id = order.tax_line_id
-            
 
-    # #set default taxes to the order_line by item wise
+
+    #set default taxes to the order_line by item wise
     @api.onchange('order_line')
     def default_taxes_change(self):
         for order in self:
@@ -61,7 +43,7 @@ class PurchaseOrder(models.Model):
                 for line in order.order_line :
                     if line.product_id and order.default_check_box == True:
                         line.taxes_id = self.tax_line_id
-                   
+
 
     # In order Line Or Default Taxes user forgot to select taxes rise user error
     @api.constrains('order_line')
@@ -71,6 +53,7 @@ class PurchaseOrder(models.Model):
                 for line in order.order_line:
                     if not line.taxes_id:
                         raise ValidationError("Please Enter Taxes")
+
 
     # Add Unique Item For Order Line
     @api.onchange('order_line')
@@ -83,8 +66,9 @@ class PurchaseOrder(models.Model):
                 list.append(product)
             else:
                 raise UserError(('Duplicate Order Line Item %s Exists.') % order.product_id.name)
-    
-    # Description For Category  
+
+
+    # Description For Category
     @api.depends('po_categ_id','category_description')
     def _category_purchase_description(self):
         for order in self:
@@ -93,40 +77,40 @@ class PurchaseOrder(models.Model):
 
     # update_by | update_date
     # Yogeshwar Chaudhari | 1/3/2019 change sequnce of model using category field
-    @api.model   
+    @api.model
     def create(self,vals):
         vals['name'] = ' '
         return super(PurchaseOrder, self).create(vals)
 
+   
     # If user want to confirm order then check in order line has product is avaliable or not
     @api.multi
     def button_confirm(self):
         for order in self:
-            if not order.po_categ_id:
-                raise UserError(" Please Select Category")
             if order.po_categ_id:
-                if self.po_categ_id.category_name == 'PO Import':
-                    self.name=self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','PI') or '/'
-                elif self.po_categ_id.category_name == 'PO Local':
-                    self.name=self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','PL') or '/'
-                elif self.po_categ_id.category_name == 'Free Sample Import':
-                    self.name=self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','FSI') or '/'
-                elif self.po_categ_id.category_name == 'Free Sample Local':
-                    self.name=self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','FSL') or '/'
-                elif self.po_categ_id.category_name == 'Operation':
-                    self.name=self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','OP') or '/'
-                elif self.po_categ_id.category_name == 'Service':
-                    self.name=self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','SER') or '/'    
+                if not order.po_categ_id:
+                    raise UserError(_(" Please Select Category"))
+            if order.indent_type_id:
+                if not order.indent_type_id:
+                    raise UserError(_("Please Select Indent Type"))
+            if order.indent_type_id: # Generate Sequence For Indent Type 
+                self.name=self.env['ir.sequence'].next_by_code('indent.type.master')or'/'
+            if order.po_categ_id:
+                if self.po_categ_id.po_category:     # Generate Sequence For Purchasr Order Using Different Category  
+                    self.name=self.env['ir.sequence'].next_by_code('purchase.order').replace('PL',self.po_categ_id.po_category) or '/'
             if order.order_line:
                 for line in order.order_line:
                     if not line.taxes_id:
                         raise UserError(" Please Select Taxes")
-            if not order.transport_id: 
-                raise UserError("Please Select Transport Mode")
-            if not order.incoterm_id:
-                raise UserError("Please Select Transport Cost")
-            if not order.payment_term_id:
-                raise UserError("Please Select Payment Terms")
+            if order.po_categ_id:
+                if not order.transport_id:
+                    raise UserError("Please Select Transport Mode")
+            if order.po_categ_id:
+                if not order.incoterm_id:
+                    raise UserError("Please Select Transport Cost")
+            if order.po_categ_id:
+                if not order.payment_term_id:
+                    raise UserError("Please Select Payment Terms")
             if not order.order_line:
                 raise UserError("Please Select Product")
             if order.state not in ['draft', 'sent']:
@@ -136,11 +120,13 @@ class PurchaseOrder(models.Model):
             if order.company_id.po_double_validation == 'one_step'\
                     or (order.company_id.po_double_validation == 'two_step'\
                         and order.amount_total < self.env.user.company_id.currency_id.compute(order.company_id.po_double_validation_amount, order.currency_id)):
-                    # or order.user_has_groups('purchase.group_purchase_manager')
+                    # or order.user_has_groups('purchase.group_purchase_manager'):
                 order.button_approve()
             else:
                 order.write({'state': 'to approve'})
         return True
+        
+
 
     # To Create Amendment For Purchase Order
     @api.multi
@@ -159,7 +145,6 @@ class PurchaseOrder(models.Model):
                             raise UserError("Please Select Amendment Order Other Wise Discard")
         var=super(PurchaseOrder,self).write(vals)
         return var
-
 
     @api.multi
     def create_revision(self):
@@ -189,7 +174,9 @@ class PurchaseOrder(models.Model):
             'ven_ref_date':self.ven_ref_date,
             'internal_ref_no':self.internal_ref_no,
             'internal_ref_date':self.internal_ref_date,
-            'requisition_id':self.requisition_id.id
+            'requisition_id':self.requisition_id.id,
+            'indent_type_id':self.indent_type_id.id,
+            'po_categ_id':self.po_categ_id.id
             }
         purchase_order_revise_obj=self.env['purchase.order.amendment'].create(revise_vals)
         purchase_order_revise_obj.purchase_id=self.id
@@ -211,30 +198,209 @@ class PurchaseOrder(models.Model):
             purchase_order_revise_obj.purchase_id=self.id
 
 
+class PurchaseOrderLine(models.Model):
+    _inherit="purchase.order.line"
+
+    indent_type_id=fields.Many2one("indent.type.master",string="Indent Type", store=True, related='order_id.indent_type_id')
+    # po_categ_id = fields.Many2one("category.purchase",store=True, string="Category", related='order_id.po_categ_id')    
+    product_id = fields.Many2one('product.product', string='Product', domain=[('purchase_ok', '=', True)], change_default=True, required=True,readonly=True, store=True)      
+    
+    '''
+    Below Code Is For Filter The Product On The Change OF Selected Category From Order
+    '''   
+    @api.multi
+    @api.onchange('product_id')
+    def display_product_category_selection(self):
+        for order in self:
+            if order.indent_type_id:
+                if not order.indent_type_id:
+                    raise UserError(_("Please Select Indent Type"))
+        for order in self:
+            if order.indent_type_id:
+                pp=[]
+                domain={}
+                product_tmpl_obj=self.env['product.template'] #made object of product template
+                ptmpl_ids=product_tmpl_obj.search([('type','=',self.indent_type_id.product_type)and('type','!=','product')]) #Search for type in order into product template 
+                product_obj=self.env['product.product'] #made object for product product
+                for i in ptmpl_ids:
+                    pro_ids=product_obj.search([('product_tmpl_id','=',i.id)])
+                    for pro in pro_ids:
+                        pp.append(pro.id)
+                domain['product_id']=[('id','in',pp)]
+                return {'domain':domain}
+
+
 class Picking(models.Model):
     _inherit="stock.picking"
 
-    challan_no=fields.Char(string="Challan Number")
-    challan_date=fields.Date(string="Challan Date")
-    awb_no=fields.Char(string="AWB No")
-    boe_no=fields.Char(string="BOE No")
-    boe_date=fields.Date(string="BOE Date")
-    mode=fields.Selection([('cargo','Cargo'),('courier','Courier')],'mode')
+    revise =fields.Integer(string="Amendment Number",track_visibility='onchange')
+    challan_no=fields.Char(string="Challan Number",help="Challan Number")
+    challan_date=fields.Date(string="Challan Date",help="Challan Date")
+    scheduled_date = fields.Datetime(
+        'Scheduled Date', compute='_compute_scheduled_date', inverse='_set_scheduled_date', store=True,
+        index=True, track_visibility='onchange',
+        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},default=fields.Datetime.now)
+
+    
+    #Validation For Schedule Date raise user error if date is less than todays date
+    # create_by | create_date | update_by | update_date
+    # Yogeshwar Chaudahri | 29/04/2019
+    @api.onchange('scheduled_date')
+    def scheduled_date_check(self):
+        today = datetime.datetime.now()
+        if self.scheduled_date < str(today):
+            raise UserError(_("Please Select Valid Scheduled Date"))
+
+
+    @api.one
+    @api.depends('move_lines.date_expected')
+    def _compute_scheduled_date(self):
+        if self.move_type == 'direct':
+            self.scheduled_date = min(self.move_lines.mapped('date_expected') or [fields.Datetime.now()])
+        else:
+            self.scheduled_date = max(self.move_lines.mapped('date_expected') or [fields.Datetime.now()])
+
+    
+    @api.one
+    def _set_scheduled_date(self):
+        self.move_lines.write({'date_expected': self.scheduled_date})    
+    
+    
+    @api.onchange('challan_no')
+    def partner_challan_no_exist(self):
+        for picking in self:
+            stock_picking_obj=self.env['stock.picking']
+        rect=stock_picking_obj.search([('origin','=',picking.origin),('challan_no','=',self.challan_no)])
+        if picking.picking_type_id.name == 'Receipts':
+            if rect:
+                raise UserError(_("Challan Number Already Exists Re"))
+        if picking.picking_type_id.name == 'In To Quality':
+            if rect:
+                raise UserError(_("Challan Number Already Exists ITQ"))
+        if picking.picking_type_id.name == 'Quality To Stock':
+            if rect:
+                raise UserError(_("Challan Number Already Exists QTS"))
+
+    
+    @api.onchange('challan_date')
+    def partner_challan_date_exist(self):
+        for i in self:
+            obj_stock_picking=self.env['stock.picking']
+        rect1=obj_stock_picking.search([('origin','=',i.origin),('challan_date','=',self.challan_date)])
+        if i.picking_type_id.name == 'Receipts':
+            if rect1:
+                raise UserError(_("Challan Date Already Exists In Receipts"))
+        if i.picking_type_id.name == 'In To Quality':
+            if rect1:
+                raise UserError(_("Challan Date Already Exists In ITQ"))
+        if i.picking_type_id.name == 'Quality To Stock':
+            if rect1:
+                raise UserError(_("Challan Date Already Exists In QTS"))
+    
+    
+    @api.onchange('challan_date')
+    def date_check(self):
+        today = datetime.datetime.now()
+        if self.challan_date > str(today):
+            raise UserError(_("Please Select Valid Date "))
+
     
     @api.multi
     def button_validate(self):
         res=super(Picking,self).button_validate()
         po_obj=self.env['purchase.order']
         rect=po_obj.search([('name','=',self.origin)])
-        if not self.challan_no:
-            raise UserError (" Please Enter Challan Number ")
-        if not self.challan_date:
-            raise UserError (" Please Select Challan Date ")
+        if not self.challan_no and self.picking_type_id.name=='Receipts':
+            raise UserError(_(" Please Enter Challan Number "))
+        if not self.challan_date and self.picking_type_id.name=='Receipts':
+            raise UserError (_(" Please Select Challan Date "))
+        # for i in self.move_lines:#Generate Sequence For Product Type Is Consumable Or Service 
+            # if i.product_id.product_tmpl_id.type == 'consu':
+            #     self.name=self.env['ir.sequence'].next_by_code('grn.product.type.service')or'/'
+        pdata = self.env['purchase.order'] #Make For To Generate Sequence As 'SG' On GRN At the time of Subcontract 
+        if self.origin:                
+            podata = pdata.search([('name','=',self.origin)])  
+        for j in self:
+            if 'GEN' in j.origin and j.picking_type_id.name == 'Receipts':#Generate Sequence For Indent Type Of GRN
+                self.name=self.env['ir.sequence'].next_by_code('grn.indent.type.master')or'/'
+        date=datetime.datetime.now()
+        a=(date.strftime('%y'))
+        b=int(a)+1
+        p=' '
+        c='-'
+        p=str(a)+c+str(b)
+        if not podata.mrp_id: # Make To Generate Sequence As 'SG'     
+            if not self.name:
+                if self.picking_type_id.name=='Delivery Orders':
+                    self.name=self.picking_type_id.sequence_id.next_by_id().replace('x',p)
+                elif self.picking_type_id.name=='Receipts':
+                    self.name=self.picking_type_id.sequence_id.next_by_id()
+                else:
+                    self.name=self.picking_type_id.sequence_id.next_by_id()
+        else:            
+            self.name = self.env['ir.sequence'].next_by_code('grn.sub.seq') or '/'
+        for order in self:
+            if order.move_lines:
+                for line in order.move_lines:
+                    if not line.move_orig_ids:
+                        move1=line
+                        move2=move1.move_dest_ids
+                        move3=move2.move_dest_ids
+                        if move2:
+                            move2.picking_id.partner_id=order.partner_id
+                            move2.picking_id.grn_name=order.name
+                            move2.challan_quantity=line.challan_quantity
+                            move2.receive_quantity=line.receive_quantity  
+                        if move3:
+                            move3.picking_id.partner_id=order.partner_id
+                            move3.picking_id.grn_name=order.name
+                            move3.challan_quantity=line.challan_quantity
+                            move3.receive_quantity=line.receive_quantity        
+                    else:
+                        if line.move_orig_ids:
+                            move2=line
+                            move3=move2.move_dest_ids
+                            move4=line
+                            move5=move4.move_dest_ids
+                            if move3:
+                                move3.inspected_quantity=line.inspected_quantity
+                            if move5:
+                                move5.dispatch_clerance=line.dispatch_clerance                            
+        rect.button_done()
         return res
 
 
+
+    @api.model
+    def create(self, vals):
+        # TDE FIXME: clean that brol
+        # defaults = self.default_get(['name', 'picking_type_id'])
+        pick_type=self.env['stock.picking.type'].browse(vals['picking_type_id'])
+
+        # if vals.get('name', '/') == '/' and defaults.get('name', '/') == '/' and vals.get('picking_type_id', defaults.get('picking_type_id')):
+        #     vals['name'] = self.env['stock.picking.type'].browse(vals.get('picking_type_id', defaults.get('picking_type_id'))).sequence_id.next_by_id()
+        if pick_type.name=='Pick' or pick_type.name=='Delivery Orders' or pick_type.name == 'Receipts':
+            vals['name']=False
+        # TDE FIXME: what ?
+        # As the on_change in one2many list is WIP, we will overwrite the locations on the stock moves here
+        # As it is a create the format will be a list of (0, 0, dict)
+        if vals.get('move_lines') and vals.get('location_id') and vals.get('location_dest_id'):
+            for move in vals['move_lines']:
+                if len(move) == 3:
+                    move[2]['location_id'] = vals['location_id']
+                    move[2]['location_dest_id'] = vals['location_dest_id']
+        res = super(Picking, self).create(vals)
+        res._autoconfirm_picking()
+        return res
+    
+  
+        
+
 class PurchaseOrderAmendment(models.Model):
     _name="purchase.order.amendment"
+
+    po_categ_id =fields.Many2one("category.purchase.master",string="Category")
+    indent_type_id=fields.Many2one("indent.type.master",string="Indent Type")
     requisition_id = fields.Many2one('purchase.requisition', string='Purchase Agreement', copy=False)
     purchase_revise_line=fields.One2many("purchase.order.line.amendment",'purchase_revise_id')
     purchase_id=fields.Many2one("purchase.order")
@@ -275,7 +441,7 @@ class PurchaseOrderAmendment(models.Model):
     internal_ref_no = fields.Char(string="Internal Reference Number")
     internal_ref_date = fields.Date(string="Internal Reference Date")
 
-    
+
 class PurchaseOrderLineAmendment(models.Model):
     _name="purchase.order.line.amendment"
     purchase_revise_id=fields.Many2one("purchase.order.amendment", readonly=True, store=True)
@@ -291,28 +457,3 @@ class PurchaseOrderLineAmendment(models.Model):
     taxes_id = fields.Many2many('account.tax', string='Taxes', domain=['|', ('active', '=', False), ('active', '=', True)],readonly=True, store=True, track_visibility='onchange')
     currency_id = fields.Many2one(related='purchase_revise_id.currency_id', store=True, string='Currency', readonly=True)
     date_order = fields.Datetime(related='purchase_revise_id.date_order', string='Order Date', readonly=True,store=True)
-
-
-
-
-    #     @api.model
-    # def create(self,vals):
-    #     if vals.get('po_category_id.category_name') == 'PO Import':
-    #         vals['name']=self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','PI') or '/'
-    #     elif vals.get('po_category_id.category_name') == 'PO Local':
-    #         vals['name']=self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','PL') or '/'
-    #     elif vals.get('po_category_id.category_name') == 'Free Supply Local':
-    #         vals['name']=self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','FSL') or '/'
-    #     elif vals.get('po_category_id.category_name') == 'Free Supply Import':
-    #         vals['name']=self.env['ir.sequence'].next_by_code('purchase.order').replace('PL','FSI') or '/'
-    #     return super(purchase_model, self).create(vals)
-
-
-    # if not self.awb_no:
-    #         raise UserError(" Please Select AWB No")
-    #     if not self.boe_no:
-    #         raise UserError(" Please Select BOE No")
-    #     if not self.boe_date:
-    #         raise UserError(" Please Select BOE Date")
-    #     if not self.mode:
-    #         raise UserError(" Please Select Mode")

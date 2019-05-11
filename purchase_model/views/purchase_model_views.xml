@@ -1,157 +1,97 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>        
-        <record id="purchase__view_order_form96378963" model="ir.ui.view">
-            <field name="name">purchase.order.form</field>
+	<data>
+    
+    	<record id="purchase_order_forms1234" model="ir.ui.view">
+        	<field name="name">purchase.order</field>
             <field name="model">purchase.order</field>
-            <field name="inherit_id" ref="purchase.purchase_order_form" />
-            <field name="arch" type="xml">
-                <!-- 
-                Created By | Created Date |Info.
-                Pradip     |08-05-19      | if user has manager group ,the price_unit 
-                                            field editable else readonly         -->
-                
-                <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="before">
-                    <field name="compute_field1" invisible="1" />
-                </xpath>
-                <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom']" position="before">
-                    <field name="price_unit" invisible="0" attrs="{'readonly': [('compute_field1', '!=' , True)]}" />
-                </xpath>
-            </field>
-        </record>
-
-
-
-        <record id="purchase_order_forms1234" model="ir.ui.view">
-            <field name="name">purchase.order</field>
-            <field name="model">purchase.order</field>
-            <field name="inherit_id" ref="purchase.purchase_order_form" />
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='origin']" position="replace">
-                    <field name="origin" attrs="{'invisible': [('origin','=',False)]}" readonly="True" />
-                </xpath>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
                 <xpath expr="//field[@name='date_order']" position="after">
-                    <field name="category_description" invisible="True" />
+                    <field name="revise" string="Amendment Number" readonly="True" write="false"/>
+                    <field name="indent_type_id" string="Indent Type" attrs="{'invisible':[('po_categ_id','!=',False)],'readonly':['|', ('state', 'in', ('done','purchase','to approve','cancel'))]}" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="po_categ_id"  attrs="{'readonly':['|',('state', 'in', ('done','purchase','to approve','cancel')),('revise','>',0)],'invisible':[('indent_type_id','!=',False)]}" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="category_description" invisible="1"/>
+                    <field name="box_check"  style="color:Red;" widget="radio" string="Purchase Order Amendment" attrs="{'invisible':[('state','not in',('purchase'))]}"/>                  
+                    <field name="internal_ref_date" attrs="{'readonly':[('state','in',('done'))]}"/>
+                    <field name="internal_ref_no" attrs="{'readonly':[('state','in',('done'))]}"/>
                 </xpath>
                 <xpath expr="//div//button[@name='action_view_picking']" position="replace">
-                    <button type="object" name="action_view_picking" class="oe_stat_button" icon="fa-truck" attrs="{'invisible':['|','|', ('state', 'in', ('draft','sent','to approve')),('picking_ids','=',[]),('state','not in',('purchase'))]}">
-                        <field name="picking_count" widget="statinfo" string="Shipment" help="Incoming Shipments" />
-                        <field name="picking_ids" invisible="1" />
+                    <button type="object" name="action_view_picking" class="oe_stat_button"
+                        icon="fa-truck" attrs="{'invisible':['|','|', ('state', 'in', ('draft','sent','to approve')),('picking_ids','=',[]),('state','not in',('purchase'))]}">
+                        <field name="picking_count" widget="statinfo" string="Shipment" help="Incoming Shipments"/>
+                        <field name="picking_ids" invisible="1"/>
                     </button>
                 </xpath>
                 <xpath expr="//field[@name='notes']" position="replace">
-                    <field name="notes" class="oe_inline" placeholder="Define your terms and conditions ..." attrs="{'readonly':[('state','in',('done'))]}" />
+                    <field name="notes" class="oe_inline" placeholder="Define your terms and conditions ..."  attrs="{'readonly':[('state','in',('done'))]}"/>
                 </xpath>
                 <xpath expr="//field[@name='partner_ref']" position="after">
-                    <field name="ven_ref_date" attrs="{'readonly':[('state','in',('done'))]}" />
-                </xpath>
-                <xpath expr="//field[@name='date_order']" position="after">
-                    <field name="internal_ref_date" attrs="{'readonly':[('state','in',('done'))]}" />
-                </xpath>
-                <xpath expr="//field[@name='date_order']" position="after">
-                    <field name="internal_ref_no" attrs="{'readonly':[('state','in',('done'))]}" />
+                    <field name="ven_ref_date" attrs="{'readonly':[('state','in',('done'))]}"/>
                 </xpath>
                 <xpath expr="//field[@name='currency_id']" position="replace">
-                    <field name="currency_id" groups="base.group_multi_currency" attrs="{'readonly':[('state','in',('done'))]}" options="{'no_open': True, 'no_create': True}" />
+                    <field name="currency_id" groups="base.group_multi_currency" attrs="{'readonly':[('state','in',('done'))]}" options="{'no_open': True, 'no_create': True}"/>
                 </xpath>
                 <xpath expr="//field[@name='picking_type_id']" position="replace">
-                    <field name="picking_type_id" attrs="{'readonly':[('state','in',('done'))]}" options="{'no_open': True, 'no_create': True}" />
+                    <field name="picking_type_id" attrs="{'readonly':[('state','in',('done'))]}" options="{'no_open': True, 'no_create': True}"/>
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="replace">
-                    <field name="partner_id" attrs="{'readonly':['|',('state', 'in', ('done','purchase','to approve','cancel')),('revise','>',0)]}" options="{'no_open': True, 'no_create': True}" />
+                    <field name="partner_id" attrs="{'readonly':['|',('state', 'in', ('done','purchase','to approve','cancel')),('revise','>',0)]}" options="{'no_open': True, 'no_create': True}"/>
                 </xpath>
                 <xpath expr="//field[@name='partner_ref']" position="replace">
-                    <field name="partner_ref" attrs="{'readonly':[('state','in',('done'))]}" />
+                    <field name="partner_ref" attrs="{'readonly':[('state','in',('done'))]}"/>
                 </xpath>
                 <xpath expr="//button[@name='action_view_picking']" position="replace">
-                    <button name="action_view_picking" string="Receive Products" class="oe_highlight" type="object" attrs="{'invisible': ['|', '|' , '|' ,('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0), ('state', '=', 'done')]}" />
-                </xpath>
-                <xpath expr="//field[@name='date_order']" position="after">
-                    <field name="box_check" style="color:Red;" widget="radio" string="Purchase Order Amendment" attrs="{'invisible':[('state','not in',('purchase'))]}" />
+                    <button name="action_view_picking" string="Receive Products" class="oe_highlight" type="object" attrs="{'invisible': ['|', '|' , '|' ,('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0), ('state', '=', 'done')]}"/>
                 </xpath>
                 <xpath expr="//field[@name='currency_id']" position="after">
-                    <field name="default_check_box" attrs="{'readonly':[('state', '=', 'done')]}" />
-                </xpath>
-                <xpath expr="//field[@name='date_order']" position="after">
-                    <field name="po_categ_id" options="{'no_open': True, 'no_create': True}" attrs="{'readonly':['|',('state', 'in', ('done','purchase','to approve','cancel')),('revise','>',0)]}" />
-                </xpath>
-                <xpath expr="//field[@name='date_order']" position="after">
-                    <field name="revise" string="Amendment Number" readonly="True" write="false" />
-                </xpath>
+                    <field name="default_check_box" attrs="{'readonly':[('state', '=', 'done')]}"/>
+                    <field name="tax_line_id" string="Default Taxes" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase'}" options="{'no_create': True}" attrs="{'invisible':[('default_check_box','=',False)],'readonly':[('state', '=', 'done')]}"/>
+                </xpath>              
                 <xpath expr="//field[@name='incoterm_id']" position="replace">
-                    <field name="incoterm_id" attrs="{'readonly':[('state','in',('done'))]}" options="{'no_open': True, 'no_create': True}" />
+                    <field name="incoterm_id" attrs="{'readonly':[('state','in',('done'))]}" options="{'no_open': True, 'no_create': True}"/>
                 </xpath>
                 <xpath expr="//field[@name='incoterm_id']" position="after">
-                    <field name="transport_id" attrs="{'readonly':[('state','in',('done'))]}" string="Transport Mode" options="{'no_open': True, 'no_create': True}" />
-                </xpath>
-                <xpath expr="//field[@name='currency_id']" position="after">
-                    <field name="tax_line_id" string="Default Taxes" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase'}" options="{'no_create': True}" attrs="{'invisible':[('default_check_box','=',False)],'readonly':[('state', '=', 'done')]}" />
+                    <field name="transport_id" attrs="{'readonly':[('state','in',('done'))]}" string="Transport Mode" options="{'no_open': True, 'no_create': True}"/>
                 </xpath>
                 <xpath expr="//form//sheet//notebook//page//field[@name='product_uom']" position="replace">
-                    <field name="product_uom" string="UOM" groups="product.group_uom" attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}" force_save="1" />
+                    <field name="product_uom" string="UOM" groups="product.group_uom" attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}" force_save="1"/>
+                </xpath>
+                <xpath expr="//form//sheet//notebook//page//form//sheet//group//field[@name='product_id']" position="replace">
+                    <field name="product_id" context="{'partner_id': parent.partner_id}" options="{'no_create': True,'no_open': True}"/>
                 </xpath>
                 <xpath expr="//form//sheet//notebook//page//field[@name='name']" position="replace">
-                    <field name="name" string="Description" style="min-width: 260px;" />
+                    <field name="name" string="Description" style="min-width: 260px;"/>
                 </xpath>
                 <xpath expr="//form//sheet//notebook//page//field[@name='product_id']" position="replace">
-                    <field name="product_id" attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}" force_save="1" string="Product" style="min-width: 266px;" />
+                    <field name="product_id" attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}" force_save="1" string="Product" style="min-width: 266px;" options="{'no_create': True,'no_open': True}"/>
                 </xpath>
                 <xpath expr="//form//sheet//notebook//page//field[@name='date_planned']" position="replace">
-                    <field name="date_planned" string="Sch Date" />
+                    <field name="date_planned" string="Sch Date"/>
+                </xpath>
+                <xpath expr="//form//sheet//group//field[@name='origin']" position="replace">
+                    <field name="origin" attrs="{'invisible': [('origin','=',False)]}" readonly="1"/>
                 </xpath>
                 <xpath expr="//form//sheet//notebook//page" position="after">
                     <page string="Purchase Amendment Order">
                         <field name="purchase_line">
                             <tree create="false" edit="false" delete="false">
-                                <field name="revise" string="Amendment Number" readonly="True" write="false" />
-                                <field name="name" string="Reference" />
-                                <field name="date_order" string="Order Date" />
-                                <field name="partner_id" string="Vendor" readonly="True" write="false" />
-                                <field name="date_planned" string="Scheduled Date" />
-                                <field name="origin" string="Source Document" />
-                                <field name="amount_untaxed" string="Untaxed" widget="monetary" />
-                                <field name="amount_total" string="Total" widget="monetary" />
-                                <field name="state" string="Status" />
+                                <field name="revise" string="Amendment Number" readonly="True" write="false"/>
+                                <field name="name" string="Reference"/>
+                                <field name="date_order"  string="Order Date"/>
+                                <field name="partner_id"  string="Vendor" readonly="True" write="false"/>
+                                <field name="date_planned"  string="Scheduled Date"/>
+                                <field name="origin"  string="Source Document" readonly="1"/> 
+                                <field name="amount_untaxed"  string="Untaxed" widget="monetary"/>
+                                <field name="amount_total"  string="Total" widget="monetary"/>  
+                                <field name="state"  string="Status"/>
                             </tree>
                         </field>
                     </page>
                 </xpath>
-            </field>
-        </record>
-        <!-- Stock Picking Model -->
-        <record id="stock_picking_1234" model="ir.ui.view">
-            <field name="name">stock.picking</field>
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_form" />
-            <field name="arch" type="xml">
-                <xpath expr="//form//sheet//notebook//page[@name='extra']" position="after">
-                    <page string="BOE Details" name="BOE Details" attrs="{'invisible':['|',('origin','like','FSL'),('origin','like','PL'),('origin','like','OP')]}">
-                        <group>
-                            <group>
-                                <field name="awb_no" options="{'no_open': True, 'no_create': True}" attrs="{'required':['|', ('origin','like','PI'),('origin','like','FSI')]}" />
-                                <field name="mode" string="MODE" options="{'no_open': True, 'no_create': True}" attrs="{'required':['|', ('origin','like','PI'),('origin','like','FSI')]}" />
-                            </group>
-                            <group>
-                                <field name="boe_no" options="{'no_open': True, 'no_create': True}" attrs="{'required':['|', ('origin','like','PI'),('origin','like','FSI')]}" />
-                                <field name="boe_date" options="{'no_open': True, 'no_create': True}" attrs="{'required':['|', ('origin','like','PI'),('origin','like','FSI')]}" />
-                            </group>
-                        </group>
-                    </page>
-                </xpath>
-                <xpath expr="//field[@name='quantity_done']" position="replace">
-                    <field name="quantity_done" string="Receive Quantity" />
-                </xpath>
-                <xpath expr="//field[@name='product_uom_qty']" position="replace">
-                    <field name="product_uom_qty" string="PO Quantity" attrs="{'readonly': [('is_initial_demand_editable', '=', False)]}" />
-                </xpath>
-                <xpath expr="//field[@name='origin']" position="after">
-                    <field name="challan_date" attrs="{'invisible': [('state','=',('assigned'))]}" />
-                </xpath>
-                <xpath expr="//field[@name='origin']" position="after">
-                    <field name="challan_no" attrs="{'invisible': [('state','=',('assigned'))]}" />
-                </xpath>
-            </field>
-        </record>
+      		</field>
+    	</record>
+
         <!-- Purchase Order Revise Form -->
         <record id="purchase_order_revise_forms1316" model="ir.ui.view">
             <field name="name">purchase.order.amendment</field>
@@ -166,68 +106,109 @@
                     </script>
                     <group>
                         <group>
-                            <field name="partner_id" string="Vendor" options="{'no_open': True, 'no_create': True}" readonly="True" />
-                            <field name="partner_ref" string="Vendor Reference" options="{'no_open': True, 'no_create': True}" readonly="True" />
-                            <field name="ven_ref_date" options="{'no_open': True, 'no_create': True}" readonly="True" />
-                            <field name="requisition_id" options="{'no_open': True, 'no_create': True}" readonly="True" />
+                            <field name="partner_id" string="Vendor" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                            <field name="partner_ref" string="Vendor Reference" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                            <field name="ven_ref_date" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                            <field name="requisition_id" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                            <field name="currency_id" options="{'no_open': True, 'no_create': True}" readonly="True"/>
                         </group>
                         <group>
-                            <field name="date_order" string="Order Date" options="{'no_open': True, 'no_create': True}" readonly="True" />
-                            <field name="internal_ref_no" options="{'no_open': True, 'no_create': True}" readonly="True" />
-                            <field name="internal_ref_date" options="{'no_open': True, 'no_create': True}" readonly="True" />
-                            <field name="currency_id" options="{'no_open': True, 'no_create': True}" readonly="True" />
+                            <field name="date_order" string="Order Date" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                            <field name="indent_type_id" string="Indent Type" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                            <field name="po_categ_id" string="Category" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                            <field name="internal_ref_date" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                            <field name="internal_ref_no" options="{'no_open': True, 'no_create': True}" readonly="True"/>
                         </group>
                     </group>
                     <notebook>
-                        <page string="Purchase Order Line Amendment">
-                            <field name="purchase_revise_line" readonly="1" write="false">
-                                <tree delete="false">
-                                    <field name="product_id" readonly="1" options="{'no_open': True, 'no_create': True}" />
-                                    <field name="name" readonly="1" />
-                                    <field name="date_planned" readonly="1" />
-                                    <field name="product_qty" readonly="1" />
-                                    <field name="product_uom" readonly="1" options="{'no_open': True, 'no_create': True}" />
-                                    <field name="price_unit" readonly="1" />
-                                    <field name="taxes_id" readonly="1" options="{'no_open': True, 'no_create': True}" />
-                                    <field name="price_subtotal" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1" />
+                        <page string="Purchase Order Line Amendment"> 
+                            <field name="purchase_revise_line">
+                                <tree create="false" edit="false" delete="false">
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="date_planned"/>
+                                    <field name="product_qty"/>
+                                    <field name="product_uom"/>
+                                    <field name="price_unit"/>
+                                    <field name="taxes_id"/>
+                                    <field name="price_subtotal" widget="monetary" options="{'currency_field': 'currency_id'}"  readonly="1"/> 
                                 </tree>
                             </field>
                             <group class="oe_subtotal_footer oe_right">
-                                <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}" />
-                                <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                                <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                 <div class="oe_subtotal_footer_separator oe_inline">
-                                    <label for="amount_total" />
+                                    <label for="amount_total"/>
                                 </div>
-                                <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                                <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                             </group>
-                            <field name="notes" class="oe_inline" placeholder="Define your terms and conditions ..." no_open="True" />
-                            <div class="oe_clear" />
+                            <field name="notes" class="oe_inline" placeholder="Define your terms and conditions ..." no_open="True"/>
+                            <div class="oe_clear"/> 
                         </page>
                         <page string="Deliveries &amp; Invoices">
                             <group>
                                 <group>
-                                    <label for="date_planned" />
+                                    <label for="date_planned"/>
                                     <div>
-                                        <field name="date_planned" required="1" no_open="True" readonly="True" />
-                                        <button name="action_set_date_planned" type="object" states="draft,sent" string="Set date to all order lines" help="This changes the scheduled date of all order lines to the given date" class="fa fa-calendar o_icon_button oe_edit_only" />
+                                        <field name="date_planned" required="1" no_open="True" readonly="True"/>
+                                        <button name="action_set_date_planned" type="object"
+                                            states="draft,sent"
+                                            string="Set date to all order lines"
+                                            help="This changes the scheduled date of all order lines to the given date"
+                                            class="fa fa-calendar o_icon_button oe_edit_only"/>
                                     </div>
-                                    <field name="picking_type_id" domain="[('code','=','incoming')]" groups="stock.group_stock_multi_locations" options="{'no_open': True, 'no_create': True}" />
-                                    <field name="dest_address_id" groups="stock.group_stock_multi_locations" no_open="True" readonly="True" />
-                                    <field name="default_location_dest_id_usage" invisible="1" no_open="True" readonly="True" />
-                                    <field name="incoterm_id" options="{'no_open': True, 'no_create': True}" readonly="True" />
-                                    <field name="transport_id" options="{'no_open': True, 'no_create': True}" readonly="True" string="Transport Mode" />
+                                    <field name="picking_type_id" domain="[('code','=','incoming')]" groups="stock.group_stock_multi_locations" options="{'no_open': True, 'no_create': True}"/>
+                                    <field name="dest_address_id" groups="stock.group_stock_multi_locations" no_open="True" readonly="True"/>
+                                    <field name="default_location_dest_id_usage" invisible="1" no_open="True" readonly="True"/>
+                                    <field name="incoterm_id" options="{'no_open': True, 'no_create': True}"  readonly="True"/>
+                                    <field name="transport_id" options="{'no_open': True, 'no_create': True}" readonly="True" string="Transport Mode"/>
                                 </group>
                                 <group>
-                                    <field name="invoice_status" no_open="True" readonly="True" />
-                                    <field name="payment_term_id" options="{'no_open': True, 'no_create': True}" readonly="True" />
-                                    <field name="fiscal_position_id" options="{'no_open': True, 'no_create': True}" readonly="True" />
-                                    <field name="date_approve" groups="base.group_no_one" />
-                                </group>
+                                    <field name="invoice_status" no_open="True" readonly="True"/>
+                                    <field name="payment_term_id" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                                    <field name="fiscal_position_id" options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                                    <field name="date_approve" groups="base.group_no_one"/>
+                                </group> 
                             </group>
-                        </page>
+                        </page> 
                     </notebook>
                 </form>
             </field>
         </record>
-    </data>
+
+                <!-- Stock Picking Model -->
+        <record id="stock_picking_1234" model="ir.ui.view">
+        	<field name="name">form.model</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+			<field name="arch" type="xml">
+                <xpath expr="/form/sheet/div" position="after">
+                    <label string="Good Receipt Note" attrs="{'invisible': [('test','!=','Receipts')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="replace">
+                    <field name="origin" attrs="{'readonly':['|','|','|','|','|','|','|', ('test','=','Receipts'),('test','=','In To Quality'),('test','=','Quality To Stock'),('test','=','Pick'),('test','=','Pack'),('test','=','Internal Transfers'),('test','=','Delivery Orders'),('test','=','Manufacturing')]}"/> 
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="challan_no" attrs="{'invisible': ['|','|','|','|','|','|', ('sale_id','!=',False),('picking_type_code','=','intrenal'),('test','=','Pick'),('test','=','Delivery Orders'),('test','=','Pack'),('test','=','Manufacturing'),('test','=','Internal Transfers')],'readonly':[('state','in','done')]}"/>
+                    <field name="challan_date" attrs="{'invisible': ['|','|','|','|','|','|', ('sale_id','!=',False),('picking_type_code','=','intrenal'),('test','=','Pick'),('test','=','Delivery Orders'),('test','=','Pack'),('test','=','Manufacturing'),('test','=','Internal Transfers')],'readonly':[('state','in','done')]}"/>
+                    <field name="grn_name" attrs="{'invisible': ['|','|','|','|','|', ('test','=','Receipts'),('test','=','Pick'),('test','=','Delivery Orders'),('test','=','Pack'),('test','=','Manufacturing'),('test','=','Internal Transfers')],'readonly':['|', ('test','=','In To Quality'),('test','=','Quality To Stock')]}"/> 
+                </xpath>
+                <xpath expr="/form/sheet/group/group/field[@name='scheduled_date']" position="replace">
+                    <field name="scheduled_date" string="GRN Date" attrs="{'readonly': ['|','|','|','|','|','|', ('id', '=', False),('test','=','In To Quality'),('test','=','Quality To Stock'),('test','=','Pick'),('test','=','Pack'),('test','=','Manufacturing'),('test','=','Internal Transfers')], 'required': [('id', '!=', False)], 'invisible':['|','|','|','|', ('test','=','Pick'),('test','=','Pack'),('test','=','Delivery Orders'),('test','=','Internal Transfers'),('test','=','Manufacturing')]}"/>
+                    <field name="scheduled_date" string="Date" attrs="{'readonly': ['|','|','|','|','|', ('id', '=', False),('test','=','Pick'),('test','=','Pack'),('test','=','Manufacturing'),('test','=','Internal Transfers'),('test','=','Delivery Orders')], 'required': [('id', '!=', False)], 'invisible': ['|','|','|', ('test','=','Receipts'),('test','=','In To Quality'),('test','=','Quality To Stock')]}"/>
+                </xpath>
+                 <xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
+                    <field name="test" invisible="1"/>
+                    <field name="revise" invisible="1"/>
+                    <!-- <field name="vendor"  attrs="{'invisible':['|', ('sale_id','!=',False),('revise','!=',False)]}" options="{'no_open': True, 'no_create': True}"/> -->
+                    <field name="partner_id" string="Vendor" options="{'no_open': True, 'no_create': True}" attrs="{'invisible':['|','|','|','|', ('grn_name','=',False),('sale_id','=',False),('test','=','Pick'),('test','=','Pack'),('test','=','Delivery Orders')]}" readonly="'|','|', ('test_pick','=','In To Quality'),('test_pick','=','Receipts'),('test_pick','=','Quality To Stock')"/> 
+                    <field name="partner_id" string="Vendor" readonly="1" options="{'no_open': True, 'no_create': True}" attrs="{'visible':[('revise','!=',False)],'invisible':[('sale_id','!=',False)]}"/> 
+                </xpath>
+            </field>
+        </record>
+	</data>
 </odoo>
+    		
+
+    
+  
