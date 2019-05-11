@@ -18,19 +18,23 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','mrp','sale','product','sale_margin'],
+    'depends': ['base','mrp','sale','product','sale_margin','purchase_model'],
 
     # always loaded
     'data': [
+        'views/saleorder_type_mst.xml',
         'views/quotation_mrp_bom.xml',
         'views/sale_order_view.xml',
-       'views/mrp_bom_views.xml',
-       'views/sale_order_line_view.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.Sale.order.line.views ,Column width Adjust
+        'views/mrp_bom_views.xml',
+        'views/sale_order_line_view.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.Sale.order.line.views ,Column width Adjust
 	    'views/purchase_view_order_form.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.purchase.order.line.views ,Column width Adjust
-        'views/mrp_bom_views_line.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.mrp.bom.line.views ,Column width Adjust
+        'views/mrp_bom_views_line.xml', #Created-By:Pradip Created-Date:07-03-2019,Info.mrp.bom.line.views ,Column width Adjust        
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
 }
